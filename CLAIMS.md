@@ -128,3 +128,128 @@ pattern and its receipt; otherwise **unknown**, left for a model. The library ne
 - Ollama with `format: 'json'` can abort qwen2.5:7b with HTTP 500 "token repeat limit": an error, never an empty answer.
   This build does not use the JSON format; any non-200 is recorded as an error.
 - Python writes JSON with CRLF; every hash is taken over the bytes git stores.
+
+---
+
+# SEAL 2 · library 2, FINANCE / ACCOUNTING (receipts), written before its code (2026-11-10)
+
+Seal 1 above is unchanged, byte for byte. Simon's P1-P5 bind this library as they bind every library. This seal adds
+the bars for library 2, the reconciliation rule, the night's wiring for a second library, and one disclosed change to
+library 1's night. A claim that misses its bar is kept and published as failed. Nothing here is relaxed after a result
+is seen.
+
+## Data
+
+**CORD v2**, the Consolidated Receipt Dataset (NAVER CLOVA; Park, Shin, Lee, Lee, Surh, Seo and Lee, Document
+Intelligence Workshop at NeurIPS 2019), licence **CC BY 4.0**, as stated in two places: the clovaai/cord repository's
+README and the Hugging Face dataset card of naver-clova-ix/cord-v2. 1,000 real Indonesian shop and restaurant receipts,
+with the experts' labels on every word they kept.
+
+- Pinned at dataset revision `7f0115a4b758a71d6473b8d085751692da2fef98` (the revision is in every URL, so the files
+  cannot change under it): six parquet files, with the sha256 Hugging Face lists for each: train 0
+  `da3994eee1bf9bd3c57f0d53a72c3a6812c8696c5ba26245987949ddf73483cc`, train 1
+  `cce4def16a0d6a6c75f80be712f7494c56c318a8829b712f5c62650155c9e58e`, train 2
+  `591e2db8fe8b1d364b054f46e8c375b7f00e72578914ba46a573b6858162cab2`, train 3
+  `1ffd9de8d6fbcee7630fd4cdfedff05b9b7fabc0fae4fc17557c5fe7cf178748`, validation
+  `0d0f6dac11fdcc549de2746aa9f53136a3bc22a2a1aff2b0b847f7622ad60c15`, test
+  `51c65f1788faff392abe2a0b55b023eb23e9be551c509138eaa3a832514224e7`. These whole files (2.31 GB, mostly images) are
+  not downloaded, so those hashes name the files; the hash this build checks is the derived file's, below.
+- Only the `ground_truth` column is read, by HTTP range requests; the receipt images are never downloaded. The derived
+  file `cord-v2-ground-truth.jsonl` (1,000 lines, one per receipt: split, row, ground_truth; 6,198,162 bytes) has
+  sha256 `272432829e501edde76ee9457a04c146e4e6e5d7fb40c0c395fc71a93f82c613`. A committed tool regenerates it from the
+  pinned files and CI checks that hash before it re-derives any night. This repository commits no receipt text.
+- **What CORD does not have.** Its makers removed the store and payment information before publishing (clovaai/cord
+  README, 2019-12-12), so the receipts carry **no dates, no supplier names and no payment terms**. No pattern for them
+  can be gated on this data, and this library does not claim them; the page says so. A later seal may add a
+  licence-checked source that has them. (Kleister Charity, UK charity accounts with report dates, was checked: its
+  repository states no licence, so it is not used.)
+
+**A receipt as text.** The experts' words are grouped into rows by their `row_id`, rows run top to bottom (by the
+smallest y of their words, then the row_id), words left to right (by the smallest x, then their order in the file),
+joined by single spaces, rows by newlines. That text is all the library reads; a stranger's pasted receipt is read the
+same way, one printed line per row.
+
+## What it reads
+
+- **Amounts** are found by a deterministic scanner: an optional currency mark (Rp, IDR, £, $, €, USD, GBP, EUR), an
+  optional minus or bracket, then digits in groups of three with `.` or `,` between them (with or without two decimals
+  after), or digits with exactly two decimals, or three to seven plain digits, or a lone `0`. Its value is kept in
+  hundredths, the sign apart. Each amount's words are the words on its own row before it (up to 6) and after it (up to
+  3), with all-digit words left out, plus where it sits: `zfirst` and `zlast` (the first and last amount on the
+  receipt), `zmax` (the largest), `zend` (the last on its row), `zalone` (the only one on its row), `zneg` (printed
+  negative), and `ztop` / `zmid` / `zlow` (its row in the first, middle or last third of the rows).
+- **Seven fields**, one value per receipt: `total` (the experts' total.total_price), `subtotal`
+  (sub_total.subtotal_price), `tax` (sub_total.tax_price), `service` (sub_total.service_price), `discount`
+  (sub_total.discount_price), `cash` (total.cashprice), `change` (total.changeprice). An amount is right for a field
+  when its value equals the value of an amount lying inside a word the experts gave that label.
+- **Line items**, many per receipt: `item-price` (menu.price). An amount is right when it lies inside a word the experts
+  labelled menu.price. The library's line items are every amount on which a kept line-item pattern fires.
+
+**The cheap baseline it must beat** (fixed here): ctrl-F. For a field, the first amount at or after the first row whose
+text contains the field's search word (lower case): total `total`, subtotal `sub`, tax `tax`, service `serv`, discount
+`disc`, cash `cash`, change `change`; no such row, no answer (counted wrong). For line items, every amount on the rows
+above the first row containing `total` (all of them when there is none).
+
+**The fresh exam per cycle.** Receipt id = the source split and row (`train-000` … `test-099`). One fixed order: FNV-1a
+of `cord:` + id. The first **100** are the finance METER (never used to propose or to gate); the next **300** are the
+seed training set; the other 600 are **15 batches of 40**. Cycle n gates on batch 2n (held-out) and 2n+1 (the final
+exam), never seen by an earlier cycle; its training set is the seed plus every batch before 2n. Seven nights, then the
+library says plainly that it needs fresh data and stops promoting. No exam is ever re-used.
+
+**The two gates.** The law's gate, unchanged (vendor/patlib), on the cycle's amounts; then the field gate with library
+1's numbers: on the held-out receipts where a pattern fires, it must be right on at least 80% of them and beat the cheap
+baseline's rightness on those same receipts by at least 0.10, over at least 3 receipts; the same on the final exam. For
+a field, "right on a receipt" is its first firing amount being right. For line items, the same bars are taken over the
+amounts the pattern picks on those receipts, against the amounts the cheap baseline picks on the same receipts.
+
+**The answer.** For a field, the first amount (top to bottom) on which a kept pattern fires, with the pattern and its
+receipt; for line items, every amount a kept pattern fires on; otherwise **unknown**, left for a person or a model. It
+never guesses. On the meter a field is right when its answer is right; line items are right only when the amounts
+picked are exactly the experts' line items, nothing missed and nothing extra.
+
+## The reconciliation rule (arithmetic over the library's own answers)
+
+Three parts, each run only when every term it needs was answered:
+
+- **A, items:** the line items add up to the subtotal.
+- **B, totals:** subtotal + tax + service − discount = total (an unanswered tax, service or discount counts as zero).
+- **C, change:** cash − change = total.
+
+A part holds when its two sides differ by at most **100** units on receipts printed in whole units (100 rupiah, the cash
+rounding Indonesian receipts use) and at most **0.05** on receipts that print decimals. The receipt is **reconciled**
+when at least one part ran and every part that ran holds, **flagged** when a part that ran fails (look at it), and
+**unchecked** when no part could run. The check never changes an answer and never calls a model.
+
+## Claims for library 2
+
+- **F1** — each night, the library as carried in beats the cheap baseline on the cases it answers on that night's fresh
+  final exam, judged and signed by the baseline agreement (rate, higher, minimum improvement 0.10, z 1.96, at least 20
+  answered cases; fewer is INSUFFICIENT, never a pass). Night 0 carries nothing in, so night 0 cannot decide it.
+- **F2** — it abstains rather than guesses: on the finance METER, wherever it answers, it is right at least **90%** of
+  the time (higher than library 1's 75%, because a wrong amount costs more than a missed one).
+- **F3** — every night re-derives byte for byte from the pinned file and the recorded proposals (CI re-runs it).
+- **F4** — the source carries its licence and attribution: the page and NOTICE credit CORD (NAVER CLOVA, CC BY 4.0).
+- **R0** — the rule is tested on the experts' own answers before it is trusted: over all 1,000 receipts, each part holds
+  on at least **80%** of the receipts where the experts labelled every term it needs (the experts' value of a field is
+  the value of the scanned amount inside their word; their line items are the amounts inside their menu.price words).
+  A part that misses this bar is published as failed and **dropped from the check**: it neither reconciles nor flags.
+  (R0 measures a fixed rule on the labels; it proposes and gates nothing, so it spends no exam.)
+- **R1** — the check is pure arithmetic: it never changes an answer, never calls a model (tests and the source scan).
+- **R2** — reconciled means right: on the METER, of the receipts the check marks reconciled, every amount the check used
+  is right in at least **95%**, decided over at least 10 reconciled receipts (fewer is undecided).
+- **R3** — flagged means look: on the METER, of the receipts where a part ran and at least one amount it used was
+  wrong, the check flags at least **half**, decided over at least 5 such receipts (fewer is undecided).
+- **N3** — library 2 runs inside the same night process as library 1, after it, under N1's limits for the two
+  together: at most 6 local-7B calls (**3 for each library**) and the one 25-minute clock; its records live apart
+  (in their own folder beside library 1's), and the morning block carries its line. Its credit-tier candidates go to
+  the same credit step through the same wire, sharing the night's call allowance; the tier stays OFF until Simon
+  switches it on.
+
+Library 2 is reported **landed** only under seal 1's definition. Until then it is **running** (built, gated, live,
+growing) or **not landed**.
+
+## Disclosed change to library 1 (before its first night with the 7B)
+
+Library 1's night asks the local 7B about at most **3** tasks a night, not 6, from night 1 on (night 0 asked none), so
+the two libraries together stay within N1's six calls. It is a proposer budget, never a gate: it makes library 1 grow
+more slowly, never more easily. Night 0 still re-derives byte for byte.
