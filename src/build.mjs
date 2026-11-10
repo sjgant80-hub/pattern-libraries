@@ -15,7 +15,7 @@ import P from '../vendor/patlib/patlib.mjs';
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const arr = (x) => (Array.isArray(x) ? x : []);
 const str = (x) => (typeof x === 'string' ? x : '');
-const nat = (n) => (Number.isInteger(n) && n >= 0 ? n : 0);
+const nat = (n) => (Number.isInteger(n) ? Math.max(0, n) : 0);
 export const TIERS = Object.freeze(['recipe', 'mined', '7b', 'oauth']);
 export const MERGE = 0.6;
 
@@ -45,7 +45,7 @@ export function order7b(tasks, kept, cycle, max) {
   const k = isObj(kept) ? kept : {};
   const need = arr(tasks).filter((t) => typeof t === 'string' && !(nat(k[t]) > 0));
   if (!need.length) return [];
-  const start = ((Number.isInteger(cycle) && cycle > 0 ? cycle : 0) * nat(max)) % need.length;
+  const start = (nat(cycle) * nat(max)) % need.length;
   return need.slice(start).concat(need.slice(0, start)).slice(0, nat(max));
 }
 

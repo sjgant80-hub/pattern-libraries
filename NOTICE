@@ -1,0 +1,24 @@
+pattern-libraries — credits, provenance and data licences
+
+DATA
+- CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Dan Hendrycks, Collin Burns, Anya Chen,
+  Spencer Ball), licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/; record https://zenodo.org/records/4595826).
+  The file used is data.zip from https://github.com/TheAtticusProject/cuad, sha256
+  f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a. The contracts are filings on SEC EDGAR. This
+  repository commits no contract text from it except the one short sample excerpt on the live page, credited there;
+  the patterns, scores and records in data/ are derived from it and are shared under the same CC BY 4.0 terms.
+
+REUSED CODE (vendored byte for byte, each pinned by hash in test/vendor.test.mjs)
+- vendor/patlib/patlib.mjs: Kar's pattern-library law (si-didy, sealed 2026-11-06, 53cfed8).
+- vendor/mint/src/{baseline,experiment,journal}.mjs and vendor/mint/vendor/fall-kit/light/sha256.mjs: the baseline
+  agreement from sjgant80-hub/ai-first-company at 2e69755 (mint-a-department). MIT.
+- vendor/spendwall/src/wall.mjs and vendor/spendwall/vendor/wallet/wallet.mjs: the spend wall's law from
+  sjgant80-hub/kar-spendwall at 5d02254 (with the-wallet's canDo from fall-kit core). MIT.
+- data/prices.json: kar-spendwall's record of Anthropic's published prices (read 2026-11-09 from https://claude.com/pricing).
+
+The gate is witness (sjgant80-hub/witness, pinned v0.6). Claude and Anthropic are names of Anthropic; this repository
+is not theirs. qwen2.5 is Alibaba Cloud's open model, run locally through Ollama.
+
+Powered by the Konomi architecture, created by Thomas Frumkin.
+
+The code is MIT licensed (LICENSE).

@@ -106,6 +106,9 @@ test('checksOf: every CHECK lesson with its build and date; near-duplicates merg
   assert.match(c[0].id, /^chk-[0-9a-f]{8}$/);
   assert.ok(c[0].tokens.includes('witness'));
   assert.deepEqual(B.checksOf('## no date here\n- CHECK: a lesson long enough to keep it'), [{ id: B.checksOf('## x\n- CHECK: a lesson long enough to keep it')[0].id, text: 'a lesson long enough to keep it', build: 'no date here', date: '', tokens: ['lesson', 'long', 'enough', 'keep'], seen: [] }]);
+  // exactly 0.6 of the words shared (3 of 5) is a near-duplicate; under it is not
+  assert.equal(B.checksOf('- CHECK: alphas bravos charlies\n- CHECK: alphas bravos charlies deltas echoes').length, 1);
+  assert.equal(B.checksOf('- CHECK: alphas bravos charlies\n- CHECK: alphas bravos charlies deltas echoes foxtrots').length, 2);
   assert.equal(B.checksOf('- CHECK: ' + 'x'.repeat(19)).length, 0);
   assert.equal(B.checksOf('- CHECK: ' + 'x'.repeat(20)).length, 1);
   assert.equal(B.checksOf('- CHECK: ' + 'word '.repeat(200))[0].text.length, 400);

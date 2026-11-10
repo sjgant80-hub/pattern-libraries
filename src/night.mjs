@@ -41,7 +41,7 @@ const countBy = (list, key) => { const o = {}; for (const x of list) { const k =
 /** night({ units, plan, cycle, library, records, at, ask, model, max7b }) → { ok, record, state } */
 export async function night(input) {
   const I = isObj(input) ? input : {};
-  const at = str(I.at), cycle = Number.isInteger(I.cycle) && I.cycle >= 0 ? I.cycle : 0;
+  const at = str(I.at), cycle = Number.isInteger(I.cycle) ? Math.max(0, I.cycle) : 0;
   const units = isObj(I.units) ? I.units : {}, plan = isObj(I.plan) ? I.plan : {};
   const carried = arr(I.library).filter((r) => isObj(r) && P.validRule(r));
   const records = arr(I.records).filter(isObj);
@@ -54,7 +54,7 @@ export async function night(input) {
   if (!slices) {
     const m = Y.meter(carried, E.TASKS, units, meterIds);
     return { ok: false, code: 'exhausted', why: 'no fresh exam left: every batch has been an exam once; the library needs fresh data before it may promote again',
-      record: { ...base, exhausted: true, promoted: [], dropped: [], meter: m, library: carried.length }, state: { cycle, library: carried, records } };
+      record: { ...base, exhausted: true, promoted: [], dropped: [], meter: m, patterns: carried.length }, state: { cycle, library: carried, records } };
   }
 
   // 2 · the library as carried in, on a final exam none of its patterns ever saw (X1)
@@ -87,7 +87,8 @@ export async function night(input) {
 
   // 5 · the credit tier's only candidates: open after the free tiers AND the 7B
   const ev = { keptFree, tried7b, passed7b, model, dropped7b };
-  const asks = tasks7b.filter((t) => !(keptFree[t] > 0) && (tried7b[t] || 0) > 0 && !(passed7b[t] > 0))
+  // (the counts are whole numbers from countBy: absent means none)
+  const asks = tasks7b.filter((t) => !keptFree[t] && tried7b[t] && !passed7b[t])
     .map((task) => ({ task, evidence: B.evidenceOf(task, ev), prompt: Y.promptFor(task, Y.casesFor(units, slices.train, task, 'train'), cycle) }));
 
   // 6 · the METER, never used to propose or gate
@@ -112,7 +113,7 @@ export async function night(input) {
     dropped: [...g1.dropped, ...g2.dropped],
     keptFree, tried7b, passed7b, asks: asks.map((a) => ({ task: a.task, evidence: a.evidence })),
     meter: { before: { coverage: mIn.coverage, precision: mIn.precision, answered: mIn.answered, cases: mIn.cases }, after: { coverage: m.coverage, precision: m.precision, answered: m.answered, right: m.right, cases: m.cases, withGold: m.withGold }, per: m.per, receipt: mReceipt },
-    library: lib.length, built: built.length,
+    patterns: lib.length, built: built.length,
   };
   return { ok: true, record, asks, state: { cycle: cycle + 1, library: lib, records: [...records, ...built] } };
 }
@@ -131,12 +132,12 @@ export function replayAsk(record) {
 export function line(rec) {
   if (!isObj(rec)) return 'document extraction library: no night recorded';
   const pct = (x) => (typeof x === 'number' ? (x * 100).toFixed(1) + '%' : 'n/a');
-  if (rec.exhausted) return 'document extraction library: no fresh exam left (all 15 batches spent), so nothing was promoted; it needs fresh data · ' + rec.library + ' patterns · coverage ' + pct(rec.meter && rec.meter.coverage);
+  if (rec.exhausted) return 'document extraction library: no fresh exam left (all 15 batches spent), so nothing was promoted; it needs fresh data · ' + rec.patterns + ' patterns · coverage ' + pct(rec.meter && rec.meter.coverage);
   const why = {};
   for (const d of arr(rec.dropped)) { const k = str(d.why).split(':')[0]; why[k] = (why[k] || 0) + 1; }
   const top = Object.entries(why).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, n]) => n + ' ' + k).join(', ');
   const m = rec.meter || {}, x = rec.exam && rec.exam.receipt;
-  return 'document extraction library, night ' + rec.cycle + ': ' + rec.library + ' patterns (' + arr(rec.promoted).length + ' kept tonight, ' + arr(rec.dropped).length + ' dropped: ' + (top || 'none') + ')'
+  return 'document extraction library, night ' + rec.cycle + ': ' + rec.patterns + ' patterns (' + arr(rec.promoted).length + ' kept tonight, ' + arr(rec.dropped).length + ' dropped: ' + (top || 'none') + ')'
     + ' · coverage on the meter ' + pct(m.before && m.before.coverage) + ' → ' + pct(m.after && m.after.coverage) + ', right ' + pct(m.after && m.after.precision) + ' when it answers'
     + ' · final exam: ' + (x && x.ok ? x.decision + ' (' + x.right + '/' + x.answered + ' vs the cheap baseline ' + x.baseRight + ')' : 'nothing carried in to examine')
     + ' · 7B ' + arr(rec.replies).length + ' calls · credit tier candidates: ' + (arr(rec.asks).map((a) => a.task).join(', ') || 'none');

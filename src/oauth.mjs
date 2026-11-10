@@ -48,7 +48,8 @@ export function env(base, maxTokens) {
 export function reply(stdout) {
   let j = null;
   const lines = str(stdout).trim().split(/\r?\n/).filter(Boolean);
-  for (let i = lines.length - 1; i >= 0 && !j; i--) { try { const x = JSON.parse(lines[i]); if (isObj(x) && x.type === 'result') j = x; } catch { /* not this line */ } }
+  // the last result line wins
+  for (const line of lines.reverse()) { try { const x = JSON.parse(line); if (isObj(x) && x.type === 'result') { j = x; break; } } catch { /* not this line */ } }
   if (!j) return { ok: false, text: '', usage: null, model: null, why: 'no result from the CLI' };
   const models = isObj(j.modelUsage) ? Object.keys(j.modelUsage) : [];
   const model = models.length === 1 ? models[0] : null;
