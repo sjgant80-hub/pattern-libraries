@@ -42,6 +42,10 @@ page computes the same verdicts in the browser from the same files.
 Witness v0.6, uncapped, nothing baselined, re-derived on the runner: extract 99/99, cycle 55/55, build 37/37, night
 38/38, oauth 26/26, value 23/23.
 
+## Landed or not
+
+By the seal's own rule (a library is landed only when all its claims are decided on a real run), **document extraction and the build-pattern library are RUNNING, not landed**: built, gated, live and growing every night; X1 and P4 are first decided on night 1 (2026-11-11, 03:00), P2 and P3 only once Simon switches the paid tier on. **Finance, triage, sales, novel angles and compression are NOT LANDED** (not built).
+
 ## Disclosures: what changed after seal 1, before night 0 was read (and which way it moves the bar)
 
 1. **The paid tier ships switched off** (`"on": true` in Simon's settings file turns it on). Spending waits for him. Stricter.

@@ -131,7 +131,7 @@ async function main() {
   ].map((r) => '<tr><td class="mono">' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
 
   // the libraries
-  $('libs').innerHTML = (libs && Array.isArray(libs.libraries) ? libs.libraries : []).map((l) => '<div class="card"><p><strong>' + esc(l.name) + '</strong> <span class="chip ' + (l.status === 'landed' ? 'good' : 'wait') + '">' + esc(l.status.toUpperCase()) + '</span></p><p>' + esc(l.what) + '</p><p class="muted">' + esc(l.status === 'landed' ? 'Data: ' + l.data : l.why) + '</p></div>').join('');
+  $('libs').innerHTML = (libs && Array.isArray(libs.libraries) ? libs.libraries : []).map((l) => '<div class="card"><p><strong>' + esc(l.name) + '</strong> <span class="chip ' + (l.status === 'landed' ? 'good' : 'wait') + '">' + esc(l.status.toUpperCase()) + '</span></p><p>' + esc(l.what) + '</p>' + (l.data ? '<p class="muted">Data: ' + esc(l.data) + '</p>' : '') + (l.why ? '<p class="muted">' + esc(l.why) + '</p>' : '') + '</div>').join('');
 
   // what it answers today, from the library itself, so the brochure never claims more than the patterns do
   const answers = [...new Set(library.map((r) => r.then))];

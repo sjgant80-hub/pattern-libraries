@@ -1,12 +1,70 @@
 {
- "note": "Simon's PATTERN LIBRARY BUILD PLAN (2026-11-10), in his build order. A library is 'landed' only when its claims are decided on a real run, its kernels are witness-clean and this page shows it; otherwise 'not landed', said plainly.",
+ "note": "Simon's PATTERN LIBRARY BUILD PLAN (2026-11-10), in his build order. A library is 'landed' only when all its claims are decided on a real run, its kernels are witness-clean and this page shows it (CLAIMS.md). 'running' means built, gated, live and growing every night, with claims still to decide; 'not landed' means not built.",
  "libraries": [
-  { "n": 1, "id": "doc", "name": "Document extraction", "kind": "income", "status": "landed", "what": "Pulls dates, parties, governing law, renewal and notice terms, liability caps and minimum commitments out of contracts, and flags ten kinds of clause, each answer with the pattern that gave it.", "data": "CUAD v1, 510 real commercial contracts (The Atticus Project, CC BY 4.0)" },
-  { "n": 3, "id": "build", "name": "Build patterns", "kind": "capability", "status": "landed", "what": "How every kept pattern was built (which proposer, which recipe, what it cost), looked up first the next night so a sibling task starts from what already worked; and Kar's own build checks, kept on Kar's machine.", "data": "the libraries' own night records; Kar's build retrospectives (private, local only)" },
-  { "n": 2, "id": "finance", "name": "Finance and accounting", "kind": "income", "status": "not landed", "what": "Invoice and statement parsing, reconciliation rules, payment terms, anomaly flags, on top of extraction.", "why": "Not built yet. It needs its own licence-checked data with real answers and its own sealed claims before any code." },
-  { "n": 4, "id": "triage", "name": "Triage and routing", "kind": "income", "status": "not landed", "what": "Urgent or not, hot lead or cold, risky claim, needs a human.", "why": "Not built yet: its own data and seal first." },
-  { "n": 4, "id": "sales", "name": "Sales and outreach", "kind": "income", "status": "not landed", "what": "What converts, follow-up structure, lead qualification, measured by whether it converted.", "why": "Not built yet: it needs real outcome data, which the estate does not have in volume." },
-  { "n": 5, "id": "angle", "name": "Novel angles", "kind": "capability", "status": "not landed", "what": "Question a requirement, find what to delete, cross one domain's reasoning with another.", "why": "Not built yet." },
-  { "n": 5, "id": "compression", "name": "Compression and stacked light", "kind": "capability", "status": "not landed", "what": "Each layer of how the estate's codec folds, as a pattern.", "why": "Not built yet." }
+  {
+   "n": 1,
+   "id": "doc",
+   "name": "Document extraction",
+   "kind": "income",
+   "status": "running",
+   "what": "Built to pull dates, parties, governing law, renewal and notice terms, liability caps and minimum commitments out of contracts, and to flag ten kinds of clause, each answer with the pattern that gave it. It answers only what its patterns have proven so far.",
+   "data": "CUAD v1, 510 real commercial contracts (The Atticus Project, CC BY 4.0)",
+   "why": "Not landed yet: X1 (beating the cheap method on a fresh final exam) and P4 (the coverage climb) are first decided on night 1 (2026-11-11, 03:00); P2 and P3 only once the owner switches the paid tier on."
+  },
+  {
+   "n": 3,
+   "id": "build",
+   "name": "Build patterns",
+   "kind": "capability",
+   "status": "running",
+   "what": "How every kept pattern was built (which proposer, which recipe, what it cost), looked up first the next night so a sibling task starts from what already worked; and Kar's own build checks, kept on Kar's machine.",
+   "data": "the libraries' own night records; Kar's build retrospectives (private, local only)",
+   "why": "Not landed yet: its records and Kar's build checks are kept (B1, B2), but the fall in spend per kept pattern (P3) needs weeks of nights that used the paid tier."
+  },
+  {
+   "n": 2,
+   "id": "finance",
+   "name": "Finance and accounting",
+   "kind": "income",
+   "status": "not landed",
+   "what": "Invoice and statement parsing, reconciliation rules, payment terms, anomaly flags, on top of extraction.",
+   "why": "Not built yet. It needs its own licence-checked data with real answers and its own sealed claims before any code."
+  },
+  {
+   "n": 4,
+   "id": "triage",
+   "name": "Triage and routing",
+   "kind": "income",
+   "status": "not landed",
+   "what": "Urgent or not, hot lead or cold, risky claim, needs a human.",
+   "why": "Not built yet: its own data and seal first."
+  },
+  {
+   "n": 4,
+   "id": "sales",
+   "name": "Sales and outreach",
+   "kind": "income",
+   "status": "not landed",
+   "what": "What converts, follow-up structure, lead qualification, measured by whether it converted.",
+   "why": "Not built yet: it needs real outcome data, which the estate does not have in volume."
+  },
+  {
+   "n": 5,
+   "id": "angle",
+   "name": "Novel angles",
+   "kind": "capability",
+   "status": "not landed",
+   "what": "Question a requirement, find what to delete, cross one domain's reasoning with another.",
+   "why": "Not built yet."
+  },
+  {
+   "n": 5,
+   "id": "compression",
+   "name": "Compression and stacked light",
+   "kind": "capability",
+   "status": "not landed",
+   "what": "Each layer of how the estate's codec folds, as a pattern.",
+   "why": "Not built yet."
+  }
  ]
 }

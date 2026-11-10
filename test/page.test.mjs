@@ -65,5 +65,7 @@ test('every file the page loads is in the repository', () => {
   assert.match(html, /rel="manifest" href="manifest\.webmanifest"/);
   const libs = JSON.parse(read('data/libraries.json')).libraries;
   assert.deepEqual(libs.map((l) => l.id), ['doc', 'build', 'finance', 'triage', 'sales', 'angle', 'compression']);
-  for (const l of libs) assert.ok(['landed', 'not landed'].includes(l.status) && (l.status === 'landed' || l.why), l.id);
+  for (const l of libs) assert.ok(['landed', 'running', 'not landed'].includes(l.status) && (l.status === 'landed' || l.why), l.id);
+  // the seal's own definition: nothing is called landed while a claim of it is still pending
+  assert.equal(libs.find((l) => l.id === 'doc').status === 'landed', false, 'X1 and P4 are not decided yet');
 });
