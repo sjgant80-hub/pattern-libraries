@@ -8,7 +8,7 @@
   "private": true,
   "engines": { "node": ">=20" },
   "scripts": {
-    "test": "node --test test/extract.test.mjs test/cycle.test.mjs test/build.test.mjs test/night.test.mjs test/oauth.test.mjs test/scan.test.mjs test/vendor.test.mjs test/page.test.mjs",
+    "test": "node --test test/extract.test.mjs test/cycle.test.mjs test/build.test.mjs test/night.test.mjs test/oauth.test.mjs test/value.test.mjs test/scan.test.mjs test/vendor.test.mjs test/page.test.mjs",
     "rederive": "node tools/rederive.mjs",
     "scan": "node tools/scan.mjs"
   }

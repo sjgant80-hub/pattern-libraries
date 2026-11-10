@@ -1,0 +1,143 @@
+{
+ "cycle": 1,
+ "library": [
+  {
+   "when": [
+    "construed"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-10T04:22:25.438Z",
+    "feed": "cuad-v1",
+    "trainN": 1862,
+    "recipe": "mine-1"
+   },
+   "receipt": "0586eb5c",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 14,
+     "right": 13,
+     "prec": 0.9285714285714286,
+     "basePrec": 0.07142857142857142
+    },
+    "final": {
+     "cover": 10,
+     "right": 10,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 12,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.333333,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "conflict"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-10T04:22:25.438Z",
+    "feed": "cuad-v1",
+    "trainN": 1862,
+    "recipe": "mine-1"
+   },
+   "receipt": "0991e8bc",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.333333,
+     "why": ""
+    }
+   }
+  }
+ ],
+ "records": [
+  {
+   "library": "doc",
+   "task": "governing-law",
+   "type": "place",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-10T04:22:25.438Z",
+   "rule": {
+    "when": [
+     "construed"
+    ],
+    "then": "governing-law"
+   },
+   "receipt": "0586eb5c"
+  },
+  {
+   "library": "doc",
+   "task": "governing-law",
+   "type": "place",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-10T04:22:25.438Z",
+   "rule": {
+    "when": [
+     "conflict"
+    ],
+    "then": "governing-law"
+   },
+   "receipt": "0991e8bc"
+  }
+ ]
+}

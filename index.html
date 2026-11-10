@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pattern Libraries · contract reading that proves itself</title>
+<meta name="description" content="A contract reader that grows every night on real contracts, keeps a pattern only when it beats a cheap baseline on documents it never saw, and answers 'unknown' rather than guess.">
+<style>
+:root { --bg: #fbfaf7; --fg: #1d1d1b; --muted: #5d5c57; --line: #dedbd2; --card: #ffffff; --accent: #1f5f8b; --accent-bg: #e6f0f7; --good: #1d6b3a; --good-bg: #e3f2e7; --bad: #9b2c2c; --bad-bg: #f8e5e5; --wait: #7a5a00; --wait-bg: #f7efd9; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+@media (prefers-color-scheme: dark) { :root { --bg: #151514; --fg: #ecebe6; --muted: #a9a79f; --line: #3a3934; --card: #1e1e1c; --accent: #7db7e0; --accent-bg: #1b2c39; --good: #7fcf98; --good-bg: #1b2e22; --bad: #f0a0a0; --bad-bg: #3a2020; --wait: #e6c46a; --wait-bg: #352c14; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 0 16px 64px; }
+header.top { padding: 40px 0 8px; }
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 12px; }
+h2 { font-size: 1.4rem; margin: 48px 0 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+h3 { font-size: 1.08rem; margin: 24px 0 6px; }
+p, li { max-width: 72ch; }
+.lede { font-size: 1.15rem; color: var(--fg); }
+.muted { color: var(--muted); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 16px 0 0; font-size: .95rem; }
+nav.toc a { color: var(--accent); text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.chip { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .85rem; border: 1px solid var(--line); background: var(--card); }
+.chip.good { background: var(--good-bg); color: var(--good); border-color: transparent; }
+.chip.bad { background: var(--bad-bg); color: var(--bad); border-color: transparent; }
+.chip.wait { background: var(--wait-bg); color: var(--wait); border-color: transparent; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 12px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+textarea { width: 100%; min-height: 220px; font: 13px/1.45 var(--mono); padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); }
+button { font: inherit; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+button.ghost { background: transparent; color: var(--accent); }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); }
+code, .mono { font-family: var(--mono); font-size: .88em; }
+.unknown { color: var(--muted); font-style: italic; }
+.steps { counter-reset: s; list-style: none; padding: 0; }
+.steps > li { counter-increment: s; position: relative; padding-left: 40px; margin: 12px 0; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--accent-bg); color: var(--accent); display: grid; place-items: center; font-weight: 700; }
+svg { max-width: 100%; height: auto; display: block; }
+svg text { fill: var(--fg); font: 13px system-ui, sans-serif; }
+svg .muted { fill: var(--muted); }
+svg .box { fill: var(--card); stroke: var(--line); }
+svg .hot { fill: var(--accent-bg); stroke: var(--accent); }
+svg .line { stroke: var(--muted); fill: none; }
+label.inp { display: grid; gap: 2px; font-size: .9rem; }
+label.inp input { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.big { font-size: 1.6rem; font-weight: 700; }
+footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+details summary { cursor: pointer; color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+<header class="top" id="what">
+  <h1>A contract reader that has to prove every pattern it learns</h1>
+  <p class="lede">Paste a contract and it pulls out the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing.</p>
+  <p>It learns every night, on this laptop, from 510 real commercial contracts. A new pattern is kept only if it beats a cheap method on contracts it has never seen, and then passes a second exam on contracts nobody has looked at. Everything else is thrown away, and the reason is written down.</p>
+  <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
+  <nav class="toc" aria-label="On this page">
+    <a href="#try">Try it</a><a href="#start">Start here</a><a href="#night">Last night, traced</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
+    <a href="#builds">How each pattern was built</a><a href="#wall">The credit wall</a><a href="#blueprint">Blueprint</a><a href="#libraries">The libraries</a><a href="#business">For your business</a><a href="#paper">White paper</a>
+  </nav>
+</header>
+
+<section id="try" aria-labelledby="try-h">
+  <h2 id="try-h">Try it on a contract</h2>
+  <p>The sample below is made up, written in the style of a commercial contract. Replace it with your own text. It is read in your browser: nothing is sent anywhere.</p>
+  <textarea id="doc" aria-label="Contract text"></textarea>
+  <p><button id="read">Read it</button> <button id="sample" class="ghost">Put the sample back</button></p>
+  <div class="table-wrap"><table id="answers" aria-live="polite"><thead><tr><th>Question</th><th>Answer</th><th>The pattern that found it</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted" id="answers-note"></p>
+</section>
+
+<section id="start" aria-labelledby="start-h">
+  <h2 id="start-h">Start here</h2>
+  <ol class="steps">
+    <li><strong>Read a contract.</strong> In <a href="#try">Try it</a>, press <em>Read it</em>. Every row is one question. An answer shows the words the library picked and the pattern that picked them, for example "near the word <code>governed</code>, a jurisdiction is the governing law". An <em>unknown</em> means no kept pattern fired; in a real deployment that question goes to a model or a person.</li>
+    <li><strong>See what it learned and why.</strong> <a href="#night">Last night, traced</a> shows the real night: how many patterns were proposed, by whom (a free word-counting miner, or the local AI model), which were kept, and why every other one was thrown out.</li>
+    <li><strong>See how it is tested.</strong> <a href="#exam">The fresh exam</a> shows how the 510 contracts are split so that every night is tested on contracts it never saw, and why no exam is ever used twice.</li>
+    <li><strong>See what it costs.</strong> <a href="#wall">The credit wall</a> shows the paid tier: the last resort, capped per day, off until the owner switches it on.</li>
+    <li><strong>Work out what it is worth to you.</strong> <a href="#business">For your business</a> has the calculator: your contracts, your rates, the library's measured coverage.</li>
+  </ol>
+</section>
+
+<section id="night" aria-labelledby="night-h">
+  <h2 id="night-h">Last night, traced</h2>
+  <p>This is the real record of the most recent night, read from the file the night wrote. Nothing here is typed in by hand.</p>
+  <div class="card" id="night-flow"><p class="muted">Loading the night's record…</p></div>
+  <h3>The patterns it kept</h3>
+  <p class="muted">"Held-out" is the first exam: contracts the proposers never saw. "Final" is the second: contracts nobody has looked at. Each row had to clear both, at the level of single candidates and at the level of whole contracts, against the cheap method.</p>
+  <div class="table-wrap"><table id="kept"><thead><tr><th>Pattern</th><th>Proposed by</th><th>Held-out: right / fired</th><th>Final: right / fired</th><th>Contracts right vs the cheap method</th><th>Receipt</th></tr></thead><tbody></tbody></table></div>
+  <h3>Why the rest were thrown out</h3>
+  <div id="drops" class="card"></div>
+  <h3>Coverage, night by night</h3>
+  <p class="muted">Coverage is the share of questions (contracts × questions) on the 60 measuring contracts that the library answers without a model. Those 60 are never used to propose or to test a pattern, only to measure. It can only climb, because patterns are only added; the claim is that it climbs on every night that keeps one.</p>
+  <div id="climb" class="card"></div>
+</section>
+
+<section id="how" aria-labelledby="how-h">
+  <h2 id="how-h">How it works</h2>
+  <p>Each night runs the same seven steps, cheapest first. The model only ever proposes; plain code decides.</p>
+  <svg viewBox="0 0 900 250" role="img" aria-label="The night: gather, propose with free miners, then the local model, then the paid tier last; every proposal goes through two gates; winners are kept with a receipt, losers are dropped with a reason; how each was built is cached; coverage is measured.">
+    <rect class="box" x="10" y="20" width="120" height="56" rx="8"/><text x="70" y="44" text-anchor="middle">1 Gather</text><text x="70" y="62" text-anchor="middle" class="muted">real contracts</text>
+    <rect class="hot" x="160" y="20" width="140" height="56" rx="8"/><text x="230" y="44" text-anchor="middle">2a Free proposers</text><text x="230" y="62" text-anchor="middle" class="muted">recipes + miners</text>
+    <rect class="box" x="160" y="96" width="140" height="56" rx="8"/><text x="230" y="120" text-anchor="middle">2b Local 7B model</text><text x="230" y="138" text-anchor="middle" class="muted">only where 2a failed</text>
+    <rect class="box" x="160" y="172" width="140" height="56" rx="8"/><text x="230" y="196" text-anchor="middle">2c Paid tier, last</text><text x="230" y="214" text-anchor="middle" class="muted">walled; off by default</text>
+    <rect class="hot" x="340" y="60" width="160" height="110" rx="8"/><text x="420" y="88" text-anchor="middle">3 Two gates</text><text x="420" y="110" text-anchor="middle" class="muted">beat the cheap method</text><text x="420" y="128" text-anchor="middle" class="muted">on unseen contracts,</text><text x="420" y="146" text-anchor="middle" class="muted">then a second exam</text>
+    <rect class="box" x="540" y="30" width="150" height="56" rx="8"/><text x="615" y="54" text-anchor="middle">4 Keep + receipt</text><text x="615" y="72" text-anchor="middle" class="muted">versioned library</text>
+    <rect class="box" x="540" y="146" width="150" height="56" rx="8"/><text x="615" y="170" text-anchor="middle">Drop + reason</text><text x="615" y="188" text-anchor="middle" class="muted">logged, never hidden</text>
+    <rect class="box" x="730" y="30" width="160" height="56" rx="8"/><text x="810" y="54" text-anchor="middle">5 Cache the recipe</text><text x="810" y="72" text-anchor="middle" class="muted">next night starts here</text>
+    <rect class="box" x="730" y="146" width="160" height="56" rx="8"/><text x="810" y="170" text-anchor="middle">6 Measure coverage</text><text x="810" y="188" text-anchor="middle" class="muted">on contracts kept apart</text>
+    <path class="line" d="M130 48 H160 M300 48 H320 V100 H340 M300 124 H320 M300 200 H320 V130 H340 M500 90 H520 V58 H540 M500 140 H520 V174 H540 M690 58 H730 M690 58 H710 V174 H730"/>
+  </svg>
+  <ol class="steps">
+    <li><strong>Gather.</strong> The 510 contracts of CUAD, a public set filed with the US Securities and Exchange Commission and marked up by trained reviewers (The Atticus Project, CC BY 4.0). Plain code finds every candidate of each kind: every date, every amount, every duration, every jurisdiction, every company name, every sentence.</li>
+    <li><strong>Propose, cheapest first.</strong> First the free tiers: a <em>recipe</em> lookup (words that worked for a sibling question, like another date field) and two miners that count which nearby words go with a right answer. Then, only for questions the free tiers kept nothing for, the local 7B model (qwen2.5, running on this laptop) reads 20 right and 20 wrong examples and writes rules. Last, and only when both failed, the paid tier may be asked, behind its wall.</li>
+    <li><strong>Test.</strong> A pattern is one or two words near a candidate: "WHEN <code>governed</code> THEN governing law". It must fire on at least five candidates in contracts it never saw and be right 80% of the time, beat the commonest answer by 0.2, stay within its competence, and pass a second exam on contracts nobody looked at. Then a second gate checks whole contracts: on the contracts where it fires, it must be right in 80% of them and beat the cheap method (take the first date, the first jurisdiction, ctrl-F for the clause's word) by 0.10.</li>
+    <li><strong>Keep or drop.</strong> A winner enters the library with its scores and a receipt. A loser is dropped and its reason is written down. A near-copy of a kept pattern is refused.</li>
+    <li><strong>Cache how it was built.</strong> Which proposer found it, from which recipe, at what cost. The next night tries that recipe on sibling questions first, for free.</li>
+    <li><strong>Measure.</strong> Coverage and precision on 60 contracts that are never used for anything else.</li>
+    <li><strong>Report.</strong> One line in the owner's morning brief: kept, dropped and why, the coverage climb, the credit spent and what it bought, and what needs the owner. Nothing goes outward at night.</li>
+  </ol>
+</section>
+
+<section id="exam" aria-labelledby="exam-h">
+  <h2 id="exam-h">The fresh exam: no test is ever used twice</h2>
+  <p>A library that is tested on the same contracts every night slowly learns the test. So the 510 contracts are put in one fixed order, and cut once:</p>
+  <div class="card" id="exam-bar"></div>
+  <p>Night <em>n</em> is tested on batches 2<em>n</em> and 2<em>n</em>+1, which no earlier night has seen; afterwards they only ever train. When the batches run out, the library says so and stops adding patterns until fresh contracts arrive. It never re-uses an exam.</p>
+</section>
+
+<section id="builds" aria-labelledby="builds-h">
+  <h2 id="builds-h">How each pattern was built (the build-pattern library)</h2>
+  <p>Every kept pattern carries how it was made. This is what makes the nights cheaper: a recipe that worked for one date question is tried first, at no cost, on the other date questions.</p>
+  <div class="table-wrap"><table id="recipes"><thead><tr><th>Question</th><th>Kind</th><th>Found by</th><th>Recipe</th><th>Cost</th><th>Night</th></tr></thead><tbody></tbody></table></div>
+  <p class="muted">Kar also keeps its own build checks here, every lesson a past build caught, each with the build it came from. They cite private work, so they stay on Kar's machine and are not shown on this page.</p>
+</section>
+
+<section id="wall" aria-labelledby="wall-h">
+  <h2 id="wall-h">The credit wall (the paid tier)</h2>
+  <p>The paid tier is a frontier model reached through the owner's own Claude subscription, through the official command-line tool. A subscription has no price per call, so the wall meters each call in what it would cost on the published API price list ("API-equivalent").</p>
+  <div class="card" id="wall-card"></div>
+  <ul>
+    <li><strong>Last tier only.</strong> A question may go to it only if the free tiers kept nothing for it tonight and the local model tried and nothing it wrote passed.</li>
+    <li><strong>Reserved before it goes out.</strong> The most the call could cost is written to the ledger on disk first, and checked against the day's cap and a hard stop. The same ceiling is handed to the tool as its own budget limit.</li>
+    <li><strong>Settled after.</strong> Priced from the usage the tool reports, rounded up. If the usage cannot be read, the whole ceiling is charged.</li>
+    <li><strong>A stop that stays stopped.</strong> Reaching the stop switches the tier off until the owner raises it.</li>
+    <li><strong>Off until the owner switches it on.</strong> Spending is the owner's decision, and so is the daily cap.</li>
+  </ul>
+</section>
+
+<section id="blueprint" aria-labelledby="blueprint-h">
+  <h2 id="blueprint-h">Blueprint: how it is built, piece by piece</h2>
+  <svg viewBox="0 0 900 230" role="img" aria-label="Blueprint: the scanners and units feed the cycle; the cycle uses the pattern law and the baseline agreement; the night runs the cycle with the free proposers and the local model; the build-pattern library feeds the next night; the credit step uses the wall; the page uses the same code.">
+    <rect class="hot" x="10" y="20" width="170" height="56" rx="8"/><text x="95" y="44" text-anchor="middle">extract</text><text x="95" y="62" text-anchor="middle" class="muted">scanners, units, answers</text>
+    <rect class="hot" x="220" y="20" width="170" height="56" rx="8"/><text x="305" y="44" text-anchor="middle">cycle</text><text x="305" y="62" text-anchor="middle" class="muted">fresh exam, two gates</text>
+    <rect class="hot" x="430" y="20" width="170" height="56" rx="8"/><text x="515" y="44" text-anchor="middle">night</text><text x="515" y="62" text-anchor="middle" class="muted">one night, cheapest first</text>
+    <rect class="hot" x="640" y="20" width="170" height="56" rx="8"/><text x="725" y="44" text-anchor="middle">build</text><text x="725" y="62" text-anchor="middle" class="muted">how it was built</text>
+    <rect class="box" x="220" y="130" width="170" height="56" rx="8"/><text x="305" y="154" text-anchor="middle">pattern law</text><text x="305" y="172" text-anchor="middle" class="muted">reused, byte for byte</text>
+    <rect class="box" x="10" y="130" width="170" height="56" rx="8"/><text x="95" y="154" text-anchor="middle">baseline agreement</text><text x="95" y="172" text-anchor="middle" class="muted">signs each exam</text>
+    <rect class="hot" x="430" y="130" width="170" height="56" rx="8"/><text x="515" y="154" text-anchor="middle">oauth + wire</text><text x="515" y="172" text-anchor="middle" class="muted">the paid tier's rules</text>
+    <rect class="box" x="640" y="130" width="170" height="56" rx="8"/><text x="725" y="154" text-anchor="middle">spend wall law</text><text x="725" y="172" text-anchor="middle" class="muted">reused, byte for byte</text>
+    <path class="line" d="M180 48 H220 M390 48 H430 M600 48 H640 M305 76 V130 M180 158 H200 V76 M515 76 V130 M600 158 H640"/>
+  </svg>
+  <div class="table-wrap"><table><thead><tr><th>Piece</th><th>What it does</th><th>Proof</th></tr></thead><tbody id="organs"></tbody></table></div>
+  <p class="muted">"Witness-clean" means every deliberate small break (a &lt; turned into &lt;=, an and into an or) made a test fail. Nothing was waved through.</p>
+</section>
+
+<section id="libraries" aria-labelledby="lib-h">
+  <h2 id="lib-h">The libraries, in the owner's build order</h2>
+  <p>The plan grows seven libraries: four that become products, three that make the builder itself better. Each is reported as landed or not landed, plainly.</p>
+  <div class="grid" id="libs"></div>
+</section>
+
+<section id="business" aria-labelledby="biz-h">
+  <h2 id="biz-h">For your business</h2>
+  <p class="lede">Contract review is expert reading at expert rates. This library takes the first pass, finding the dates, parties, law, terms, caps and clauses, for nothing per contract, on your own machine, and shows its working on every answer. What it cannot prove, it hands back.</p>
+  <h3>What it does for each role</h3>
+  <div class="grid">
+    <div class="card"><strong>Chief executive</strong><p>A first read of every contract in the drawer, not just the ones someone had time for: renewal dates and notice windows surfaced before they pass.</p></div>
+    <div class="card"><strong>Finance director</strong><p>The money terms (liability caps, minimum commitments) pulled out with the sentence they came from. No per-contract fee: once installed, a read costs nothing.</p></div>
+    <div class="card"><strong>Operations</strong><p>A register of who, when, under which law, how long and how to exit, built from the documents themselves and refreshed as new contracts arrive.</p></div>
+    <div class="card"><strong>Technology and security</strong><p>Runs in a browser or on one machine, offline. Documents never leave. Every answer is a rule you can read, with a receipt; there is no model to leak or drift.</p></div>
+    <div class="card"><strong>Legal team</strong><p>It does the finding; your lawyers do the deciding. Each answer points at its sentence, so checking takes seconds, and "unknown" is honest rather than a confident error.</p></div>
+    <div class="card"><strong>Procurement</strong><p>Supplier contracts screened for exclusivity, change of control, assignment and audit rights before signature, the same way every time.</p></div>
+  </div>
+  <h3>What it is worth to you</h3>
+  <p>The defaults are figures from the CUAD paper itself; replace them with yours. Only the questions the library answers, and only the share it gets right, count. A person still checks each answer: this is the time spent <em>finding</em>, not deciding.</p>
+  <div class="card">
+    <div class="grid" id="calc-in"></div>
+    <p class="big" id="calc-out">—</p>
+    <p class="muted" id="calc-why"></p>
+  </div>
+  <h3>Against what you pay now</h3>
+  <div class="card" id="vs"></div>
+  <h3>Security, data protection and audit</h3>
+  <ul>
+    <li><strong>Your documents stay with you.</strong> The reader runs in the browser or on one machine. There is no server and no upload. Under UK GDPR and GDPR that means no third-party processor for the documents.</li>
+    <li><strong>Every answer is auditable.</strong> It names the pattern that produced it, and every pattern carries its exam scores and a receipt. An auditor can re-run the whole night from the public data and get the same bytes.</li>
+    <li><strong>It abstains rather than guesses.</strong> No pattern fires, no answer. The share it answers is measured and published.</li>
+    <li><strong>The paid tier is walled</strong> (see <a href="#wall">the credit wall</a>): last resort, capped, ledgered, off unless switched on.</li>
+  </ul>
+  <h3>Deployment and roll-out</h3>
+  <ol class="steps">
+    <li><strong>Week 1, try it on your own contracts.</strong> Paste them into this page. Nothing leaves your browser.</li>
+    <li><strong>Week 2, grow it on yours.</strong> With your consent and on your machine, the same nightly loop runs on your own marked-up contracts, so the patterns learn your house style. Your data never joins the public set.</li>
+    <li><strong>Week 3, wire it in.</strong> The library is a small set of files: put it in front of your review queue. Answered questions are pre-filled with their sentence; unknown ones go to your reviewers or your model, as today.</li>
+  </ol>
+  <h3>Ownership, support and exit</h3>
+  <p>The code is MIT licensed and the library is plain files you keep. No lock-in: stop using it and you still own every pattern and every receipt. Built and supported by AI Native Solutions (ainativesolutions@gmail.com); terms are agreed one to one.</p>
+  <h3>Risks, answered straight</h3>
+  <ul id="risks">
+    <li><strong>It answers only part of each contract today.</strong> The share is on this page, measured, and it grows by night. Everything it does not answer goes to people or a model exactly as now.</li>
+    <li><strong>It learned on US commercial contracts.</strong> Other document types (leases, employment, UK forms) need their own marked-up examples; the method is the same.</li>
+    <li><strong>It is not legal advice.</strong> It finds and points; a qualified person decides.</li>
+    <li><strong>Patterns can be wrong.</strong> Each one was right at least 80% of the time on contracts it never saw, and the measured precision is published. The sentence comes with the answer so a wrong one is caught in seconds.</li>
+  </ul>
+  <h3>The case for the board</h3>
+  <div class="card" id="board"></div>
+</section>
+
+<section id="paper" aria-labelledby="paper-h">
+  <h2 id="paper-h">White paper: the method and the sealed claims</h2>
+  <p><strong>The problem.</strong> Models that read contracts are opaque, cost money per page, and are confidently wrong some of the time. A rule-based reader is cheap and readable, but hand-written rules do not grow.</p>
+  <p><strong>The method.</strong> Grow the rules, but let nothing in unproven. Each night, cheap proposers (counting miners, the recipes of past winners) and then a local model propose short rules; deterministic code tests each one on contracts the proposers never saw, against a cheap method, by margins written down before any code existed, and then again on a second set nobody has looked at. The exam batches are used once. Coverage is measured on contracts that never take part in any decision. Every kept rule carries its scores and a receipt; every dropped rule carries its reason.</p>
+  <p><strong>The bars were sealed first.</strong> The claims and every number in them were committed before any code (<a href="CLAIMS.md">CLAIMS.md</a>, seal 1). A claim that misses its bar is kept and shown as failed.</p>
+  <div class="table-wrap"><table id="claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
+  <p><strong>What it does not do.</strong> It does not read scanned images; it does not decide anything; it does not learn from your documents unless you run it on your own machine with your consent.</p>
+  <p><strong>Re-run it.</strong> The repository holds the code, the night records and a tool that re-derives every night byte for byte from the public contracts: <code>node tools/rederive.mjs CUADv1.json</code>. GitHub's own computers do this on every change.</p>
+  <details><summary>The data and its licence</summary><p>CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Hendrycks, Burns, Chen, Ball; NeurIPS 2021), licensed CC BY 4.0. 510 contracts from SEC EDGAR, marked up by trained reviewers. The patterns and records here are derived from it and shared under the same terms.</p></details>
+</section>
+
+<footer>
+  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · <a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
+  <p>Powered by the Konomi architecture, created by Thomas Frumkin.</p>
+</footer>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>
