@@ -186,6 +186,21 @@ export function minePairs(cases, task, k = 2) {
     .slice(0, Math.max(0, k)).map((r) => ({ when: r.when, then: r.then }));
 }
 
+/** mineCover(cases, task, k) → one-word proposals, the most-used first: words right at least 80% of the time on the
+ *  training cases (whole numbers: right × 10 ≥ 8 × n), seen at least five times, ranked by how many cases they get right.
+ *  The law's own miner ranks by precision first and finds rare words; this one finds the common words that a small
+ *  fresh batch can actually meet (added after night 0, 2026-11-10; the gates are unchanged). */
+export function mineCover(cases, task, k = 3) {
+  const seen = new Map();
+  for (const c of arr(cases)) {
+    if (!isObj(c)) continue;
+    for (const t of arr(c.tokens)) { const e = seen.get(t) || { n: 0, right: 0 }; e.n++; if (c.label === task) e.right++; seen.set(t, e); }
+  }
+  return [...seen].filter(([, e]) => e.n >= 5 && e.right * 10 >= e.n * 8)
+    .sort((a, b) => b[1].right - a[1].right || b[1].right * a[1].n - a[1].right * b[1].n || first(a[0], b[0]))
+    .slice(0, Math.max(0, k)).map(([t]) => ({ when: [t], then: task }));
+}
+
 /** recipe(records, task, type) → the build-pattern lookup: the words of patterns kept for OTHER tasks of the same kind,
  *  tried on this task first, at no cost (P3). Most recently kept first; at most 4. */
 export function recipe(records, task, type) {
@@ -217,4 +232,4 @@ export function proposalsOf(text, task) {
   return P.parseProposals(text, [task]).filter((r) => r.then === task);
 }
 
-export default { SCHEDULE, FIELD_GATE, EXAM, METER_BAR, schedule, slicesFor, casesFor, fieldGate, contextFor, admit, grow, examine, meter, receipt, minePairs, recipe, promptFor, proposalsOf };
+export default { SCHEDULE, FIELD_GATE, EXAM, METER_BAR, schedule, slicesFor, casesFor, fieldGate, contextFor, admit, grow, examine, meter, receipt, minePairs, mineCover, recipe, promptFor, proposalsOf };

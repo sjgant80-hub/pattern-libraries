@@ -31,7 +31,7 @@ for (const f of files) {
   const rec = JSON.parse(readFileSync(join(DIR, f), 'utf8'));
   if (rec.cycle !== state.cycle) { console.error('::error::' + f + ' is night ' + rec.cycle + ', but the replay is at night ' + state.cycle); process.exit(1); }
   if (!rec.source || rec.source.sha256 !== C.SOURCE.sha256) { console.error('::error::' + f + ' was not made from the pinned data.zip'); bad++; }
-  const r = await N.night({ units, plan, cycle: rec.cycle, library: state.library, records: state.records, at: rec.at, ask: rec.model ? N.replayAsk(rec) : null, model: rec.model });   // no model that night: nothing was asked
+  const r = await N.night({ units, plan, cycle: rec.cycle, library: state.library, records: state.records, at: rec.at, ask: rec.model ? N.replayAsk(rec) : null, model: rec.model, free: rec.free || 1 });   // no model that night: nothing was asked
   const same = JSON.stringify(r.record) === JSON.stringify(strip(rec));
   console.log((same ? 'same  ' : 'DIFFERENT ') + f + ': ' + N.line(r.record));
   if (!same) bad++;

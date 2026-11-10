@@ -259,3 +259,25 @@ test('promptFor and proposalsOf: what the model is asked, and only its rules for
   assert.deepEqual(Y.proposalsOf('WHEN dated THEN agreement-date\nWHEN laws THEN governing-law\nWHEN made AND entered THEN agreement-date\nnonsense', 'agreement-date').map((r) => P.ruleKey(r)), ['dated=>agreement-date', 'entered+made=>agreement-date']);
   assert.deepEqual(Y.proposalsOf(null, 'x'), []);
 });
+
+test('mineCover: common words right at least 80% of the time on training, the most-used first', () => {
+  const cases = [];
+  const add = (n, tokens, label) => { for (let i = 0; i < n; i++) cases.push({ id: tokens.join('-') + i + label + cases.length, tokens, label }); };
+  add(8, ['aaa'], 't'); add(2, ['aaa'], 'other');          // 8/10: exactly 0.8, kept
+  add(20, ['bbb'], 't'); add(6, ['bbb'], 'other');         // 20/26: 0.77, not kept
+  add(4, ['ccc'], 't'); add(1, ['ccc'], 'other');          // 4/5: exactly 0.8 and exactly five, kept
+  add(4, ['ddd'], 't');                                    // 4/4: under five, not kept
+  add(9, ['eee'], 't'); add(1, ['eee'], 'other');          // 9/10
+  add(8, ['fff'], 't'); add(1, ['fff'], 'other');          // 8/9: same right as aaa, more precise, so before it
+  add(30, ['zzz'], 'other');
+  assert.deepEqual(Y.mineCover(cases, 't', 9).map((r) => r.when[0]), ['eee', 'fff', 'aaa', 'ccc']);
+  assert.deepEqual(Y.mineCover(cases, 't').map((r) => r.when[0]), ['eee', 'fff', 'aaa']);
+  assert.deepEqual(Y.mineCover(cases, 't', 0), []);
+  assert.deepEqual(Y.mineCover(cases, 't', 1)[0], { when: ['eee'], then: 't' });
+  const tie = [];
+  for (const w of ['qqq', 'ppp']) for (let i = 0; i < 5; i++) tie.push({ id: w + i, tokens: [w], label: 'u' });
+  assert.deepEqual(Y.mineCover(tie, 'u', 2).map((r) => r.when[0]), ['ppp', 'qqq']);
+  assert.deepEqual(Y.mineCover([...tie].reverse(), 'u', 2).map((r) => r.when[0]), ['ppp', 'qqq']);
+  assert.deepEqual(Y.mineCover([null, { tokens: 'x' }, { tokens: ['aaa'] }], 't', 3), []);
+  assert.deepEqual(Y.mineCover(null, 't', 3), []);
+});

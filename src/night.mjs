@@ -20,18 +20,21 @@ const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const arr = (x) => (Array.isArray(x) ? x : []);
 const str = (x) => (typeof x === 'string' ? x : '');
 
-export const NIGHT = Object.freeze({ max7b: 6, clockMinutes: 25, numPredict: 160, library: 'doc', feed: 'cuad-v1', prompt: 'prompt-v1' });
+// free = which set of free proposers a night runs: 1 on night 0; 2 adds the coverage-first miner (after night 0). A record
+// written with set 2 or later says so, and its replay runs that set; a record without it was set 1.
+export const NIGHT = Object.freeze({ max7b: 6, clockMinutes: 25, numPredict: 160, library: 'doc', feed: 'cuad-v1', prompt: 'prompt-v1', free: 2 });
 
 const prov = (source, model, at, trainN, recipe) => ({ source, model, proposedAt: at, feed: NIGHT.feed, trainN, recipe });
 
 /** freeProposals(units, slices, records, at) → the recipe lookup, then the miners, for every task */
-export function freeProposals(units, slices, records, at) {
+export function freeProposals(units, slices, records, at, set = NIGHT.free) {
   const out = [];
   for (const task of E.TASKS) {
     const train = Y.casesFor(units, slices.train, task, 'train');
     for (const r of Y.recipe(records, task, E.typeOf(task))) out.push({ when: r.when, then: task, prov: prov('recipe', 'none', at, train.length, 'recipe from ' + r.from) });
     for (const r of P.mine(train, task, 3)) out.push({ ...r, prov: prov('mined', 'none', at, train.length, 'mine-1') });
     for (const r of Y.minePairs(train, task, 2)) out.push({ ...r, prov: prov('mined', 'none', at, train.length, 'mine-2') });
+    if (set === 2) for (const r of Y.mineCover(train, task, 3)) out.push({ ...r, prov: prov('mined', 'none', at, train.length, 'mine-cover') });
   }
   return out;
 }
@@ -48,7 +51,8 @@ export async function night(input) {
   const max7b = Number.isInteger(I.max7b) && I.max7b >= 0 ? I.max7b : NIGHT.max7b;
   const model = str(I.model) || null;
   const meterIds = arr(plan.meter);
-  const base = { kind: 'library-night', v: 1, library: NIGHT.library, feed: NIGHT.feed, cycle, at, model };
+  const free = I.free === 1 ? 1 : NIGHT.free;
+  const base = { kind: 'library-night', v: 1, library: NIGHT.library, feed: NIGHT.feed, cycle, at, model, ...(free === 1 ? {} : { free }) };
 
   const slices = Y.slicesFor(plan, cycle);
   if (!slices) {
@@ -62,8 +66,8 @@ export async function night(input) {
   const x1 = Y.receipt(examIn, 'document extraction, night ' + cycle);
 
   // 3 · the free tiers
-  const free = freeProposals(units, slices, records, at);
-  const g1 = Y.grow(units, slices, free, carried);
+  const freeProps = freeProposals(units, slices, records, at, free);
+  const g1 = Y.grow(units, slices, freeProps, carried);
   const keptFree = countBy(g1.promoted, (r) => r.then);
 
   // 4 · the local 7B, only where the free tiers kept nothing
@@ -107,8 +111,8 @@ export async function night(input) {
     ...base,
     slices: { train: slices.train.length, held: slices.held, final: slices.final },
     carried: carried.length, exam: { total: examIn.total, receipt: x1 },
-    proposed: { free: free.length, '7b': props7b.length }, replies,
-    proposals: [...free, ...props7b].map((p) => ({ when: p.when, then: p.then, prov: p.prov })),
+    proposed: { free: freeProps.length, '7b': props7b.length }, replies,
+    proposals: [...freeProps, ...props7b].map((p) => ({ when: p.when, then: p.then, prov: p.prov })),
     promoted: promoted.map((r) => ({ rule: P.ruleKey(r), source: r.prov.source, recipe: r.prov.recipe, receipt: r.receipt, held: r.scores.held, final: r.scores.final, heldDocs: r.scores.heldDocs, finalDocs: r.scores.finalDocs })),
     dropped: [...g1.dropped, ...g2.dropped],
     keptFree, tried7b, passed7b, asks: asks.map((a) => ({ task: a.task, evidence: a.evidence })),

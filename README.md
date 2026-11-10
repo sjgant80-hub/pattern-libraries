@@ -3,15 +3,15 @@
 **Live: https://sjgant80-hub.github.io/pattern-libraries/**
 
 A contract reader that grows every night on real contracts and has to prove every pattern it learns. Paste a contract
-and it pulls out the dates, the parties, the governing law, the renewal and notice terms, the liability cap and minimum
+and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the liability cap and minimum
 commitment, and flags ten kinds of clause. Each answer names the pattern that found it. When no proven pattern fires,
-it says **unknown** instead of guessing.
+it says **unknown** instead of guessing. It answers only what it has proven; the live page shows how much that is tonight.
 
 ## How a pattern gets in
 
 A pattern is one or two words near a candidate: `WHEN governed THEN governing-law`. Each night:
 
-1. **Free proposers first**: the recipe lookup (words that worked for a sibling question) and two counting miners.
+1. **Free proposers first**: the recipe lookup (words that worked for a sibling question) and three counting miners (the most precise words, the most-used words still right 4 times in 5, and pairs).
 2. **The local 7B** (qwen2.5:7b through Ollama on the same machine), only for questions the free tiers kept nothing for.
 3. **The paid tier last**: the owner's Claude subscription through the official CLI, behind a wall (a day cap and a stop,
    reserved on disk before each call), and **off until the owner switches it on**.

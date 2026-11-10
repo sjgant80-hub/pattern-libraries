@@ -143,7 +143,16 @@ test('freeProposals: the recipe lookup, then one-word and two-word miners, every
   const f = N.freeProposals(W.units, slices, rec, AT);
   const eff = f.filter((p) => p.then === 'effective-date');
   assert.deepEqual(eff[0], { when: ['dated'], then: 'effective-date', prov: { source: 'recipe', model: 'none', proposedAt: AT, feed: 'cuad-v1', trainN: 90, recipe: 'recipe from agreement-date' } });
-  assert.deepEqual(eff.map((p) => p.prov.recipe), ['recipe from agreement-date', 'mine-1', 'mine-1', 'mine-1', 'mine-2', 'mine-2']);
+  assert.deepEqual(eff.map((p) => p.prov.recipe).filter((r) => r !== 'mine-cover'), ['recipe from agreement-date', 'mine-1', 'mine-1', 'mine-1', 'mine-2', 'mine-2']);
+  // set 1 (night 0) has no coverage-first miner; set 2 (the default) adds it after the others
+  const one = N.freeProposals(W.units, slices, rec, AT, 1);
+  assert.ok(!one.some((p) => p.prov.recipe === 'mine-cover'));
+  const two = N.freeProposals(W.units, slices, rec, AT);
+  assert.ok(two.some((p) => p.prov.recipe === 'mine-cover'));
+  assert.equal(two.filter((p) => p.prov.recipe !== 'mine-cover').length, one.length);
+  const ag = two.filter((p) => p.then === 'agreement-date');
+  assert.equal(ag.at(-1).prov.recipe, 'mine-cover');
+  assert.equal(N.freeProposals(W.units, slices, rec, AT, 3).some((p) => p.prov.recipe === 'mine-cover'), false);
   assert.ok(f.filter((p) => p.then === 'agreement-date').every((p) => p.prov.source === 'mined'));
   assert.ok(f.every((p) => E.TASKS.includes(p.then)));
 });
@@ -155,4 +164,16 @@ test('line: robust to a record without its parts', () => {
   assert.match(N.line({ cycle: 1, patterns: 0, meter: { before: { coverage: 0.5 }, after: { coverage: 0.123456, precision: 1 } }, exam: { receipt: { ok: true, decision: 'DROP', right: 1, answered: 2, baseRight: 1 } } }), /0 dropped: none\) · coverage on the meter 50\.0% → 12\.3%, right 100\.0% when it answers · final exam: DROP \(1\/2 vs the cheap baseline 1\)/);
   assert.match(N.line({ exhausted: true, patterns: 4, meter: { coverage: 0.25 } }), /4 patterns · coverage 25\.0%$/);
   assert.match(N.line({ exhausted: true, patterns: 4 }), /coverage n\/a$/);
+});
+
+test('the proposer set is written in the record from set 2 on, and a set-1 record replays as set 1', async () => {
+  const two = await N.night({ units: W.units, plan, cycle: 0, library: [], records: [], at: AT });
+  assert.equal(two.record.free, 2);
+  assert.ok(two.record.proposals.some((p) => p.prov.recipe === 'mine-cover'));
+  const one = await N.night({ units: W.units, plan, cycle: 0, library: [], records: [], at: AT, free: 1 });
+  assert.equal('free' in one.record, false);
+  assert.ok(!one.record.proposals.some((p) => p.prov.recipe === 'mine-cover'));
+  const other = await N.night({ units: W.units, plan, cycle: 0, library: [], records: [], at: AT, free: 7 });
+  assert.equal(other.record.free, 2);
+  assert.equal(N.NIGHT.free, 2);
 });

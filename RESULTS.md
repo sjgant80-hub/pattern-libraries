@@ -59,3 +59,11 @@ By the seal's own rule (a library is landed only when all its claims are decided
 5. **The company-name scanner dropped "Bank", "Trust", "Partners" and "Holdings" as name endings** after a test showed
    "Bank of America Corporation" read as "America Corporation". Found on a synthetic test sentence, not on the exam.
 6. **Night 0 ran without the 7B** (above). It makes night 0 weaker, not easier.
+
+## Changed after night 0 (a proposer, never a gate)
+
+7. **A third free miner, coverage-first**, from night 1 on: the most-used words that are right at least 4 times in 5 on
+   the training contracts. Night 0's own miners rank by precision and propose rare words, and 71 of its 81 drops were
+   patterns that met too few candidates in a 20-contract exam. Both gates and every bar are unchanged; the proposer set
+   is written in each record (`free: 2`), and night 0 still replays as set 1, byte for byte. Checked first on the seed
+   contracts only (8 kept against 7), never on an exam batch.

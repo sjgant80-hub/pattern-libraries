@@ -13,8 +13,8 @@
   {
    "name": "cycle",
    "file": "src/cycle.mjs",
-   "total": 55,
-   "killed": 55,
+   "total": 62,
+   "killed": 62,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -31,8 +31,8 @@
   {
    "name": "night",
    "file": "src/night.mjs",
-   "total": 38,
-   "killed": 38,
+   "total": 41,
+   "killed": 41,
    "ignored": 0,
    "clean": true,
    "capped": false
