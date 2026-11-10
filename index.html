@@ -60,10 +60,10 @@ details summary { cursor: pointer; color: var(--accent); }
 <header class="top" id="what">
   <h1>A contract reader that has to prove every pattern it learns</h1>
   <p class="lede">Paste a contract and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing. It answers only what it has proven, and the figures just below say how much that is today.</p>
-  <p>It learns every night, on this laptop, from 510 real commercial contracts. A new pattern is kept only if it beats a cheap method on contracts it has never seen, and then passes a second exam on contracts nobody has looked at. Everything else is thrown away, and the reason is written down.</p>
+  <p>It learns every night, on this laptop, from 510 real commercial contracts. A new pattern is kept only if it beats a cheap method on contracts it has never seen, and then passes a second exam on contracts nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your contract never calls any model: it only applies the proven patterns.</p>
   <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
   <nav class="toc" aria-label="On this page">
-    <a href="#try">Try it</a><a href="#start">Start here</a><a href="#night">Last night, traced</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
+    <a href="#try">Try it</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
     <a href="#builds">How each pattern was built</a><a href="#wall">The credit wall</a><a href="#blueprint">Blueprint</a><a href="#libraries">The libraries</a><a href="#business">For your business</a><a href="#paper">White paper</a>
   </nav>
 </header>
@@ -81,15 +81,15 @@ details summary { cursor: pointer; color: var(--accent); }
   <h2 id="start-h">Start here</h2>
   <ol class="steps">
     <li><strong>Read a contract.</strong> In <a href="#try">Try it</a>, press <em>Read it</em>. Every row is one question. An answer shows the words the library picked and the pattern that picked them, for example "near the word <code>governed</code>, a jurisdiction is the governing law". An <em>unknown</em> means no kept pattern fired; in a real deployment that question goes to a model or a person.</li>
-    <li><strong>See what it learned and why.</strong> <a href="#night">Last night, traced</a> shows the real night: how many patterns were proposed, by whom (a free word-counting miner, or the local AI model), which were kept, and why every other one was thrown out.</li>
+    <li><strong>See what it learned and why.</strong> <a href="#night">Last night, step by step</a> shows the real night: how many patterns were proposed, by whom (a free word-counting miner, or the local AI model), which were kept, and why every other one was thrown out.</li>
     <li><strong>See how it is tested.</strong> <a href="#exam">The fresh exam</a> shows how the 510 contracts are split so that every night is tested on contracts it never saw, and why no exam is ever used twice.</li>
-    <li><strong>See what it costs.</strong> <a href="#wall">The credit wall</a> shows the paid tier: the last resort, capped per day, off until the owner switches it on.</li>
+    <li><strong>See what it costs.</strong> <a href="#wall">The credit wall</a> shows the paid tier: the last resort, capped per day, off until the keeper switches it on.</li>
     <li><strong>Work out what it is worth to you.</strong> <a href="#business">For your business</a> has the calculator: your contracts, your rates, the library's measured coverage.</li>
   </ol>
 </section>
 
 <section id="night" aria-labelledby="night-h">
-  <h2 id="night-h">Last night, traced</h2>
+  <h2 id="night-h">Last night, step by step</h2>
   <p>This is the real record of the most recent night, read from the file the night wrote. Nothing here is typed in by hand.</p>
   <div class="card" id="night-flow"><p class="muted">Loading the night's record…</p></div>
   <h3>The patterns it kept</h3>
@@ -124,7 +124,7 @@ details summary { cursor: pointer; color: var(--accent); }
     <li><strong>Keep or drop.</strong> A winner enters the library with its scores and a receipt. A loser is dropped and its reason is written down. A near-copy of a kept pattern is refused.</li>
     <li><strong>Cache how it was built.</strong> Which proposer found it, from which recipe, at what cost. The next night tries that recipe on sibling questions first, for free.</li>
     <li><strong>Measure.</strong> Coverage and precision on 60 contracts that are never used for anything else.</li>
-    <li><strong>Report.</strong> One line in the owner's morning brief: kept, dropped and why, the coverage climb, the credit spent and what it bought, and what needs the owner. Nothing goes outward at night.</li>
+    <li><strong>Report.</strong> One line in the keeper's morning brief: kept, dropped and why, the coverage climb, the credit spent and what it bought, and what needs the keeper. Nothing goes outward at night.</li>
   </ol>
 </section>
 
@@ -144,14 +144,14 @@ details summary { cursor: pointer; color: var(--accent); }
 
 <section id="wall" aria-labelledby="wall-h">
   <h2 id="wall-h">The credit wall (the paid tier)</h2>
-  <p>The paid tier is a frontier model reached through the owner's own Claude subscription, through the official command-line tool. A subscription has no price per call, so the wall meters each call in what it would cost on the published API price list ("API-equivalent").</p>
+  <p><strong>This is on the builder's side, not yours.</strong> Reading a contract never calls any model and costs nothing. The paid tier is only one of the ways new patterns are <em>proposed</em> while the library is grown: a frontier model reached through the library keeper's own Claude subscription (today AI Native Solutions'; yours only if you grow the library on your own contracts and choose to switch it on), through the official command-line tool. A subscription has no price per call, so the wall meters each call in what it would cost on the published API price list ("API-equivalent").</p>
   <div class="card" id="wall-card"></div>
   <ul>
     <li><strong>Last tier only.</strong> A question may go to it only if the free tiers kept nothing for it tonight and the local model tried and nothing it wrote passed.</li>
     <li><strong>Reserved before it goes out.</strong> The most the call could cost is written to the ledger on disk first, and checked against the day's cap and a hard stop. The same ceiling is handed to the tool as its own budget limit.</li>
     <li><strong>Settled after.</strong> Priced from the usage the tool reports, rounded up. If the usage cannot be read, the whole ceiling is charged.</li>
-    <li><strong>A stop that stays stopped.</strong> Reaching the stop switches the tier off until the owner raises it.</li>
-    <li><strong>Off until the owner switches it on.</strong> Spending is the owner's decision, and so is the daily cap.</li>
+    <li><strong>A stop that stays stopped.</strong> Reaching the stop switches the tier off until the keeper raises it.</li>
+    <li><strong>Off until the keeper switches it on.</strong> Spending is the keeper's decision, and so is the daily cap.</li>
   </ul>
 </section>
 
@@ -173,7 +173,7 @@ details summary { cursor: pointer; color: var(--accent); }
 </section>
 
 <section id="libraries" aria-labelledby="lib-h">
-  <h2 id="lib-h">The libraries, in the owner's build order</h2>
+  <h2 id="lib-h">The libraries, in the keeper's build order</h2>
   <p>The plan grows seven libraries: four that become products, three that make the builder itself better. Each is reported plainly: landed (every claim decided), running (built and growing, claims still to decide), or not landed (not built).</p>
   <div class="grid" id="libs"></div>
 </section>
@@ -205,11 +205,11 @@ details summary { cursor: pointer; color: var(--accent); }
     <li><strong>Your documents stay with you.</strong> The reader runs in the browser or on one machine. There is no server and no upload. Under UK GDPR and GDPR that means no third-party processor for the documents.</li>
     <li><strong>Every answer is auditable.</strong> It names the pattern that produced it, and every pattern carries its exam scores and a receipt. An auditor can re-run the whole night from the public data and get the same bytes.</li>
     <li><strong>It abstains rather than guesses.</strong> No pattern fires, no answer. The share it answers is measured and published.</li>
-    <li><strong>The paid tier is walled</strong> (see <a href="#wall">the credit wall</a>): last resort, capped, ledgered, off unless switched on.</li>
+    <li><strong>Your reading never touches a paid model.</strong> The paid tier only proposes patterns while the library is grown, on the builder's side (see <a href="#wall">the credit wall</a>): last resort, capped, ledgered, off unless switched on.</li>
   </ul>
   <h3>Deployment and roll-out</h3>
   <ol class="steps">
-    <li><strong>Week 1, try it on your own contracts.</strong> Paste them into this page. Nothing leaves your browser.</li>
+    <li><strong>Week 1, try it on your own contracts.</strong> Paste them into this page. Nothing to install and no IT work: the nightly learning runs on the builder's machine, and the page picks up each new night's patterns. Nothing leaves your browser.</li>
     <li><strong>Week 2, grow it on yours.</strong> Give it your own contracts with the answers marked, in the same format as the public set, and the same nightly loop learns your house style on your machine. Your data never joins the public set.</li>
     <li><strong>Week 3, wire it in.</strong> The library is one small file of patterns and the reader is one function, <code>read(text, patterns)</code>: put it in front of your review queue. Answered questions arrive with their sentence; unknown ones go to your reviewers or your model, as today.</li>
   </ol>
