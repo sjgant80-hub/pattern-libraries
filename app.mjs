@@ -89,9 +89,10 @@ async function main() {
     $('kept').querySelector('tbody').innerHTML = (r.promoted || []).map((p) => '<tr><td>' + explain(p.rule) + '</td><td>' + esc(p.source === '7b' ? 'local 7B' : p.source === 'recipe' ? 'recipe (' + (p.recipe || '').replace('recipe from ', 'from ') + ')' : p.source === 'oauth' ? 'paid tier' : 'free miner') + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td><td>'
       + esc('held-out ' + p.heldDocs.right + '/' + p.heldDocs.docs + ' vs ' + p.heldDocs.base + ' · final ' + p.finalDocs.right + '/' + p.finalDocs.docs + ' vs ' + p.finalDocs.base) + '</td><td class="mono">' + esc(p.receipt) + '</td></tr>').join('') || '<tr><td colspan="6" class="muted">nothing kept on this night</td></tr>';
     const why = {};
-    for (const d of r.dropped || []) { const k = String(d.why).replace(/[-0-9.]+/g, '#').replace(/ of [a-z0-9+=>-]+$/, ''); why[k] = (why[k] || 0) + 1; }
-    $('drops').innerHTML = '<div class="table-wrap"><table><thead><tr><th>Reason (numbers removed)</th><th>Proposals</th></tr></thead><tbody>' + Object.entries(why).sort((a, b) => b[1] - a[1]).map(([k, n]) => '<tr><td>' + esc(k) + '</td><td>' + n + '</td></tr>').join('') + '</tbody></table></div>'
-      + '<p class="muted">The commonest reason is "covers #, needs 5": the pattern fired on too few candidates in the night\'s 20 unseen contracts to be trusted yet. With more nights it meets more contracts.</p>';
+    for (const d of r.dropped || []) { const k = String(d.why).replace(/-?\d[\d.]*/g, '#').replace(/ of [a-z0-9+=>-]+$/, ''); why[k] = (why[k] || 0) + 1; }
+    const ranked = Object.entries(why).sort((a, b) => b[1] - a[1]);
+    $('drops').innerHTML = '<div class="table-wrap"><table><thead><tr><th>Reason (numbers removed)</th><th>Proposals</th></tr></thead><tbody>' + ranked.map(([k, n]) => '<tr><td>' + esc(k) + '</td><td>' + n + '</td></tr>').join('') + '</tbody></table></div>'
+      + (ranked.length && /covers #, needs #/.test(ranked[0][0]) ? '<p class="muted">The commonest reason, "' + esc(ranked[0][0]) + '", means the pattern fired on too few candidates in that night\'s unseen contracts to be trusted yet. It is not a wrong pattern; it has not been seen enough.</p>' : '');
   }
   $('climb').innerHTML = series.length ? '<div class="table-wrap"><table><thead><tr><th>Night</th><th>Date</th><th>Patterns</th><th>Coverage</th><th>Right when it answers</th></tr></thead><tbody>'
     + series.map((s) => '<tr><td>' + esc(s.cycle) + '</td><td>' + esc(String(s.at).slice(0, 10)) + '</td><td>' + esc(s.patterns) + '</td><td>' + esc(pct(s.coverage)) + '</td><td>' + esc(pct(s.precision)) + '</td></tr>').join('') + '</tbody></table></div>'
@@ -131,6 +132,10 @@ async function main() {
 
   // the libraries
   $('libs').innerHTML = (libs && Array.isArray(libs.libraries) ? libs.libraries : []).map((l) => '<div class="card"><p><strong>' + esc(l.name) + '</strong> <span class="chip ' + (l.status === 'landed' ? 'good' : 'wait') + '">' + esc(l.status.toUpperCase()) + '</span></p><p>' + esc(l.what) + '</p><p class="muted">' + esc(l.status === 'landed' ? 'Data: ' + l.data : l.why) + '</p></div>').join('');
+
+  // what it answers today, from the library itself, so the brochure never claims more than the patterns do
+  const answers = [...new Set(library.map((r) => r.then))];
+  $('today').innerHTML = '<strong>Today</strong> it answers ' + (answers.length ? answers.map((t) => esc(say(t).toLowerCase())).join(', ') : 'nothing yet') + ', from ' + esc(library.length) + ' proven pattern' + (library.length === 1 ? '' : 's') + '. The other ' + esc(E.TASKS.length - answers.length) + ' questions it is built for are being learned night by night; until a pattern for one passes both exams, that question comes back <em>unknown</em>. The roles below describe what each question gives you once it is answered.';
 
   // what it is worth
   const avgPages = V.SOURCES.pages.value / V.SOURCES.pages.contracts;

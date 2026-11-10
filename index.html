@@ -58,7 +58,7 @@ details summary { cursor: pointer; color: var(--accent); }
 <main>
 <header class="top" id="what">
   <h1>A contract reader that has to prove every pattern it learns</h1>
-  <p class="lede">Paste a contract and it pulls out the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing.</p>
+  <p class="lede">Paste a contract and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing. It answers only what it has proven, and the figures just below say how much that is today.</p>
   <p>It learns every night, on this laptop, from 510 real commercial contracts. A new pattern is kept only if it beats a cheap method on contracts it has never seen, and then passes a second exam on contracts nobody has looked at. Everything else is thrown away, and the reason is written down.</p>
   <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
   <nav class="toc" aria-label="On this page">
@@ -180,7 +180,8 @@ details summary { cursor: pointer; color: var(--accent); }
 <section id="business" aria-labelledby="biz-h">
   <h2 id="biz-h">For your business</h2>
   <p class="lede">Contract review is expert reading at expert rates. This library takes the first pass, finding the dates, parties, law, terms, caps and clauses, for nothing per contract, on your own machine, and shows its working on every answer. What it cannot prove, it hands back.</p>
-  <h3>What it does for each role</h3>
+  <p class="card" id="today"></p>
+  <h3>What it does for each role, as it learns</h3>
   <div class="grid">
     <div class="card"><strong>Chief executive</strong><p>A first read of every contract in the drawer, not just the ones someone had time for: renewal dates and notice windows surfaced before they pass.</p></div>
     <div class="card"><strong>Finance director</strong><p>The money terms (liability caps, minimum commitments) pulled out with the sentence they came from. No per-contract fee: once installed, a read costs nothing.</p></div>
@@ -208,7 +209,7 @@ details summary { cursor: pointer; color: var(--accent); }
   <h3>Deployment and roll-out</h3>
   <ol class="steps">
     <li><strong>Week 1, try it on your own contracts.</strong> Paste them into this page. Nothing leaves your browser.</li>
-    <li><strong>Week 2, grow it on yours.</strong> With your consent and on your machine, the same nightly loop runs on your own marked-up contracts, so the patterns learn your house style. Your data never joins the public set.</li>
+    <li><strong>Week 2, grow it on yours.</strong> Give it your own contracts with the answers marked, in the same format as the public set, and the same nightly loop learns your house style on your machine. Your data never joins the public set.</li>
     <li><strong>Week 3, wire it in.</strong> The library is a small set of files: put it in front of your review queue. Answered questions are pre-filled with their sentence; unknown ones go to your reviewers or your model, as today.</li>
   </ol>
   <h3>Ownership, support and exit</h3>
