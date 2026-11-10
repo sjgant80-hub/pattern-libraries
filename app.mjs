@@ -182,4 +182,7 @@ function box(x, title, a, b, hot) {
   return '<rect class="' + (hot ? 'hot' : 'box') + '" x="' + x + '" y="30" width="190" height="110" rx="8"/><text x="' + (x + 95) + '" y="62" text-anchor="middle">' + esc(title) + '</text><text x="' + (x + 95) + '" y="90" text-anchor="middle" class="muted">' + esc(a) + '</text><text x="' + (x + 95) + '" y="114" text-anchor="middle" class="muted">' + esc(b) + '</text>';
 }
 
+// after one visit the page works offline: it keeps its own files, nothing else
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { /* offline copy is optional */ });
+
 main().catch((e) => { const c = document.getElementById('chips'); if (c) c.innerHTML = '<span class="chip bad">the page could not read its records: ' + esc(e && e.message) + '</span>'; });

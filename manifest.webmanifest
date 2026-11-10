@@ -1,0 +1,1 @@
+{ "name": "Pattern Libraries", "short_name": "Patterns", "start_url": "./", "display": "standalone", "background_color": "#fbfaf7", "theme_color": "#1f5f8b", "description": "A contract reader that proves every pattern it learns, and says unknown instead of guessing." }

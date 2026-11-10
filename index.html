@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pattern Libraries · contract reading that proves itself</title>
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="description" content="A contract reader that grows every night on real contracts, keeps a pattern only when it beats a cheap baseline on documents it never saw, and answers 'unknown' rather than guess.">
 <style>
 :root { --bg: #fbfaf7; --fg: #1d1d1b; --muted: #5d5c57; --line: #dedbd2; --card: #ffffff; --accent: #1f5f8b; --accent-bg: #e6f0f7; --good: #1d6b3a; --good-bg: #e3f2e7; --bad: #9b2c2c; --bad-bg: #f8e5e5; --wait: #7a5a00; --wait-bg: #f7efd9; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
@@ -69,7 +70,7 @@ details summary { cursor: pointer; color: var(--accent); }
 
 <section id="try" aria-labelledby="try-h">
   <h2 id="try-h">Try it on a contract</h2>
-  <p>The sample below is made up, written in the style of a commercial contract. Replace it with your own text. It is read in your browser: nothing is sent anywhere.</p>
+  <p>The sample below is made up, written in the style of a commercial contract. Replace it with your own text (from a PDF, select the text and paste it; scanned images are not read). It is read in your browser: nothing is sent anywhere, and after one visit the page works offline.</p>
   <textarea id="doc" aria-label="Contract text"></textarea>
   <p><button id="read">Read it</button> <button id="sample" class="ghost">Put the sample back</button></p>
   <div class="table-wrap"><table id="answers" aria-live="polite"><thead><tr><th>Question</th><th>Answer</th><th>The pattern that found it</th></tr></thead><tbody></tbody></table></div>
@@ -185,9 +186,9 @@ details summary { cursor: pointer; color: var(--accent); }
   <div class="grid">
     <div class="card"><strong>Chief executive</strong><p>A first read of every contract in the drawer, not just the ones someone had time for: renewal dates and notice windows surfaced before they pass.</p></div>
     <div class="card"><strong>Finance director</strong><p>The money terms (liability caps, minimum commitments) pulled out with the sentence they came from. No per-contract fee: once installed, a read costs nothing.</p></div>
-    <div class="card"><strong>Operations</strong><p>A register of who, when, under which law, how long and how to exit, built from the documents themselves and refreshed as new contracts arrive.</p></div>
+    <div class="card"><strong>Operations</strong><p>Who, when, under which law, how long and how to exit, read from each contract itself, the same way every time, ready to drop into the register you keep.</p></div>
     <div class="card"><strong>Technology and security</strong><p>Runs in a browser or on one machine, offline. Documents never leave. Every answer is a rule you can read, with a receipt; there is no model to leak or drift.</p></div>
-    <div class="card"><strong>Legal team</strong><p>It does the finding; your lawyers do the deciding. Each answer points at its sentence, so checking takes seconds, and "unknown" is honest rather than a confident error.</p></div>
+    <div class="card"><strong>Legal team</strong><p>It does the finding; your lawyers do the deciding. Each answer points at its sentence, so checking it means reading that one sentence, and "unknown" is honest rather than a confident error.</p></div>
     <div class="card"><strong>Procurement</strong><p>Supplier contracts screened for exclusivity, change of control, assignment and audit rights before signature, the same way every time.</p></div>
   </div>
   <h3>What it is worth to you</h3>
@@ -210,7 +211,7 @@ details summary { cursor: pointer; color: var(--accent); }
   <ol class="steps">
     <li><strong>Week 1, try it on your own contracts.</strong> Paste them into this page. Nothing leaves your browser.</li>
     <li><strong>Week 2, grow it on yours.</strong> Give it your own contracts with the answers marked, in the same format as the public set, and the same nightly loop learns your house style on your machine. Your data never joins the public set.</li>
-    <li><strong>Week 3, wire it in.</strong> The library is a small set of files: put it in front of your review queue. Answered questions are pre-filled with their sentence; unknown ones go to your reviewers or your model, as today.</li>
+    <li><strong>Week 3, wire it in.</strong> The library is one small file of patterns and the reader is one function, <code>read(text, patterns)</code>: put it in front of your review queue. Answered questions arrive with their sentence; unknown ones go to your reviewers or your model, as today.</li>
   </ol>
   <h3>Ownership, support and exit</h3>
   <p>The code is MIT licensed and the library is plain files you keep. No lock-in: stop using it and you still own every pattern and every receipt. Built and supported by AI Native Solutions (ainativesolutions@gmail.com); terms are agreed one to one.</p>

@@ -56,6 +56,13 @@ test('every file the page loads is in the repository', () => {
     assert.ok(existsSync(new URL(p, ROOT)), p);
   const summary = JSON.parse(read('data/doc/summary.json'));
   assert.ok(existsSync(new URL('data/doc/' + summary.latest, ROOT)));
+  // the offline copy keeps exactly the page's own files, all of which exist, and only same-origin ones
+  const sw = read('sw.js');
+  const files = JSON.parse(sw.match(/const FILES = (\[[\s\S]*?\]);/)[1].replace(/'/g, '"'));
+  for (const f of files.filter((x) => x !== './')) assert.ok(existsSync(new URL(f, ROOT)), 'sw.js keeps a missing file: ' + f);
+  assert.match(sw, /origin !== location\.origin\) return/);
+  assert.match(app, /serviceWorker\.register\('sw\.js'\)/);
+  assert.match(html, /rel="manifest" href="manifest\.webmanifest"/);
   const libs = JSON.parse(read('data/libraries.json')).libraries;
   assert.deepEqual(libs.map((l) => l.id), ['doc', 'build', 'finance', 'triage', 'sales', 'angle', 'compression']);
   for (const l of libs) assert.ok(['landed', 'not landed'].includes(l.status) && (l.status === 'landed' || l.why), l.id);
