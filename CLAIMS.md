@@ -253,3 +253,81 @@ growing) or **not landed**.
 Library 1's night asks the local 7B about at most **3** tasks a night, not 6, from night 1 on (night 0 asked none), so
 the two libraries together stay within N1's six calls. It is a proposer budget, never a gate: it makes library 1 grow
 more slowly, never more easily. Night 0 still re-derives byte for byte.
+
+---
+
+# SEAL 3 · library 3, TRIAGE AND ROUTING, written before its code (2026-11-10)
+
+Seals 1 and 2 above are unchanged, byte for byte. Simon's P1-P5 bind this library as they bind every library. This
+seal adds the bars for library 3 and its place in the night. A claim that misses its bar is kept and published as
+failed. Nothing here is relaxed after a result is seen.
+
+## Data
+
+Both sources come from one repository, **github.com/PolyAI-LDN/task-specific-datasets**, pinned at commit
+`57ec275d8078af65b7731c2a98be812d844a6d6b`, licence **CC BY 4.0** (its LICENSE file; the Hugging Face card of
+PolyAI/banking77 says the same). Simon approved the download in this session's chat.
+
+- **Banking77** (Casanueva, Temčinas, Gerz, Henderson and Vulić, 2020, "Efficient Intent Detection with Dual Sentence
+  Encoders"): 13,083 online banking customer queries, each labelled with one of 77 intents (files `banking_data/train.csv`,
+  `test.csv`, `categories.json`). Its makers describe it as "online banking queries annotated with their corresponding
+  intents".
+- **NLU++** (Casanueva, Vulić, Spithourakis and Budzianowski, 2022): 3,080 banking and hotel queries, each with the
+  experts' list of intent modules (`nlupp/data/{banking,hotels}/fold0-19.json`, `ontology.json`). Two of its modules are
+  triage questions: `handoff` ("is the intent to speak to a human or hand off?", 83 queries) and `lost_stolen` ("is the
+  intent asking about something being lost or stolen?", 81 queries).
+- The 45 files fetched (the two datasets and the LICENSE; 1,925,654 bytes) hash, as sorted "path sha256" lines, to the
+  manifest sha256 `d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5`. A committed tool fetches them at the
+  pinned commit and checks that hash; CI does the same before it re-derives any night. This repository commits no query.
+
+## What it reads (two parts, each a library of its own in the night)
+
+**3a, ROUTING (Banking77).** A query is a document. Each of the 77 intents is a route, its task id the intent name in
+lower case with every run of other characters turned into one `-` and none at either end (`Refund_not_showing_up` is
+`refund-not-showing-up`, `reverted_card_payment?` is `reverted-card-payment`). For each route the query is one unit,
+right when the experts' intent is that route. A query's words are the law's own tokens of its text (`tokensOf`), the
+first 40. **The router**: the first kept route pattern, in the order the library kept them, that fires on the query; the
+answer also names every other route whose pattern fired (a conflict, said, never hidden); otherwise **unknown**.
+
+**3b, TRIAGE (NLU++).** A query is a document with two flags: `handoff` (wants a human) and `lost-stolen` (something lost
+or stolen). For each flag the query is one unit, right when the experts' list holds that module. A flag is raised when a
+kept pattern for it fires; a query with no flag raised is left to the normal queue, never called safe.
+
+**The cheap baseline each must beat** (fixed here):
+- a route: **the keyword router**, the query holds every word of the route's own name (the law's tokens of the intent
+  name: `card_arrival` needs `card` and `arrival`; `card_not_working` needs `card` and `working`). On the meter, the
+  keyword router's answer for a query is the first route, in the order of `categories.json`, whose name words it holds.
+- `handoff`: ctrl-F for `human`; `lost-stolen`: ctrl-F for `lost` or `stol` (lower case, anywhere in the text).
+
+**The fresh exam per cycle** (one fixed order each, FNV-1a of salt + id; cycle n gates on batch 2n held-out and 2n+1
+final, never seen before; a batch is an exam once, then only training; when the batches run out the library says it needs
+fresh data and stops promoting). The sizes are set so that a pattern firing on about half of a label's queries can reach
+the law's cover of 5 in one night's exam (finance's night 0 lesson):
+- routing: id `b77-<split>-<row>` (row: five digits, file order), salt `banking77:`: METER 1,000, seed 3,000, batches of
+  1,000 (nine; the 83 left over only ever train). Four nights.
+- triage: id `nlu-<domain>-f<fold>-<index>` (index: three digits, file order), salt `nlupp:`: METER 500, seed 580,
+  batches of 500 (four). Two nights.
+
+**The two gates**: the law's gate unchanged (vendor/patlib) on the cycle's units, then the field gate with library 1's
+numbers (on the held-out queries where a pattern fires: right on at least 80%, beating the cheap baseline's rightness on
+those same queries by at least 0.10, over at least 3 queries; the same on the final exam).
+
+## Claims for library 3
+
+- **T1** — each night, the library as carried in beats the cheap baseline on the cases it answers on that night's fresh
+  final exam, judged and signed by the baseline agreement (rate, higher, minimum improvement 0.10, z 1.96, at least 20
+  answered cases; fewer is INSUFFICIENT, never a pass), for routing and for triage apart. Night 0 cannot decide it.
+- **T2** — it abstains rather than guesses: on each METER, wherever it answers (a route, or a flag raised), it is right at
+  least **80%** of the time.
+- **T3** — every night re-derives byte for byte from the pinned files and the recorded proposals (CI re-runs it).
+- **T4** — the sources carry their licence and attribution: the page and NOTICE credit PolyAI (CC BY 4.0) and cite both
+  papers.
+- **T5** — the router is measured whole, against the keyword router: each night records, on the routing METER, how many
+  queries it routed, how many right, how many with a conflict, and the keyword router's routed and right on the same
+  queries. *Bar:* every night's record holds all six counts, re-derived in CI.
+- **N4** — library 3 runs inside the same night process, after library 2, within the one 25-minute clock, on the **free
+  tiers only**: N1's six local-7B calls stay with libraries 1 and 2 (three each), so library 3 makes no model call, and
+  because a credit-tier candidate needs the local 7B to have tried, it has none either (P2 holds by construction). Its
+  records live in their own folders, and the morning block carries its line.
+
+Library 3 is reported **landed** only under seal 1's definition. Until then it is **running** or **not landed**.
