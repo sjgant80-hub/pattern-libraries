@@ -84,7 +84,7 @@ details summary { cursor: pointer; color: var(--accent); }
   <p><button id="rread">Read it</button> <button id="rsample" class="ghost">Put the sample back</button></p>
   <div class="table-wrap"><table id="ranswers" aria-live="polite"><thead><tr><th>Question</th><th>The library's answer</th><th>What ctrl-F would say</th><th>The pattern that found it</th></tr></thead><tbody></tbody></table></div>
   <div class="card" id="rcheck"></div>
-  <p class="muted">"What ctrl-F would say" is the cheap method the library has to beat: for each amount, the first one at or after the first line holding its word (total, sub, tax, serv, disc, cash, change); for line items, every amount above the first line holding "total". The check below the table runs the same arithmetic on both: items add up to the subtotal; subtotal plus tax plus service, less discount, is the total; cash less change is the total. A receipt that does not add up is <strong>flagged</strong> for a person to look at; the check never changes an answer.</p>
+  <p class="muted">"What ctrl-F would say" is the cheap method the library has to beat: for each amount, the first one at or after the first line holding its word (total, sub, tax, serv, disc, cash, change); for line items, every amount above the first line holding "total". The check below the table runs the same arithmetic on both: items add up to the subtotal; subtotal plus tax plus service, less discount, is the total; cash less change is the total. A receipt that does not add up is <strong>flagged</strong> for a person to look at; the check never changes an answer. A flagged receipt is not corrected and not booked by itself: it goes to whoever keys receipts today, with the sum that failed written out (as in the line above), so they know where to look. How your receipts are handled is under <a href="#business">Security, data protection and audit</a>.</p>
 </section>
 
 <section id="start" aria-labelledby="start-h">
@@ -115,7 +115,7 @@ details summary { cursor: pointer; color: var(--accent); }
 
 <section id="finance" aria-labelledby="finance-h">
   <h2 id="finance-h">Receipts (library 2): last night, and the check</h2>
-  <p>Library 2 grows the same way as library 1, on its own data and its own sealed bars (<a href="CLAIMS.md">CLAIMS.md</a>, seal 2). Its data is CORD v2: 1,000 real Indonesian shop and restaurant receipts, every word labelled by the people who built the set (NAVER CLOVA, CC BY 4.0). Everything below is read from the night's own record.</p>
+  <p>Library 2 grows the same way as library 1, on its own data and its own sealed bars (<a href="CLAIMS.md">CLAIMS.md</a>, seal 2). Its data is CORD v2: 1,000 real Indonesian shop and restaurant receipts, every word it kept labelled by the people who built the set (NAVER CLOVA, CC BY 4.0; they removed store and payment details before publishing). Everything below is read from the night's own record.</p>
   <div class="card" id="fin-flow"><p class="muted">Loading the night's record…</p></div>
   <h3>The patterns it kept</h3>
   <div class="table-wrap"><table id="fin-kept"><thead><tr><th>Pattern</th><th>Proposed by</th><th>Held-out: right / fired</th><th>Final: right / fired</th><th>Receipts right vs the cheap method</th><th>Receipt</th></tr></thead><tbody></tbody></table></div>
@@ -123,6 +123,7 @@ details summary { cursor: pointer; color: var(--accent); }
   <div id="fin-drops" class="card"></div>
   <h3>The check, tested first on the experts' own receipts</h3>
   <p>Before the arithmetic is trusted to flag anything, it is run on the answers the experts marked, on all 1,000 receipts. A part of the check that holds on fewer than 80% of the receipts it can run on is dropped from the check and shown here as failed. This tests the rule; it does not propose or test any pattern.</p>
+  <p class="card" id="fin-r0-say"></p>
   <div class="table-wrap"><table id="fin-r0"><thead><tr><th>Part</th><th>What it checks</th><th>Held on</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
   <h3>The check on the library's own answers (the 100 measuring receipts)</h3>
   <div class="card" id="fin-check"></div>
@@ -257,10 +258,10 @@ details summary { cursor: pointer; color: var(--accent); }
     <li><strong>No dates, suppliers or payment terms on receipts.</strong> The public set had them removed before it was published, so this library does not read them and does not claim to.</li>
   </ul>
   <h3 id="fin-biz">Receipts and bookkeeping (library 2)</h3>
-  <p>Keying receipts is a person typing amounts that are already printed. Library 2 takes that first pass, line items, subtotal, tax, service, discount, total, cash and change, and then checks its own answers by arithmetic, so a receipt that does not add up is flagged instead of booked. Like library 1, it answers only what it has proven.</p>
+  <p>Keying receipts is a person typing amounts that are already printed. Library 2 takes that first pass, line items, subtotal, tax, service, discount, total, cash and change, and then checks its own answers by arithmetic, so a receipt that does not add up is flagged for a person before anyone relies on it. Like library 1, it answers only what it has proven.</p>
   <p class="card" id="fin-today"></p>
   <div class="grid">
-    <div class="card"><strong>Finance director</strong><p>Every amount it answers arrives with the line it came from and the pattern that read it, and every receipt it answers in full is either reconciled by the arithmetic or flagged. No per-receipt fee: a read costs nothing.</p></div>
+    <div class="card"><strong>Finance director</strong><p>Every amount it answers arrives with the line it came from and the pattern that read it. Every receipt is then marked by the arithmetic: reconciled, flagged (it does not add up), or unchecked (too few amounts answered to check). No per-receipt fee: a read costs nothing.</p></div>
     <div class="card"><strong>Bookkeeper and accounts payable</strong><p>Fewer amounts to type as it learns; the ones it cannot prove come back <em>unknown</em> and are keyed as today. A flagged receipt is the one to look at first.</p></div>
     <div class="card"><strong>Controller and audit</strong><p>Every answer names a rule with its exam scores and a receipt; the check's verdict is plain arithmetic anyone can redo. The whole night re-runs from the public data and gives the same bytes.</p></div>
     <div class="card"><strong>Technology and security</strong><p>Runs in the browser or on one machine, offline; receipts never leave. No model is called to read one.</p></div>
