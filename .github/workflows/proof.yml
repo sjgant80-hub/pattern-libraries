@@ -18,13 +18,21 @@ jobs:
           curl -sSL -o /tmp/cuad/data.zip https://github.com/TheAtticusProject/cuad/raw/main/data.zip
           echo "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a  /tmp/cuad/data.zip" | sha256sum -c -
           unzip -q -o /tmp/cuad/data.zip CUADv1.json -d /tmp/cuad
-      - name: every committed night re-derives byte for byte from the public contracts (X3)
-        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - name: the pinned CORD v2 receipts, the ground_truth column only (no images), checked by hash
+        run: |
+          python -m pip install --quiet pyarrow==26.0.1
+          mkdir -p /tmp/cord
+          python -I tools/cord_fetch.py /tmp/cord/cord-v2-ground-truth.jsonl
+          echo "272432829e501edde76ee9457a04c146e4e6e5d7fb40c0c395fc71a93f82c613  /tmp/cord/cord-v2-ground-truth.jsonl" | sha256sum -c -
+      - name: every committed night of both libraries re-derives byte for byte from the public data (X3, F3), with R0 re-run
+        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl
       # Pinned. An unpinned gate is a gate somebody else can change.
       - name: witness - every mutant of every kernel must die, and the committed counts must re-derive
         run: |
           git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git /tmp/witness
-          for n in extract cycle build night oauth value; do
+          for n in extract cycle build night oauth value finance; do
             node /tmp/witness/witness.mjs mutate "src/$n.mjs" --timeout 60000 --cap 2000 --test node --test "test/$n.test.mjs" > "/tmp/w-$n.json" || true
             node tools/witness-check.mjs "$n" "/tmp/w-$n.json"
           done

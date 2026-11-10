@@ -281,3 +281,53 @@ test('mineCover: common words right at least 80% of the time on training, the mo
   assert.deepEqual(Y.mineCover([null, { tokens: 'x' }, { tokens: ['aaa'] }], 't', 3), []);
   assert.deepEqual(Y.mineCover(null, 't', 3), []);
 });
+
+// ── library 2 (SEAL 2): the same cycle over the finance domain, where line items have many answers per receipt ──
+import F from '../src/finance.mjs';
+const Q = Y.cycleFor(F.DOMAIN);
+// a receipt's item-price units: tokens, right (inside a menu.price word), kw (the cheap baseline calls it a line item)
+const I = (id, tokens, right, kw) => ({ id, tokens, right, label: right ? 'item-price' : 'other', kw, value: 1 });
+
+test('library 2: a line-item pattern is judged on every amount it picks, against every amount the cheap method picks', () => {
+  const units = {
+    a: { 'item-price': [I('a0', ['zend', 'ztop'], true, true), I('a1', ['zend', 'ztop'], true, true), I('a2', ['ztop'], false, true)] },
+    b: { 'item-price': [I('b0', ['zend', 'ztop'], true, true), I('b1', ['zend', 'ztop'], false, true)] },
+    c: { 'item-price': [I('c0', ['zend', 'ztop'], true, true), I('c1', ['zlow'], false, false)] },
+    d: { 'item-price': [I('d0', ['zlow'], false, false)] },
+  };
+  const g = Q.fieldGate({ when: ['zend', 'ztop'], then: 'item-price' }, 'item-price', units, ['a', 'b', 'c', 'd'], { docs: 3, prec: 0.8, margin: 0.1 });
+  // picked 5 (4 right); the cheap method picked 6 on those three receipts (4 right): 0.8 vs 0.667
+  assert.deepEqual(g, { ok: true, docs: 3, right: 4, base: 4, rightRate: 0.8, baseRate: 0.666667, picked: 5, basePicked: 6, why: '' });
+  const g2 = Q.fieldGate({ when: ['zend', 'ztop'], then: 'item-price' }, 'item-price', units, ['a', 'b', 'c'], { docs: 3, prec: 0.9, margin: 0.1 });
+  assert.equal(g2.why, 'right on 4 of the 5 candidates it picks, needs 0.9');
+  const g3 = Q.fieldGate({ when: ['zend', 'ztop'], then: 'item-price' }, 'item-price', units, ['a', 'b', 'c'], { docs: 3, prec: 0.8, margin: 0.14 });
+  assert.match(g3.why, /^beats the cheap baseline by 0\.133 on those documents, needs 0\.14$/);
+  // the cheap method picks nothing on these receipts: its rate is 0, and the margin is measured from 0
+  const none = { e: { 'item-price': [I('e0', ['x'], true, false), I('e1', ['x'], false, false)] } };
+  assert.deepEqual(Q.fieldGate({ when: ['x'], then: 'item-price' }, 'item-price', none, ['e'], { docs: 1, prec: 0, margin: 0.6 }).ok, false);
+  assert.deepEqual(Q.fieldGate({ when: ['x'], then: 'item-price' }, 'item-price', none, ['e'], { docs: 1, prec: 0, margin: 0.5 }).ok, true);
+  // a field of the same library is still one pick per receipt, with no picked counts in its record
+  const t = { a: { total: [{ id: 't0', tokens: ['total'], right: true, label: 'total', kw: true }, { id: 't1', tokens: ['total'], right: false, label: 'other', kw: false }] } };
+  assert.deepEqual(Q.fieldGate({ when: ['total'], then: 'total' }, 'total', t, ['a'], { docs: 1, prec: 0.8, margin: 0 }), { ok: true, docs: 1, right: 1, base: 1, rightRate: 1, baseRate: 1, why: '' });
+});
+
+test('library 2: line items are right on the meter only when exactly the experts\' items; its exam signs as receipt reading', () => {
+  const units = {
+    a: { 'item-price': [I('a0', ['zend'], true, true), I('a1', ['zend'], true, true), I('a2', ['zlow'], false, false)] },   // exact
+    b: { 'item-price': [I('b0', ['zend'], true, true), I('b1', ['zmid'], true, true)] },                                   // one missed
+    c: { 'item-price': [I('c0', ['zend'], true, true), I('c1', ['zend'], false, true)] },                                   // one extra
+    d: { 'item-price': [I('d0', ['zlow'], false, false)] },                                                                 // none picked
+  };
+  const e = Q.examine([{ when: ['zend'], then: 'item-price' }], ['item-price'], units, ['a', 'b', 'c', 'd']);
+  assert.deepEqual(e.per['item-price'], { cases: 4, answered: 3, right: 1, baseRight: 2, withGold: 3 });
+  const m = Q.meter([{ when: ['zend'], then: 'item-price' }], ['item-price'], units, ['a', 'b', 'c', 'd']);
+  assert.deepEqual([m.coverage, m.precision], [0.75, 0.333333]);
+  assert.equal(Q.admit({ when: ['zend'], then: 'party', prov: {} }, units, {}, []).why, 'no such task: party');
+  assert.match(Q.promptFor('total', [{ id: 'x', tokens: ['total', 'zend'], label: 'total' }], 0), /^You write extraction rules\. Each line below is the words on one row of a receipt around one amount/);
+  const many = Array.from({ length: 30 }, (_, i) => 'r' + i);
+  const ex = { total: { cases: 30, answered: 30, right: 29, baseRight: 10, withGold: 30 } };
+  const r = Q.receipt({ total: ex.total });
+  assert.equal(r.ok, true);
+  assert.notEqual(r.receipt, Y.receipt({ total: ex.total }).receipt, 'library 2 signs its own job, data and cheap method');
+  assert.equal(many.length, 30);
+});

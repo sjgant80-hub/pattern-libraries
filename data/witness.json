@@ -13,8 +13,8 @@
   {
    "name": "cycle",
    "file": "src/cycle.mjs",
-   "total": 62,
-   "killed": 62,
+   "total": 66,
+   "killed": 66,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -49,8 +49,17 @@
   {
    "name": "value",
    "file": "src/value.mjs",
-   "total": 23,
-   "killed": 23,
+   "total": 27,
+   "killed": 27,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "finance",
+   "file": "src/finance.mjs",
+   "total": 93,
+   "killed": 93,
    "ignored": 0,
    "clean": true,
    "capped": false

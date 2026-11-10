@@ -24,11 +24,12 @@
   {
    "n": 2,
    "id": "finance",
-   "name": "Finance and accounting",
+   "name": "Finance and accounting (receipts)",
    "kind": "income",
-   "status": "not landed",
-   "what": "Invoice and statement parsing, reconciliation rules, payment terms, anomaly flags, on top of extraction.",
-   "why": "Not built yet. It needs its own licence-checked data with real answers and its own sealed claims before any code."
+   "status": "running",
+   "what": "Built to read a receipt's line items, subtotal, tax, service charge, discount, total, cash and change, each answer with the pattern that gave it, and then to check them against each other by arithmetic (items to subtotal, subtotal plus tax to total, cash less change to total): reconciled, flagged or unchecked. It answers only what its patterns have proven so far. Dates, suppliers and payment terms are not in its data, so it does not read them.",
+   "why": "Running, not landed: F1 (beating ctrl-F on a fresh final exam), F2, P4 (the coverage climb), R2 and R3 (the check on its own answers) are decided on the nights after night 0, the first on 2026-11-11 at 03:00; P2 and P3 only once the keeper switches the paid tier on. R0 (the check tested on the experts' own receipts) is decided.",
+   "data": "CORD v2, 1,000 real Indonesian receipts (NAVER CLOVA, CC BY 4.0); text and labels only, never the images"
   },
   {
    "n": 4,

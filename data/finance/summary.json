@@ -1,0 +1,53 @@
+{
+ "latest": "nights/cycle-0.json",
+ "series": [
+  {
+   "cycle": 0,
+   "at": "2026-11-10T21:40:54.619Z",
+   "patterns": 0,
+   "coverage": 0,
+   "precision": null,
+   "answered": 0,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  }
+ ],
+ "corpus": {
+  "docs": 1000,
+  "chars": 139155,
+  "avgChars": 139
+ },
+ "r0": {
+  "A": {
+   "ran": 656,
+   "held": 595
+  },
+  "B": {
+   "ran": 650,
+   "held": 619
+  },
+  "C": {
+   "ran": 535,
+   "held": 518
+  }
+ },
+ "parts": [
+  "A",
+  "B",
+  "C"
+ ],
+ "creditCalls": 0
+}

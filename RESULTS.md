@@ -44,7 +44,7 @@ Witness v0.6, uncapped, nothing baselined, re-derived on the runner: extract 99/
 
 ## Landed or not
 
-By the seal's own rule (a library is landed only when all its claims are decided on a real run), **document extraction and the build-pattern library are RUNNING, not landed**: built, gated, live and growing every night; X1 and P4 are first decided on night 1 (2026-11-11, 03:00), P2 and P3 only once Simon switches the paid tier on. **Finance, triage, sales, novel angles and compression are NOT LANDED** (not built).
+By the seal's own rule (a library is landed only when all its claims are decided on a real run), **document extraction and the build-pattern library are RUNNING, not landed**: built, gated, live and growing every night; X1 and P4 are first decided on night 1 (2026-11-11, 03:00), P2 and P3 only once Simon switches the paid tier on. **Finance is RUNNING** (library 2, below, since 2026-11-10); **triage, sales, novel angles and compression are NOT LANDED** (not built).
 
 ## Disclosures: what changed after seal 1, before night 0 was read (and which way it moves the bar)
 
@@ -67,3 +67,92 @@ By the seal's own rule (a library is landed only when all its claims are decided
    patterns that met too few candidates in a 20-contract exam. Both gates and every bar are unchanged; the proposer set
    is written in each record (`free: 2`), and night 0 still replays as set 1, byte for byte. Checked first on the seed
    contracts only (8 kept against 7), never on an exam batch.
+
+---
+
+# Results · library 2 (finance / accounting: receipts), night 0 (2026-11-10)
+
+Sealed first in SEAL 2 (`CLAIMS.md`, commit e28a504), before any of its code. Read from the records in `data/finance/`
+and re-derived byte for byte (`node tools/rederive.mjs CUADv1.json --cord cord-v2-ground-truth.jsonl`; CI fetches the
+pinned receipts and does the same). The live page computes the same verdicts in the browser from the same files.
+
+## The data
+
+CORD v2 (NAVER CLOVA, CC BY 4.0, checked on its GitHub README and its Hugging Face card), at revision 7f0115a4…. Only the
+`ground_truth` column was read, by HTTP range requests: about 1.9 MB over the wire for 1,000 receipts; the receipt images
+(2.31 GB) were never downloaded. The derived file is 6,198,162 bytes, sha256 `27243282…2c613`, and the committed fetch tool
+reproduces it exactly. Hugging Face's own row service refused the set (its parquet row groups carry the images, past the
+service's scan limit), which is why the range reads were used. CORD has **no dates, suppliers or payment terms** (its makers
+removed store and payment information), so this library does not read them, as SEAL 2 says.
+
+## The check, tested on the experts' own receipts first (R0)
+
+Over all 1,000 receipts, each part of the arithmetic run on the experts' own values, where they labelled every term:
+
+| part | what it checks | held on | verdict |
+|---|---|---|---|
+| A | the line items add up to the subtotal | 595 of 656 (90.7%) | **HELD**, kept in the check |
+| B | subtotal + tax + service − discount = total | 619 of 650 (95.2%) | **HELD**, kept in the check |
+| C | cash − change = total | 518 of 535 (96.8%) | **HELD**, kept in the check |
+
+The bar was 80%. The receipts where a part fails on the experts' own values stay in the count; they are why the check
+flags a receipt for a person and never corrects an amount.
+
+## Night 0, what happened
+
+- **The local 7B sat out.** At build time the shared qwen2.5:7b was busy with another session's job
+  (`tools/run-multiplier.mjs`), and this build never runs a second 7B job beside one. So night 0 ran the free tiers alone
+  (`--no-7b`), and the record says so. The 7B's first night for this library is the 03:00 run on 2026-11-11.
+- **55 proposals, 0 kept, 55 dropped**, every drop with its reason: 40 met fewer than 5 amounts in the 40 unseen
+  receipts; 8 did only as well as ctrl-F on the held-out receipts (`beats the cheap baseline by 0.000`: the English
+  label words TAX, CASH, CHANGE and SUB restate the cheap method); 2 were right on fewer than 80% of the amounts they
+  fired on (`total`, `subtotal`); 2 (`pb1 ⇒ tax`, right on 3 of the 4 receipts it decided) were right on fewer than 80%
+  of the receipts; 3 failed the final exam.
+- **On the 100 measuring receipts:** coverage 0.0% (nothing answered of 800 questions); the check ran on none of them
+  (100 unchecked).
+- **The paid tier:** no call. It had no candidate (the 7B did not run), and it is off until Simon switches it on.
+
+## The claims
+
+| claim | verdict | from |
+|---|---|---|
+| P1 only fresh-exam winners kept; drops logged | **HELD** on night 0 (0 kept; 55 dropped with reasons) | `nights/cycle-0.json` |
+| P2 the paid tier last; the day cap never exceeded | **NO CALL YET** (the tier is off) | the subscription ledger is empty |
+| P3 how each was built; spend per library falls | records **HELD** (0 of 0); the fall **PENDING** | `state.json` |
+| P4 coverage climbs night over night | **PENDING** (night 0 measured: 0.0%) | decided from 2026-11-11 |
+| P5 nothing outward at night; every pattern gated; the model only proposes | **HELD** by the source scans (CI) | `test/scan.test.mjs` |
+| F1 each night's library beats ctrl-F on that night's fresh final exam | **UNDECIDED** (nothing carried in) | `nights/cycle-0.json` |
+| F2 right ≥ 90% where it answers on the meter | **UNDECIDED** (nothing answered yet) | `summary.json` |
+| F3 every night re-derives byte for byte | **HELD** (local and CI) | CI |
+| F4 licence and credit | **HELD** (CORD v2, NAVER CLOVA, CC BY 4.0: NOTICE, README, the page) | |
+| R0 each part holds on ≥ 80% of the experts' receipts | **HELD** (A, B, C all kept) | `nights/cycle-0.json` (`r0`) |
+| R1 the check is arithmetic; never changes an answer; no model | **HELD** (tests; the kernel holds no clock, disk, network or process) | `test/finance.test.mjs`, `test/scan.test.mjs` |
+| R2 reconciled means right (≥ 95%, over ≥ 10) | **UNDECIDED** (0 reconciled) | `summary.json` |
+| R3 flagged means look (≥ half, over ≥ 5) | **UNDECIDED** (0 receipts with a wrong amount) | `summary.json` |
+| B1 a how-it-was-built record the same night | **HELD** (0 of 0) | `state.json` |
+| N3 inside the same night, after library 1, 3 + 3 local-7B calls, one clock | **WIRED**; the first scheduled night is 2026-11-11 03:00 | `night/patlibs-night.mjs` |
+
+Witness v0.6, uncapped, nothing baselined: finance 93/93 (new), cycle 66/66 (one cycle per library now: `cycleFor`),
+night 41/41 (`nightOf`), value 27/27 (`keying` added); extract 99/99, build 37/37, oauth 26/26 unchanged and re-run.
+Library 1's night 0 still re-derives byte for byte.
+
+## Landed or not
+
+By the seal's own rule, **library 2 (finance / receipts) is RUNNING, not landed**: built, gated, live and run every
+night, with **no proven pattern yet** after night 0. F1, F2, P4, R2 and R3 are decided on the nights that follow, P2 and P3
+only once Simon switches the paid tier on. R0 is decided (held).
+
+## Disclosures: what changed after seal 2, before night 0 was read (and which way it moves the bar)
+
+1. **The experts' words for a field are its value words.** CORD marks each word with `is_key`: the label words (TOTAL,
+   CASH, or the rate `10.00 %` printed beside a tax) are the key, not the value. "A word the experts gave that label" is
+   read as the value words only. Stricter: a printed rate never counts as the tax.
+2. **"A receipt that prints decimals" is read per part**, from the amounts that part uses, so a tax rate printed as
+   `10.00 %` does not switch a whole-rupiah receipt to the 0.05 tolerance. Neutral: it makes the rule do what the seal means.
+3. **An amount never crosses a line**: the optional space after a currency mark or a minus sign is a space or a tab, not
+   a line break. Found on a synthetic test sentence, before any read. Neutral.
+4. **Night 0 ran without the 7B** (above). It makes night 0 weaker, not easier.
+5. **The night runner can run one library** (`--only=finance`), so this build-time night 0 did not spend library 1's
+   night 1, which stays the 03:00 run. No gate or bar is touched.
+6. **The runner cuts the 7B reason at 200 characters**, and night 0's reason was cut mid-sentence. The record is kept as
+   written; the page marks where it was cut.

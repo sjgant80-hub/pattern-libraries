@@ -1,5 +1,7 @@
 // pattern-libraries · src/cycle.mjs — ONE NIGHT'S GROWTH, for any library whose cases are units in documents. Sealed
-// first: CLAIMS.md (SEAL 1, 1c6108e). Pure and total: no clock, no disk, no network, no model.
+// first: CLAIMS.md (SEAL 1, 1c6108e; SEAL 2, e28a504 for library 2). Pure and total: no clock, no disk, no network, no model.
+// The library-specific half is cycleFor(D): D names the library's tasks, its cheap method, its answer and its words for
+// the signed exam and the prompt. Library 1 (DOC, document extraction) is bound as this module's own exports.
 //
 //   schedule(ids)          the fixed order and the fixed slices: the METER (never proposes, never gates), the seed
 //                          training set, and the batches; cycle n's held-out and final exam are batches 2n and 2n+1
@@ -54,123 +56,157 @@ export function slicesFor(plan, n) {
   return { cycle: n, train: [...arr(plan.seed), ...b.slice(0, 2 * n).flat()], held: arr(b[2 * n]), final: arr(b[2 * n + 1]) };
 }
 
-/** casesFor(units, ids, task, slice) → the law's cases (label = the task when right, 'other' when not) */
-export function casesFor(units, ids, task, slice) {
-  const out = [];
-  if (!isObj(units)) return out;
-  for (const id of arr(ids)) {
-    const u = isObj(units[id]) ? arr(units[id][task]) : [];
-    for (const x of u) if (isObj(x)) out.push(E.isCaseFor(x, task) ? x : E.asCase(x, task, slice));
-  }
-  return out;
-}
-
-/** docRight(task, units) → is this unit right? (a unit carries its own verdict from the experts' annotation) */
+/** a unit carries its own verdict from the experts' annotation */
 const ok = (u) => isObj(u) && u.right === true;
+/** exact(list, units) → a many-answer is right only when it is exactly the right units: nothing missed, nothing extra */
+const exact = (list, units) => arr(list).every(ok) && arr(list).length === arr(units).filter(ok).length;
 
-/** fieldGate(rule, task, units, ids, bar) → { ok, docs, rightRate, baseRate, why } */
-export function fieldGate(rule, task, units, ids, bar) {
-  const B = isObj(bar) ? bar : FIELD_GATE.held;
-  let docs = 0, right = 0, base = 0;
-  for (const id of arr(ids)) {
-    const u = isObj(units) && isObj(units[id]) ? arr(units[id][task]) : [];
-    const hit = u.find((x) => isObj(x) && P.fires(rule, x));
-    if (!hit) continue;
-    docs++;
-    if (ok(hit)) right++;
-    if (ok(E.baseline(task, u))) base++;
+/** DOC → library 1's domain: its tasks, its cheap method, its answer, and its words for the signed exam and the prompt */
+export const DOC = Object.freeze({
+  TASKS: E.TASKS, typeOf: E.typeOf, many: () => false, baseline: E.baseline, pick: E.pick, asCase: E.asCase, isCaseFor: E.isCaseFor,
+  job: 'document extraction', data: 'CUAD v1 (CC BY 4.0)', currentTool: 'the first candidate of its type / ctrl-F',
+  what: (task) => (E.isClause(task) ? 'sentences of commercial contracts' : 'the words around a candidate ' + E.typeOf(task) + ' in commercial contracts'),
+});
+
+/** cycleFor(D) → the library-specific half of a cycle, over the domain D. A task D calls many has many answers per
+ *  document (the line items of a receipt): every unit a rule fires on is its answer, and it is right only when exact. */
+export function cycleFor(D) {
+  /** casesFor(units, ids, task, slice) → the law's cases (label = the task when right, 'other' when not) */
+  function casesFor(units, ids, task, slice) {
+    const out = [];
+    if (!isObj(units)) return out;
+    for (const id of arr(ids)) {
+      const u = isObj(units[id]) ? arr(units[id][task]) : [];
+      for (const x of u) if (isObj(x)) out.push(D.isCaseFor(x, task) ? x : D.asCase(x, task, slice));
+    }
+    return out;
   }
-  const rightRate = docs ? right / docs : 0, baseRate = docs ? base / docs : 0;
-  const res = { docs, right, base, rightRate: round6(rightRate), baseRate: round6(baseRate) };
-  // the bars in whole thousandths, so a rate exactly on the sealed bar passes (0.1 × 30 is not 3 in floating point)
-  const prec = Math.round(B.prec * 1000), margin = Math.round(B.margin * 1000);
-  if (docs < B.docs) return { ok: false, ...res, why: 'decides ' + docs + ' documents, needs ' + B.docs };
-  if (right * 1000 < prec * docs) return { ok: false, ...res, why: 'right in ' + right + ' of ' + docs + ' documents, needs ' + B.prec };
-  if ((right - base) * 1000 < margin * docs) return { ok: false, ...res, why: 'beats the cheap baseline by ' + (rightRate - baseRate).toFixed(3) + ' on those documents, needs ' + B.margin };
-  return { ok: true, ...res, why: '' };
-}
 
-/** context for one cycle: the units of every document, and the cycle's slices */
-export function contextFor(units, slices, task) {
-  return {
-    task,
-    slices: { train: casesFor(units, slices.train, task, 'train'), held: casesFor(units, slices.held, task, 'held'), final: casesFor(units, slices.final, task, 'final') },
-  };
-}
-
-/** admit(p, units, slices, library, cache) → { ok, why, receipt?, scores? }: the law's gate first, then the field gate */
-export function admit(p, units, slices, library, cache) {
-  if (!P.validRule(p)) return { ok: false, why: 'not a rule: WHEN token [AND token] THEN label' };
-  if (!E.TASKS.includes(p.then)) return { ok: false, why: 'no such task: ' + str(p.then) };
-  if (!isObj(slices)) return { ok: false, why: 'no slices for this cycle' };
-  const c = isObj(cache) ? cache : {};
-  const ctx = c[p.then] || (c[p.then] = contextFor(units, slices, p.then));
-  const lib = arr(library).filter((r) => isObj(r) && r.then === p.then);
-  const g = P.gate(p, ctx.slices, lib);
-  if (!g.ok) return { ok: false, why: g.why };
-  const h = fieldGate(p, p.then, units, slices.held, FIELD_GATE.held);
-  if (!h.ok) return { ok: false, why: 'held-out documents: ' + h.why };
-  const f = fieldGate(p, p.then, units, slices.final, FIELD_GATE.final);
-  if (!f.ok) return { ok: false, why: 'final-exam documents: ' + f.why };
-  return { ok: true, why: 'kept', receipt: g.receipt, scores: { ...g.scores, heldDocs: h, finalDocs: f } };
-}
-
-/** grow(units, slices, proposals, library) → { promoted, dropped, library }: each proposal in turn, against the growing library */
-export function grow(units, slices, proposals, library) {
-  const lib = arr(library).filter((r) => isObj(r) && P.validRule(r)).slice();
-  const promoted = [], dropped = [], cache = {};
-  for (const p of arr(proposals)) {
-    const a = admit(p, units, slices, lib, cache);
-    if (a.ok) { const r = { when: p.when.slice(), then: p.then, prov: p.prov, receipt: a.receipt, scores: a.scores }; lib.push(r); promoted.push(r); }
-    else dropped.push({ rule: isObj(p) ? P.ruleKey(p) : String(p), source: isObj(p) && isObj(p.prov) ? str(p.prov.source) : '', why: a.why });
-  }
-  return { promoted, dropped, library: lib };
-}
-
-/** examine(library, tasks, units, ids) → per task and in total: cases, answered, right, and the cheap baseline's right on the answered ones */
-export function examine(library, tasks, units, ids) {
-  const per = {};
-  const tot = { cases: 0, answered: 0, right: 0, baseRight: 0, withGold: 0 };
-  for (const task of arr(tasks)) {
-    const t = { cases: 0, answered: 0, right: 0, baseRight: 0, withGold: 0 };
+  /** fieldGate(rule, task, units, ids, bar) → { ok, docs, rightRate, baseRate, why }: on the documents where the rule
+   *  fires, what it picks (its first unit; for a many task, every unit it fires on) must be right often enough AND beat
+   *  what the cheap baseline picks on those same documents */
+  function fieldGate(rule, task, units, ids, bar) {
+    const B = isObj(bar) ? bar : FIELD_GATE.held, m = D.many(task) === true;
+    // n and bn count what is judged: one pick per document for a field, every unit picked for a many task
+    let docs = 0, right = 0, base = 0, n = 0, bn = 0;
     for (const id of arr(ids)) {
       const u = isObj(units) && isObj(units[id]) ? arr(units[id][task]) : [];
-      t.cases++;
-      if (u.some(ok)) t.withGold++;
-      const p = E.pick(library, task, u);
-      if (!p) continue;
-      t.answered++;
-      if (ok(p.unit)) t.right++;
-      if (ok(E.baseline(task, u))) t.baseRight++;
+      const hits = u.filter((x) => isObj(x) && P.fires(rule, x));
+      if (!hits.length) continue;
+      docs++;
+      const mine = m ? hits : hits.slice(0, 1), theirs = m ? arr(D.baseline(task, u)) : [D.baseline(task, u)];
+      n += mine.length; right += mine.filter(ok).length;
+      bn += theirs.length; base += theirs.filter(ok).length;
     }
-    per[task] = t;
-    for (const k of Object.keys(tot)) tot[k] += t[k];
+    const rightRate = n ? right / n : 0, baseRate = bn ? base / bn : 0;
+    const res = { docs, right, base, rightRate: round6(rightRate), baseRate: round6(baseRate), ...(m ? { picked: n, basePicked: bn } : {}) };
+    // the bars in whole thousandths, so a rate exactly on the sealed bar passes (0.1 × 30 is not 3 in floating point);
+    // the margin is compared across the two counts (right/n − base/bn ≥ margin), an empty baseline counting as rate 0
+    const prec = Math.round(B.prec * 1000), margin = Math.round(B.margin * 1000), bd = Math.max(bn, 1);
+    if (docs < B.docs) return { ok: false, ...res, why: 'decides ' + docs + ' documents, needs ' + B.docs };
+    if (right * 1000 < prec * n) return { ok: false, ...res, why: m ? 'right on ' + right + ' of the ' + n + ' candidates it picks, needs ' + B.prec : 'right in ' + right + ' of ' + docs + ' documents, needs ' + B.prec };
+    if ((right * bd - base * n) * 1000 < margin * n * bd) return { ok: false, ...res, why: 'beats the cheap baseline by ' + (rightRate - baseRate).toFixed(3) + ' on those documents, needs ' + B.margin };
+    return { ok: true, ...res, why: '' };
   }
-  return { per, total: tot };
+
+  /** context for one cycle: the units of every document, and the cycle's slices */
+  function contextFor(units, slices, task) {
+    return {
+      task,
+      slices: { train: casesFor(units, slices.train, task, 'train'), held: casesFor(units, slices.held, task, 'held'), final: casesFor(units, slices.final, task, 'final') },
+    };
+  }
+
+  /** admit(p, units, slices, library, cache) → { ok, why, receipt?, scores? }: the law's gate first, then the field gate */
+  function admit(p, units, slices, library, cache) {
+    if (!P.validRule(p)) return { ok: false, why: 'not a rule: WHEN token [AND token] THEN label' };
+    if (!D.TASKS.includes(p.then)) return { ok: false, why: 'no such task: ' + str(p.then) };
+    if (!isObj(slices)) return { ok: false, why: 'no slices for this cycle' };
+    const c = isObj(cache) ? cache : {};
+    const ctx = c[p.then] || (c[p.then] = contextFor(units, slices, p.then));
+    const lib = arr(library).filter((r) => isObj(r) && r.then === p.then);
+    const g = P.gate(p, ctx.slices, lib);
+    if (!g.ok) return { ok: false, why: g.why };
+    const h = fieldGate(p, p.then, units, slices.held, FIELD_GATE.held);
+    if (!h.ok) return { ok: false, why: 'held-out documents: ' + h.why };
+    const f = fieldGate(p, p.then, units, slices.final, FIELD_GATE.final);
+    if (!f.ok) return { ok: false, why: 'final-exam documents: ' + f.why };
+    return { ok: true, why: 'kept', receipt: g.receipt, scores: { ...g.scores, heldDocs: h, finalDocs: f } };
+  }
+
+  /** grow(units, slices, proposals, library) → { promoted, dropped, library }: each proposal in turn, against the growing library */
+  function grow(units, slices, proposals, library) {
+    const lib = arr(library).filter((r) => isObj(r) && P.validRule(r)).slice();
+    const promoted = [], dropped = [], cache = {};
+    for (const p of arr(proposals)) {
+      const a = admit(p, units, slices, lib, cache);
+      if (a.ok) { const r = { when: p.when.slice(), then: p.then, prov: p.prov, receipt: a.receipt, scores: a.scores }; lib.push(r); promoted.push(r); }
+      else dropped.push({ rule: isObj(p) ? P.ruleKey(p) : String(p), source: isObj(p) && isObj(p.prov) ? str(p.prov.source) : '', why: a.why });
+    }
+    return { promoted, dropped, library: lib };
+  }
+
+  /** examine(library, tasks, units, ids) → per task and in total: cases, answered, right, and the cheap baseline's right
+   *  on the answered ones (a many task is right only when its answer is exactly the right units) */
+  function examine(library, tasks, units, ids) {
+    const per = {};
+    const tot = { cases: 0, answered: 0, right: 0, baseRight: 0, withGold: 0 };
+    for (const task of arr(tasks)) {
+      const t = { cases: 0, answered: 0, right: 0, baseRight: 0, withGold: 0 }, m = D.many(task) === true;
+      for (const id of arr(ids)) {
+        const u = isObj(units) && isObj(units[id]) ? arr(units[id][task]) : [];
+        t.cases++;
+        if (u.some(ok)) t.withGold++;
+        const p = D.pick(library, task, u);
+        if (!p) continue;
+        t.answered++;
+        if (m ? exact(p.units, u) : ok(p.unit)) t.right++;
+        if (m ? exact(D.baseline(task, u), u) : ok(D.baseline(task, u))) t.baseRight++;
+      }
+      per[task] = t;
+      for (const k of Object.keys(tot)) tot[k] += t[k];
+    }
+    return { per, total: tot };
+  }
+
+  /** meter(library, tasks, units, meterIds) → coverage (answered / cases) and precision (right / answered) */
+  function meter(library, tasks, units, meterIds) {
+    const e = examine(library, tasks, units, meterIds);
+    const t = e.total;
+    return { ...t, coverage: t.cases ? round6(t.answered / t.cases) : 0, precision: t.answered ? round6(t.right / t.answered) : null, per: e.per };
+  }
+
+  /** receipt(exam, job) → the night's final exam, judged and signed by the baseline agreement: the library's answers
+   *  against the cheap baseline's on the same cases (X1). Too few answered cases is INSUFFICIENT, never a pass. */
+  function receipt(exam, job) {
+    const t = isObj(exam) && isObj(exam.total) ? exam.total : null;
+    if (!t || !Number.isInteger(t.answered)) return { ok: false, why: 'an exam with totals' };
+    const n = t.answered;
+    if (n === 0) return { ok: false, answered: 0, decision: 'INSUFFICIENT', why: 'the library answered none of these cases, so there is nothing to judge' };
+    const baseRate = t.baseRight / n;
+    const a = agreement({ job: str(job) || D.job, data: D.data, currentTool: D.currentTool, client: 'kar-night', supplier: 'AI-Native Solutions', metric: 'right when answered', kind: 'rate', baseline: Math.round(baseRate * 1000) / 1000, direction: 'higher' },
+      { minImprovement: EXAM.minImprovement, minSample: EXAM.minSample, zCrit: EXAM.zCrit, alpha: EXAM.alpha, price: null });
+    if (!a.ok) return { ok: false, why: 'the agreement: ' + a.why };
+    const o = outcome(a.agreement, { testId: a.agreement.test.id, control: { n, hits: t.baseRight }, variant: { n, hits: t.right } });
+    if (!o.ok) return { ok: false, why: 'the outcome: ' + o.why, answered: n };
+    return { ok: true, answered: n, right: t.right, baseRight: t.baseRight, rate: n ? round6(t.right / n) : 0, baseRate: round6(baseRate), decision: o.decision, beats: o.beatsBaseline, receipt: o.receipt, why: o.why };
+  }
+
+  /** promptFor(task, cases, salt) → what the local 7B (and, last, the subscription) is asked: 20 right and 20 wrong
+   *  contexts in a salted order, so each night the model sees a different sample */
+  function promptFor(task, cases, salt) {
+    const order = (a, b) => P.fnv(a.id + ':' + salt) - P.fnv(b.id + ':' + salt) || first(a.id, b.id);
+    const yes = arr(cases).filter((c) => c.label === task && c.tokens.length).sort(order).slice(0, 20);
+    const no = arr(cases).filter((c) => c.label !== task && c.tokens.length).sort(order).slice(0, 20);
+    const line = (c) => c.tokens.slice(0, 16).join(' ');
+    return `You write extraction rules. Each line below is ${D.what(task)}.\n\nLines where the candidate IS the "${task}":\n${yes.map(line).join('\n')}\n\nLines where it is NOT:\n${no.map(line).join('\n')}\n\nWrite up to 5 rules that pick out "${task}" and not the others. One rule per line, exactly in one of these two forms and nothing else:\nWHEN word THEN ${task}\nWHEN word AND word THEN ${task}\nUse only words that appear in the "${task}" lines above.`;
+  }
+
+  return { casesFor, fieldGate, contextFor, admit, grow, examine, meter, receipt, promptFor };
 }
 
-/** meter(library, tasks, units, meterIds) → coverage (answered / cases) and precision (right / answered) */
-export function meter(library, tasks, units, meterIds) {
-  const e = examine(library, tasks, units, meterIds);
-  const t = e.total;
-  return { ...t, coverage: t.cases ? round6(t.answered / t.cases) : 0, precision: t.answered ? round6(t.right / t.answered) : null, per: e.per };
-}
-
-/** receipt(exam, job) → the night's final exam, judged and signed by the baseline agreement: the library's answers
- *  against the cheap baseline's on the same cases (X1). Too few answered cases is INSUFFICIENT, never a pass. */
-export function receipt(exam, job) {
-  const t = isObj(exam) && isObj(exam.total) ? exam.total : null;
-  if (!t || !Number.isInteger(t.answered)) return { ok: false, why: 'an exam with totals' };
-  const n = t.answered;
-  if (n === 0) return { ok: false, answered: 0, decision: 'INSUFFICIENT', why: 'the library answered none of these cases, so there is nothing to judge' };
-  const baseRate = t.baseRight / n;
-  const a = agreement({ job: str(job) || 'document extraction', data: 'CUAD v1 (CC BY 4.0)', currentTool: 'the first candidate of its type / ctrl-F', client: 'kar-night', supplier: 'AI-Native Solutions', metric: 'right when answered', kind: 'rate', baseline: Math.round(baseRate * 1000) / 1000, direction: 'higher' },
-    { minImprovement: EXAM.minImprovement, minSample: EXAM.minSample, zCrit: EXAM.zCrit, alpha: EXAM.alpha, price: null });
-  if (!a.ok) return { ok: false, why: 'the agreement: ' + a.why };
-  const o = outcome(a.agreement, { testId: a.agreement.test.id, control: { n, hits: t.baseRight }, variant: { n, hits: t.right } });
-  if (!o.ok) return { ok: false, why: 'the outcome: ' + o.why, answered: n };
-  return { ok: true, answered: n, right: t.right, baseRight: t.baseRight, rate: n ? round6(t.right / n) : 0, baseRate: round6(baseRate), decision: o.decision, beats: o.beatsBaseline, receipt: o.receipt, why: o.why };
-}
+// library 1, bound: the names every caller already uses
+export const { casesFor, fieldGate, contextFor, admit, grow, examine, meter, receipt, promptFor } = cycleFor(DOC);
 
 /** minePairs(cases, task, k) → two-word proposals: pairs of the eight most precise single words, kept if they cover ≥ 5 */
 export function minePairs(cases, task, k = 2) {
@@ -216,20 +252,9 @@ export function recipe(records, task, type) {
   return out;
 }
 
-/** promptFor(task, cases, salt) → what the local 7B (and, last, the subscription) is asked: 20 right and 20 wrong
- *  contexts in a salted order, so each night the model sees a different sample */
-export function promptFor(task, cases, salt) {
-  const order = (a, b) => P.fnv(a.id + ':' + salt) - P.fnv(b.id + ':' + salt) || first(a.id, b.id);
-  const yes = arr(cases).filter((c) => c.label === task && c.tokens.length).sort(order).slice(0, 20);
-  const no = arr(cases).filter((c) => c.label !== task && c.tokens.length).sort(order).slice(0, 20);
-  const line = (c) => c.tokens.slice(0, 16).join(' ');
-  const what = E.isClause(task) ? 'sentences of commercial contracts' : 'the words around a candidate ' + E.typeOf(task) + ' in commercial contracts';
-  return `You write extraction rules. Each line below is ${what}.\n\nLines where the candidate IS the "${task}":\n${yes.map(line).join('\n')}\n\nLines where it is NOT:\n${no.map(line).join('\n')}\n\nWrite up to 5 rules that pick out "${task}" and not the others. One rule per line, exactly in one of these two forms and nothing else:\nWHEN word THEN ${task}\nWHEN word AND word THEN ${task}\nUse only words that appear in the "${task}" lines above.`;
-}
-
 /** proposalsOf(text, task) → the model's rules for this task only (the law's own parser, then the task check) */
 export function proposalsOf(text, task) {
   return P.parseProposals(text, [task]).filter((r) => r.then === task);
 }
 
-export default { SCHEDULE, FIELD_GATE, EXAM, METER_BAR, schedule, slicesFor, casesFor, fieldGate, contextFor, admit, grow, examine, meter, receipt, minePairs, mineCover, recipe, promptFor, proposalsOf };
+export default { SCHEDULE, FIELD_GATE, EXAM, METER_BAR, DOC, cycleFor, schedule, slicesFor, casesFor, fieldGate, contextFor, admit, grow, examine, meter, receipt, minePairs, mineCover, recipe, promptFor, proposalsOf };

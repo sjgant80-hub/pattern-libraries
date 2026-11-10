@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pattern Libraries · contract reading that proves itself</title>
+<title>Pattern Libraries · readers that prove themselves</title>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="description" content="A contract reader that grows every night on real contracts, keeps a pattern only when it beats a cheap baseline on documents it never saw, and answers 'unknown' rather than guess.">
+<meta name="description" content="Readers for contracts and receipts that grow every night on real documents, keep a pattern only when it beats a cheap baseline on documents they never saw, check receipts by arithmetic, and answer 'unknown' rather than guess.">
 <style>
 :root { --bg: #fbfaf7; --fg: #1d1d1b; --muted: #5d5c57; --line: #dedbd2; --card: #ffffff; --accent: #1f5f8b; --accent-bg: #e6f0f7; --good: #1d6b3a; --good-bg: #e3f2e7; --bad: #9b2c2c; --bad-bg: #f8e5e5; --wait: #7a5a00; --wait-bg: #f7efd9; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 @media (prefers-color-scheme: dark) { :root { --bg: #151514; --fg: #ecebe6; --muted: #a9a79f; --line: #3a3934; --card: #1e1e1c; --accent: #7db7e0; --accent-bg: #1b2c39; --good: #7fcf98; --good-bg: #1b2e22; --bad: #f0a0a0; --bad-bg: #3a2020; --wait: #e6c46a; --wait-bg: #352c14; } }
@@ -58,12 +58,12 @@ details summary { cursor: pointer; color: var(--accent); }
 <body>
 <main>
 <header class="top" id="what">
-  <h1>A contract reader that has to prove every pattern it learns</h1>
-  <p class="lede">Paste a contract and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing. It answers only what it has proven, and the figures just below say how much that is today.</p>
-  <p>It learns every night, on this laptop, from 510 real commercial contracts. A new pattern is kept only if it beats a cheap method on contracts it has never seen, and then passes a second exam on contracts nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your contract never calls any model: it only applies the proven patterns.</p>
+  <h1>Readers that have to prove every pattern they learn</h1>
+  <p class="lede">Paste a contract and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Paste a receipt and it reads the line items, subtotal, tax, service charge, discount, total, cash and change, then checks them against each other by plain arithmetic. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing. It answers only what it has proven, and the figures just below say how much that is today.</p>
+  <p>Both readers learn every night, on this laptop: the contract reader from 510 real commercial contracts, the receipt reader from 1,000 real receipts. A new pattern is kept only if it beats a cheap method on documents it has never seen, and then passes a second exam on documents nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your document never calls any model: it only applies the proven patterns.</p>
   <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
   <nav class="toc" aria-label="On this page">
-    <a href="#try">Try it</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
+    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
     <a href="#builds">How each pattern was built</a><a href="#wall">The credit wall</a><a href="#blueprint">Blueprint</a><a href="#libraries">The libraries</a><a href="#business">For your business</a><a href="#paper">White paper</a>
   </nav>
 </header>
@@ -77,10 +77,21 @@ details summary { cursor: pointer; color: var(--accent); }
   <p class="muted" id="answers-note"></p>
 </section>
 
+<section id="receipt" aria-labelledby="receipt-h">
+  <h2 id="receipt-h">Try it on a receipt (library 2)</h2>
+  <p>The sample is made up, in the style of the receipts the library learns from: one printed line per row. Paste your own receipt's text (from a scanned receipt, run it through any text-recognition tool first; photos are not read). It is read in your browser; nothing is sent anywhere.</p>
+  <textarea id="rdoc" aria-label="Receipt text" style="min-height:180px"></textarea>
+  <p><button id="rread">Read it</button> <button id="rsample" class="ghost">Put the sample back</button></p>
+  <div class="table-wrap"><table id="ranswers" aria-live="polite"><thead><tr><th>Question</th><th>The library's answer</th><th>What ctrl-F would say</th><th>The pattern that found it</th></tr></thead><tbody></tbody></table></div>
+  <div class="card" id="rcheck"></div>
+  <p class="muted">"What ctrl-F would say" is the cheap method the library has to beat: for each amount, the first one at or after the first line holding its word (total, sub, tax, serv, disc, cash, change); for line items, every amount above the first line holding "total". The check below the table runs the same arithmetic on both: items add up to the subtotal; subtotal plus tax plus service, less discount, is the total; cash less change is the total. A receipt that does not add up is <strong>flagged</strong> for a person to look at; the check never changes an answer.</p>
+</section>
+
 <section id="start" aria-labelledby="start-h">
   <h2 id="start-h">Start here</h2>
   <ol class="steps">
     <li><strong>Read a contract.</strong> In <a href="#try">Try it</a>, press <em>Read it</em>. Every row is one question. An answer shows the words the library picked and the pattern that picked them, for example "near the word <code>governed</code>, a jurisdiction is the governing law". An <em>unknown</em> means no kept pattern fired; in a real deployment that question goes to a model or a person.</li>
+    <li><strong>Read a receipt.</strong> In <a href="#receipt">Try it on a receipt</a>, press <em>Read it</em>. Each row is one amount; beside the library's answer is what the cheap method (ctrl-F) would have said. Under the table, the check adds the amounts up and says <em>reconciled</em>, <em>flagged</em> (it does not add up: look at it) or <em>unchecked</em> (too few amounts answered to check).</li>
     <li><strong>See what it learned and why.</strong> <a href="#night">Last night, step by step</a> shows the real night: how many patterns were proposed, by whom (a free word-counting miner, or the local AI model), which were kept, and why every other one was thrown out.</li>
     <li><strong>See how it is tested.</strong> <a href="#exam">The fresh exam</a> shows how the 510 contracts are split so that every night is tested on contracts it never saw, and why no exam is ever used twice.</li>
     <li><strong>See what it costs.</strong> <a href="#wall">The credit wall</a> shows the paid tier: the last resort, capped per day, off until the keeper switches it on.</li>
@@ -100,6 +111,26 @@ details summary { cursor: pointer; color: var(--accent); }
   <h3>Coverage, night by night</h3>
   <p class="muted">Coverage is the share of questions (contracts × questions) on the 60 measuring contracts that the library answers without a model. Those 60 are never used to propose or to test a pattern, only to measure. It can only climb, because patterns are only added; the claim is that it climbs on every night that keeps one.</p>
   <div id="climb" class="card"></div>
+</section>
+
+<section id="finance" aria-labelledby="finance-h">
+  <h2 id="finance-h">Receipts (library 2): last night, and the check</h2>
+  <p>Library 2 grows the same way as library 1, on its own data and its own sealed bars (<a href="CLAIMS.md">CLAIMS.md</a>, seal 2). Its data is CORD v2: 1,000 real Indonesian shop and restaurant receipts, every word labelled by the people who built the set (NAVER CLOVA, CC BY 4.0). Everything below is read from the night's own record.</p>
+  <div class="card" id="fin-flow"><p class="muted">Loading the night's record…</p></div>
+  <h3>The patterns it kept</h3>
+  <div class="table-wrap"><table id="fin-kept"><thead><tr><th>Pattern</th><th>Proposed by</th><th>Held-out: right / fired</th><th>Final: right / fired</th><th>Receipts right vs the cheap method</th><th>Receipt</th></tr></thead><tbody></tbody></table></div>
+  <h3>Why the rest were thrown out</h3>
+  <div id="fin-drops" class="card"></div>
+  <h3>The check, tested first on the experts' own receipts</h3>
+  <p>Before the arithmetic is trusted to flag anything, it is run on the answers the experts marked, on all 1,000 receipts. A part of the check that holds on fewer than 80% of the receipts it can run on is dropped from the check and shown here as failed. This tests the rule; it does not propose or test any pattern.</p>
+  <div class="table-wrap"><table id="fin-r0"><thead><tr><th>Part</th><th>What it checks</th><th>Held on</th><th>Verdict</th></tr></thead><tbody></tbody></table></div>
+  <h3>The check on the library's own answers (the 100 measuring receipts)</h3>
+  <div class="card" id="fin-check"></div>
+  <h3>Coverage, night by night</h3>
+  <p class="muted">The share of questions (receipts × questions) on the measuring receipts that the library answers without a model. Those receipts are never used to propose or to test a pattern. Line items count as right only when every item is found and nothing else is.</p>
+  <div id="fin-climb" class="card"></div>
+  <h3>Library 2's sealed claims, decided from the records</h3>
+  <div class="table-wrap"><table id="fin-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section id="how" aria-labelledby="how-h">
@@ -221,7 +252,27 @@ details summary { cursor: pointer; color: var(--accent); }
     <li><strong>It learned on US commercial contracts.</strong> Other document types (leases, employment, UK forms) need their own marked-up examples; the method is the same.</li>
     <li><strong>It is not legal advice.</strong> It finds and points; a qualified person decides.</li>
     <li><strong>Patterns can be wrong.</strong> Each one was right at least 80% of the time on contracts it never saw, and the measured precision is published. The sentence comes with the answer, so a wrong one is caught by reading that sentence.</li>
+    <li><strong>The receipt reader learned on Indonesian shop and restaurant receipts.</strong> UK VAT receipts and supplier invoices need their own marked-up examples; the method and the check are the same.</li>
+    <li><strong>It reads text, not photos.</strong> A receipt photo goes through text recognition first; the library reads the lines that come out.</li>
+    <li><strong>No dates, suppliers or payment terms on receipts.</strong> The public set had them removed before it was published, so this library does not read them and does not claim to.</li>
   </ul>
+  <h3 id="fin-biz">Receipts and bookkeeping (library 2)</h3>
+  <p>Keying receipts is a person typing amounts that are already printed. Library 2 takes that first pass, line items, subtotal, tax, service, discount, total, cash and change, and then checks its own answers by arithmetic, so a receipt that does not add up is flagged instead of booked. Like library 1, it answers only what it has proven.</p>
+  <p class="card" id="fin-today"></p>
+  <div class="grid">
+    <div class="card"><strong>Finance director</strong><p>Every amount it answers arrives with the line it came from and the pattern that read it, and every receipt it answers in full is either reconciled by the arithmetic or flagged. No per-receipt fee: a read costs nothing.</p></div>
+    <div class="card"><strong>Bookkeeper and accounts payable</strong><p>Fewer amounts to type as it learns; the ones it cannot prove come back <em>unknown</em> and are keyed as today. A flagged receipt is the one to look at first.</p></div>
+    <div class="card"><strong>Controller and audit</strong><p>Every answer names a rule with its exam scores and a receipt; the check's verdict is plain arithmetic anyone can redo. The whole night re-runs from the public data and gives the same bytes.</p></div>
+    <div class="card"><strong>Technology and security</strong><p>Runs in the browser or on one machine, offline; receipts never leave. No model is called to read one.</p></div>
+  </div>
+  <h3>What keying time it gives back</h3>
+  <p>The inputs are yours; the example figures are placeholders, not measurements. Only the share of questions the library answers, and only the share it gets right, count: a wrong amount still has to be keyed.</p>
+  <div class="card">
+    <div class="grid" id="fin-calc-in"></div>
+    <p class="big" id="fin-calc-out">—</p>
+    <p class="muted" id="fin-calc-why"></p>
+  </div>
+  <div class="card" id="fin-vs"></div>
   <h3>The case for the board</h3>
   <div class="card" id="board"></div>
 </section>
@@ -232,13 +283,15 @@ details summary { cursor: pointer; color: var(--accent); }
   <p><strong>The method.</strong> Grow the rules, but let nothing in unproven. Each night, cheap proposers (counting miners, the recipes of past winners) and then a local model propose short rules; deterministic code tests each one on contracts the proposers never saw, against a cheap method, by margins written down before any code existed, and then again on a second set nobody has looked at. The exam batches are used once. Coverage is measured on contracts that never take part in any decision. Every kept rule carries its scores and a receipt; every dropped rule carries its reason.</p>
   <p><strong>The bars were sealed first.</strong> The claims and every number in them were committed before any code (<a href="CLAIMS.md">CLAIMS.md</a>, seal 1). A claim that misses its bar is kept and shown as failed.</p>
   <div class="table-wrap"><table id="claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
+  <p><strong>Library 2, receipts.</strong> The same night and the same two gates, on its own sealed bars (seal 2, committed before its code): seven amounts read one per receipt and the line items read many per receipt, against ctrl-F, on a fresh exam of 40 receipts per batch. On top sits a check that is not learned at all: three sums over the library's own answers. The check was itself tested first on the experts' answers, and a part that failed that test would have been dropped. A receipt the check marks <em>reconciled</em> is claimed to be right at least 95% of the time; one with a wrong amount is claimed to be <em>flagged</em> at least half the time. Both claims are decided on the measuring receipts once enough of them are answered, and shown above.</p>
   <p><strong>What it does not do.</strong> It does not read scanned images; it does not decide anything; it does not learn from your documents unless you run it on your own machine with your consent.</p>
   <p><strong>Re-run it.</strong> The repository holds the code, the night records and a tool that re-derives every night byte for byte from the public contracts: <code>node tools/rederive.mjs CUADv1.json</code>. GitHub's own computers do this on every change.</p>
-  <details><summary>The data and its licence</summary><p>CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Hendrycks, Burns, Chen, Ball; NeurIPS 2021), licensed CC BY 4.0. 510 contracts from SEC EDGAR, marked up by trained reviewers. The patterns and records here are derived from it and shared under the same terms.</p></details>
+  <details><summary>The data and its licence</summary><p>CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Hendrycks, Burns, Chen, Ball; NeurIPS 2021), licensed CC BY 4.0. 510 contracts from SEC EDGAR, marked up by trained reviewers. The patterns and records here are derived from it and shared under the same terms.</p>
+  <p>CORD v2, the Consolidated Receipt Dataset for Post-OCR Parsing, by NAVER CLOVA (Park, Shin, Lee, Lee, Surh, Seo and Lee; Document Intelligence Workshop at NeurIPS 2019), licensed CC BY 4.0. 1,000 Indonesian receipts with every kept word labelled; store and payment details were removed by its makers before publishing. Only the text and labels are read, never the images. The patterns and records here are derived from it and shared under the same terms. Re-run library 2: <code>python -I tools/cord_fetch.py cord.jsonl</code>, then <code>node tools/rederive.mjs CUADv1.json --cord cord.jsonl</code>.</p></details>
 </section>
 
 <footer>
-  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · <a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
+  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · <a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
   <p>Powered by the Konomi architecture, created by Thomas Frumkin.</p>
 </footer>
 </main>

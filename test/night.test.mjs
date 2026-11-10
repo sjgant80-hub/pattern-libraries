@@ -177,3 +177,39 @@ test('the proposer set is written in the record from set 2 on, and a set-1 recor
   assert.equal(other.record.free, 2);
   assert.equal(N.NIGHT.free, 2);
 });
+
+// ── library 2 (SEAL 2): the same night for receipts, with the check measured on the meter (R2, R3) ──
+import F from '../src/finance.mjs';
+test('library 2: the finance night runs the same steps, records its own library and feed, and measures the check on the meter', async () => {
+  const FN = N.nightOf(N.FINANCE);
+  const rcpt = (i) => {
+    const t = 'Kopi 20,000\nSUBTOTAL 20,000\nTOTAL ' + (i % 7 ? '20,000' : '22,000') + '\nTUNAI 50,000\nKEMBALI 30,000';   // ctrl-F for 'cash' and 'change' finds nothing here
+    const at = (w) => t.indexOf(w), g = (cat, w) => ({ cat, start: at(w), end: at(w) + w.length });
+    return F.unitsOf({ id: 'r' + i, text: t, gold: [g('menu.price', '20,000'), { cat: 'sub_total.subtotal_price', start: t.indexOf('20,000', 12), end: t.indexOf('20,000', 12) + 6 }, { cat: 'total.total_price', start: t.indexOf('TOTAL ', 15) + 6, end: t.indexOf('TOTAL ', 15) + 12 }, g('total.cashprice', '50,000'), g('total.changeprice', '30,000')] });
+  };
+  const units = {}, ids = [];
+  for (let i = 0; i < 60; i++) { ids.push('r' + i); units['r' + i] = rcpt(i); }
+  const plan = { meter: ids.slice(0, 10), seed: ids.slice(10, 30), batches: [ids.slice(30, 40), ids.slice(40, 50)] };
+  const r = await FN.night({ units, plan, cycle: 0, library: [], records: [], at: AT, parts: ['B', 'C'] });
+  assert.equal(r.ok, true);
+  assert.deepEqual([r.record.library, r.record.feed, r.record.free], ['finance', 'cord-v2', 2]);
+  assert.ok(r.record.patterns > 0, 'the free miners find the receipt words');
+  const c = r.record.meter.check;
+  assert.deepEqual(c.parts, ['B', 'C']);
+  assert.equal(c.receipts, 10);
+  assert.equal(c.reconciled + c.flagged + c.unchecked, 10);
+  assert.ok(r.state.records.every((x) => x.library === 'finance' && x.type === 'money'));
+  assert.match(FN.line(r.record), /^receipt reading library, night 0: \d+ patterns .* · the check: \d+ reconciled, \d+ flagged, \d+ unchecked · final exam: /);
+  assert.equal(r.record.exam.receipt.decision, 'INSUFFICIENT');
+  // spent: no fresh exam left, said plainly, and the check still measured on the meter
+  const x = await FN.night({ units, plan, cycle: 1, library: r.state.library, records: [], at: AT, parts: [] });
+  assert.deepEqual([x.ok, x.code, x.record.exhausted, x.record.meter.check.parts, x.record.meter.check.unchecked], [false, 'exhausted', true, [], 10]);
+  assert.match(FN.line(x.record), /^receipt reading library: no fresh exam left \(all 15 batches spent\)/);
+  // library 1 records no check at all, so its committed nights replay unchanged
+  const d = await N.night({ units: W.units, plan: { meter: W.ids.slice(0, 20), seed: W.ids.slice(20, 50), batches: [W.ids.slice(50, 60), W.ids.slice(60, 70)] }, cycle: 0, library: [], records: [], at: AT });
+  assert.equal('check' in d.record.meter, false);
+  assert.match(N.line(d.record), /^document extraction library, night 0: /);
+  assert.equal(N.line(null), 'document extraction library: no night recorded');
+  assert.equal(FN.line(null), 'receipt reading library: no night recorded');
+  assert.deepEqual([N.NIGHT.max7b, N.FIN_NIGHT.max7b, N.NIGHT.max7b + N.FIN_NIGHT.max7b], [3, 3, 6], 'N1: six local-7B calls a night for the two libraries together');
+});

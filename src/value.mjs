@@ -33,6 +33,20 @@ export function review(inputs, measured) {
   return { ok: true, share: Math.round(share * 1e6) / 1e6, perContractMinutes: Math.round(perContractMinutes * 100) / 100, hours: Math.round(hours * 100) / 100, cost: Math.round(hours * rate * 100) / 100, why: '' };
 }
 
+/** keying(inputs, measured) → { ok, hours, cost, share, why } per month, for receipts (library 2). inputs are the buyer's
+ *  own figures = { receipts, minutes (to key one receipt's amounts by hand), rate (per hour) }; measured = { coverage,
+ *  precision } from library 2's meter. Every question on a receipt is taken to cost the same keying time, and only the
+ *  answers that are right count: a wrong one still has to be keyed. */
+export function keying(inputs, measured) {
+  const i = isObj(inputs) ? inputs : {}, m = isObj(measured) ? measured : {};
+  const receipts = num(i.receipts, 0, 1e8), minutes = num(i.minutes, 0, 600), rate = num(i.rate, 0, 1e5);
+  const coverage = num(m.coverage, 0, 1), precision = m.precision === null ? 0 : num(m.precision, 0, 1);
+  if ([receipts, minutes, rate].includes(null)) return { ok: false, why: 'every input must be a number in range: receipts a month, minutes to key one, and the hourly cost' };
+  if (coverage === null || precision === null) return { ok: false, why: 'the library\'s measured coverage and precision are needed (read from the meter)' };
+  const share = coverage * precision, hours = (receipts * minutes * share) / 60;
+  return { ok: true, share: Math.round(share * 1e6) / 1e6, hours: Math.round(hours * 100) / 100, cost: Math.round(hours * rate * 100) / 100, why: '' };
+}
+
 /** modelCost(prices, model, chars, outTokens) → dollars to send one document of that many characters to the model once,
  *  at about four characters a token (input) plus the output tokens; null if the model has no printed price */
 export function modelCost(prices, model, chars, outTokens) {
@@ -42,4 +56,4 @@ export function modelCost(prices, model, chars, outTokens) {
   return Math.round(((c / 4) * p.in + o * p.out) / 1e6 * 10000) / 10000;
 }
 
-export default { SOURCES, review, modelCost };
+export default { SOURCES, review, keying, modelCost };
