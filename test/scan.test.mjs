@@ -54,8 +54,10 @@ test('the night runners here equal the ones the night runs (when si-didy is on t
 
 test('W3: no tracked file holds a key- or token-shaped string; the scan sees one when there is one', () => {
   assert.equal(count('x sk-ant-' + 'a'.repeat(20) + ' y'), 1);
-  assert.equal(count('"accessToken": "' + 'b'.repeat(20) + '"'), 1);
-  assert.equal(count('CLAUDE_CODE_OAUTH_TOKEN=' + 'c'.repeat(20)), 1);
+  // built from pieces, so this file is never itself shaped like a token
+  const q = String.fromCharCode(34);
+  assert.equal(count(q + 'access' + 'Token' + q + ': ' + q + 'b'.repeat(20) + q), 1);
+  assert.equal(count('CLAUDE_CODE_OAUTH_' + 'TOKEN=' + 'c'.repeat(20)), 1);
   assert.equal(count('sk-ant-short'), 0);
   assert.equal(count(null), 0);
   const files = execFileSync('git', ['ls-files', '-z'], { cwd: new URL('..', import.meta.url), encoding: 'utf8' }).split('\0').filter(Boolean);

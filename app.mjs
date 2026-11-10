@@ -83,7 +83,7 @@ async function main() {
       + box(470, 'Paid tier', 'candidates: ' + (r.asks || []).length, 'calls tonight: 0', false)
       + box(700, 'The library', (r.patterns ?? library.length) + ' patterns', 'coverage ' + pct(r.meter && r.meter.after && r.meter.after.coverage), true)
       + '<path class="line" d="M200 85 H240 M430 85 H470 M660 85 H700"/></svg>'
-      + '<p>' + esc(r.dropped.length) + ' proposals were tested and dropped, ' + esc((r.promoted || []).length) + ' were kept. The local model was ' + (r.model ? 'qwen2.5:7b on this laptop' : 'not available tonight' + (r.why7b ? ' (' + esc(r.why7b) + ')' : '')) + '. '
+      + '<p>' + esc(r.dropped.length) + ' proposals were tested and dropped, ' + esc((r.promoted || []).length) + ' were kept. ' + (r.model ? 'The local model was qwen2.5:7b on this laptop. ' : r.why7b ? esc(r.why7b.charAt(0).toUpperCase() + r.why7b.slice(1)) + '. ' : 'The local model did not fit on this laptop that night. ')
       + ((r.replies || []).filter((x) => !x.ok).length ? esc((r.replies || []).filter((x) => !x.ok).length) + ' model call(s) failed and are recorded as errors, never as empty answers. ' : '')
       + 'The paid tier ' + ((r.asks || []).length ? 'could have been asked about ' + esc(r.asks.map((a) => say(a.task)).join(', ')) + ' (the free tiers and the local model both failed there), but it is off until the owner switches it on.' : 'had nothing to take: no question was left that both cheaper tiers had tried and failed.') + '</p>';
     $('kept').querySelector('tbody').innerHTML = (r.promoted || []).map((p) => '<tr><td>' + explain(p.rule) + '</td><td>' + esc(p.source === '7b' ? 'local 7B' : p.source === 'recipe' ? 'recipe (' + (p.recipe || '').replace('recipe from ', 'from ') + ')' : p.source === 'oauth' ? 'paid tier' : 'free miner') + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td><td>'
@@ -112,7 +112,7 @@ async function main() {
 
   // the wall
   const d = O.DEFAULTS;
-  $('wall-card').innerHTML = '<p><span class="chip wait">OFF until the owner switches it on</span></p><p>Defaults, until the owner sets his own: at most <strong>' + usd(d.dayCents) + '</strong> API-equivalent a UTC day, at most <strong>' + d.perNight + '</strong> calls a night, a stop that latches at <strong>' + usd(d.stopCents) + '</strong> in total, the model <code>' + esc(d.model) + '</code> at effort ' + esc(d.effort) + ', at most ' + d.maxTokens.toLocaleString('en-GB') + ' output tokens. Credit calls made so far: <strong>' + esc(summary ? summary.creditCalls : 0) + '</strong>.</p>';
+  $('wall-card').innerHTML = '<p><span class="chip wait">OFF until the owner switches it on</span></p><p>Defaults, until the owner sets their own: at most <strong>' + usd(d.dayCents) + '</strong> API-equivalent a UTC day, at most <strong>' + d.perNight + '</strong> calls a night, a stop that latches at <strong>' + usd(d.stopCents) + '</strong> in total, the model <code>' + esc(d.model) + '</code> at effort ' + esc(d.effort) + ', at most ' + d.maxTokens.toLocaleString('en-GB') + ' output tokens. Credit calls made so far: <strong>' + esc(summary ? summary.creditCalls : 0) + '</strong>.</p>';
 
   // the blueprint table
   const k = (n) => kernels.find((x) => x.name === n);
