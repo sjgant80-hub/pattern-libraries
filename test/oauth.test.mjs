@@ -32,6 +32,22 @@ test('args: print mode, JSON, no tools, no MCP, nothing saved, and the ceiling a
   assert.equal(O.args(null, 5), null);
 });
 
+test('jobs: each job its own system prompt; no job is the teacher, as before; anything else gets no call', () => {
+  assert.deepEqual(Object.keys(O.SYSTEMS), ['teacher', 'sandbox']);
+  assert.equal(O.SYSTEMS.teacher, O.SYSTEM);
+  assert.equal(O.systemFor(undefined), O.SYSTEM);
+  assert.equal(O.systemFor('teacher'), O.SYSTEM);
+  assert.match(O.systemFor('sandbox'), /^You are Kar, building in your own sandbox/);
+  for (const j of ['', 'nope', 'toString', '__proto__', 'constructor', null, 5, {}]) assert.equal(O.systemFor(j), null, String(j));
+  const cfg = { model: 'claude-opus-5-5', effort: 'medium' };
+  assert.deepEqual(O.args(cfg, 123), O.args(cfg, 123, 'teacher'));                 // the teacher's call is unchanged
+  const s = O.args(cfg, 123, 'sandbox');
+  assert.equal(s[s.indexOf('--system-prompt') + 1], O.SYSTEMS.sandbox);
+  assert.equal(s[s.indexOf('--tools') + 1], '');                                   // still no tools
+  assert.equal(O.args(cfg, 123, 'nope'), null);
+  assert.equal(O.args(cfg, 123, '__proto__'), null);
+});
+
 test('env: every ANTHROPIC_* and CLAUDE* variable removed except the two the CLI needs; the output limit set', () => {
   const e = O.env({ PATH: 'p', ANTHROPIC_API_KEY: 'k', anthropic_base_url: 'u', CLAUDECODE: '1', CLAUDE_CODE_OAUTH_TOKEN: 't', CLAUDE_CODE_GIT_BASH_PATH: 'g', N: 5 }, 4000);
   assert.deepEqual(e, { PATH: 'p', CLAUDE_CODE_OAUTH_TOKEN: 't', CLAUDE_CODE_GIT_BASH_PATH: 'g', CLAUDE_CODE_MAX_OUTPUT_TOKENS: '4000' });

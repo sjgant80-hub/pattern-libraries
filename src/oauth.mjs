@@ -11,6 +11,12 @@ const str = (x) => (typeof x === 'string' ? x : '');
 /** W2: the safe defaults until Simon sets his own. Metered in API-equivalent cents: a subscription has no price per call. */
 export const DEFAULTS = Object.freeze({ dayCents: 100, stopCents: 3000, creditCents: 3000, model: 'claude-opus-5-5', effort: 'medium', maxTokens: 4000, frame: 6000, perNight: 3 });
 export const SYSTEM = 'You write extraction rules for a deterministic pattern library. Reply with rules only, one per line, in exactly the form asked for. No other text.';
+/** The jobs the wire serves, each with its own system prompt (Simon 2026-11-11: "give kar opus, let him build"). A job not
+ *  on this list gets no call. The model never gets tools: what it writes is text the caller checks, files nothing. */
+export const SYSTEMS = Object.freeze({
+  teacher: SYSTEM,
+  sandbox: 'You are Kar, building in your own sandbox: small, pure, deterministic JavaScript kernels and their tests, chosen by you. Every kernel you write goes through a mutation gate before anything is kept, so write tests that would fail if the code were wrong. Reply in exactly the format the prompt asks for. No other text.',
+});
 export const KEEP_ENV = Object.freeze(['CLAUDE_CODE_GIT_BASH_PATH', 'CLAUDE_CODE_OAUTH_TOKEN']);
 
 /** settingsOf(file) → { on, settings }: Simon's file over the defaults. The tier is on only when his file says so. */
@@ -21,12 +27,21 @@ export function settingsOf(file) {
   return { on: f.on === true, settings };
 }
 
-/** args(cfg, ceilingCents) → the CLI's arguments: print mode, JSON out, the model and effort, no tools, no MCP, no
- *  session saved, no slash commands, and the reserved ceiling as the CLI's own budget limit (W1, W3) */
-export function args(cfg, ceilingCents) {
+/** systemFor(job) → the job's system prompt, or null for a job not on the list (no job means the teacher, as before) */
+export function systemFor(job) {
+  const j = job === undefined ? 'teacher' : job;
+  return typeof j === 'string' && Object.prototype.hasOwnProperty.call(SYSTEMS, j) ? SYSTEMS[j] : null;
+}
+
+/** args(cfg, ceilingCents, job) → the CLI's arguments: print mode, JSON out, the model and effort, the job's system
+ *  prompt, no tools, no MCP, no session saved, no slash commands, and the reserved ceiling as the CLI's own budget
+ *  limit (W1, W3). An unknown job gets no arguments, so no call. */
+export function args(cfg, ceilingCents, job) {
   if (!isObj(cfg) || !str(cfg.model) || str(cfg.model).startsWith('-') || !Number.isInteger(ceilingCents) || ceilingCents < 1) return null;
   if (!W.EFFORTS.includes(cfg.effort)) return null;
-  return ['-p', '--output-format', 'json', '--model', cfg.model, '--effort', cfg.effort, '--system-prompt', SYSTEM, '--tools', '',
+  const system = systemFor(job);
+  if (system === null) return null;
+  return ['-p', '--output-format', 'json', '--model', cfg.model, '--effort', cfg.effort, '--system-prompt', system, '--tools', '',
     '--setting-sources', 'project', '--strict-mcp-config', '--no-session-persistence', '--disable-slash-commands', '--no-chrome',
     '--max-budget-usd', (ceilingCents / 100).toFixed(2)];
 }
@@ -70,4 +85,4 @@ export function brief(entries, file, now) {
     + (s.overruns ? ' · ' + s.overruns + ' OVERRUN' : '') + (s.open.length ? ' · ' + s.open.length + ' unsettled, counted at the ceiling' : '');
 }
 
-export default { DEFAULTS, SYSTEM, KEEP_ENV, settingsOf, args, env, reply, brief };
+export default { DEFAULTS, SYSTEM, SYSTEMS, KEEP_ENV, settingsOf, systemFor, args, env, reply, brief };

@@ -32,6 +32,9 @@ A pattern is one or two words near a candidate: `WHEN governed THEN governing-la
 2. **The local 7B** (qwen2.5:7b through Ollama on the same machine), only for questions the free tiers kept nothing for.
 3. **The paid tier last**: the owner's Claude subscription through the official CLI, behind a wall (a day cap and a stop,
    reserved on disk before each call), and **off until the owner switches it on**.
+   The same wire serves a second job since 2026-11-11: **sandbox**, Kar's own builds. It too may be called only after the
+   local 7B has tried that experiment and nothing it wrote passed the gate; the model gets no tools, and every kernel it
+   writes goes through the same mutation gate.
 4. **Two gates**: Kar's pattern law (`vendor/patlib`, reused byte for byte) on candidates in contracts the proposers never
    saw, then a field gate on whole contracts against a cheap method (the first date, the first jurisdiction, ctrl-F for
    the clause's word). Both again on a second batch nobody has looked at.

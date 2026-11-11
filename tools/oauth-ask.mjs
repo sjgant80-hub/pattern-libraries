@@ -69,12 +69,14 @@ async function main() {
     const entries = (() => { try { return readFileSync(LEDGER, 'utf8').split(/\r?\n/).filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }); } catch { return []; } })();
     const prices = rd(PRICES, null);
     const at = new Date().toISOString();
-    const job = (typeof req.library === 'string' && req.library ? req.library + ':' : '') + (typeof req.job === 'string' && req.job ? req.job : 'teacher');
-    const p = W.plan(entries, { job, evidence: req.evidence, bytes: W.bytesOf([O.SYSTEM, req.prompt]) }, settings, prices, at, signedIn());
+    const bare = typeof req.job === 'string' && req.job ? req.job : 'teacher';
+    if (O.systemFor(bare) === null) { out({ ok: false, code: 'args', why: 'no such job: ' + bare.slice(0, 40) }); return; }
+    const job = (typeof req.library === 'string' && req.library ? req.library + ':' : '') + bare;
+    const p = W.plan(entries, { job, evidence: req.evidence, bytes: W.bytesOf([O.systemFor(bare), req.prompt]) }, settings, prices, at, signedIn());
     if (p.entry.kind === 'refuse' && p.entry.code === 'key') p.entry.why = 'no sign-in on disk for the official CLI, so the subscription tier cannot run';
     append(LEDGER, p.entry);
     if (!p.ok) { out({ ok: false, code: p.entry.code, why: p.entry.why, seq: p.entry.seq }); return; }
-    const res = p.entry, cli = cliPath(), a = O.args(p.cfg, res.ceilingCents);
+    const res = p.entry, cli = cliPath(), a = O.args(p.cfg, res.ceilingCents, bare);
     let r = null, why = '';
     if (!cli || !a) why = !cli ? 'the official CLI was not found' : 'the CLI arguments were refused';
     else {
