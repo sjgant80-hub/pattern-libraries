@@ -261,7 +261,7 @@ test('the library\'s place in the cycle: its tasks, its kind, its schedule and b
   assert.deepEqual(F.TASKS, ['total', 'subtotal', 'tax', 'service', 'discount', 'cash', 'change', 'item-price']);
   assert.deepEqual([F.typeOf('tax'), F.typeOf('item-price'), F.typeOf('party')], ['money', 'money', null]);
   assert.deepEqual([F.many('item-price'), F.many('total'), F.many('x'), F.isClause('total')], [true, false, false, false]);
-  assert.deepEqual(F.SCHEDULE, { meter: 100, seed: 300, batch: 40, salt: 'cord:' });
+  assert.deepEqual(F.SCHEDULE, { meter: 100, seed: 300, batch: 40, salt: 'cord:', hash: 'sha256' });
   assert.deepEqual([F.METER_BAR, F.R_BARS.r0, F.R_BARS.r2.min, F.R_BARS.r2.share, F.R_BARS.r3.min, F.R_BARS.r3.share], [0.9, 0.8, 10, 0.95, 5, 0.5]);
   assert.deepEqual(F.TOLERANCE, { whole: 10000, cents: 5 });
   assert.deepEqual(F.DOMAIN.TASKS, F.TASKS);

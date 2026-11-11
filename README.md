@@ -15,6 +15,15 @@ tax plus service, less discount, is the total; cash less change is the total. A 
 were sealed first in [CLAIMS.md](CLAIMS.md) (seal 2), and the check itself was tested on the experts' own receipts
 before it was trusted. CORD has no dates, suppliers or payment terms, so this library does not read them.
 
+**Library 3, triage and routing (customer messages).** Paste a customer message and it routes it to one of 77 banking
+teams (naming any other team that also matched) and flags it when the customer wants a human or something was lost or
+stolen. Learned on Banking77 and NLU++ (16,163 real messages, PolyAI, CC BY 4.0); sealed first in seal 3. It runs on the
+free proposers only.
+
+**Seal 4, a flaw fixed in the open.** The exam order (FNV-1a of salt + id) did not shuffle row-numbered ids, so libraries
+2 and 3 now order by SHA-256; the nights run under the old order are kept in `void/`, re-derived, and counted toward
+nothing. Library 1 was not affected.
+
 ## How a pattern gets in
 
 A pattern is one or two words near a candidate: `WHEN governed THEN governing-law`. Each night:
@@ -40,6 +49,8 @@ npm test
 node tools/rederive.mjs path/to/CUADv1.json
 pip install pyarrow && python -I tools/cord_fetch.py cord.jsonl   # library 2's receipts: text and labels only, ~1.9 MB over the wire
 node tools/rederive.mjs path/to/CUADv1.json --cord cord.jsonl
+node tools/polyai_fetch.mjs polyai   # library 3: Banking77 + NLU++ at a pinned commit, ~1.9 MB
+node tools/rederive.mjs path/to/CUADv1.json --cord cord.jsonl --polyai polyai
 ```
 
 `rederive.mjs` replays every committed night from the public contracts and the recorded model replies and fails on any
@@ -48,6 +59,7 @@ difference. CI does this on every push, plus the witness mutation gate (v0.6, pi
 | kernel | what it is | witness v0.6 |
 |---|---|---|
 | `src/extract.mjs` | scanners, units, the cheap method, the answer | see `data/witness.json` |
+| `src/triage.mjs` | library 3: 77 routes and 2 flags, the keyword router and ctrl-F, the router and its whole measure | 〃 |
 | `src/finance.mjs` | library 2: the amount scanner, units, ctrl-F, the answer, the three-part check and its own test (R0) | 〃 |
 | `src/cycle.mjs` | the fresh exam, the field gate, the meter, the signed exam, miners, recipes; one cycle per library | 〃 |
 | `src/night.mjs` | one night, cheapest tier first; its replay | 〃 |
@@ -66,6 +78,10 @@ records in `data/doc/` are derived from it and shared under the same terms.
 
 CORD v2, the Consolidated Receipt Dataset, by NAVER CLOVA (Park et al., 2019), CC BY 4.0: 1,000 Indonesian receipts.
 Only the `ground_truth` column is read (by `tools/cord_fetch.py`, HTTP range requests at a pinned revision); no image and
-no receipt text is committed here; the records in `data/finance/` are derived from it under the same terms. See [NOTICE](NOTICE).
+no receipt text is committed here; the records in `data/finance/` are derived from it under the same terms.
+
+Banking77 and NLU++ by PolyAI (Casanueva et al., 2020 and 2022), CC BY 4.0: 13,083 and 3,080 customer messages, read
+by `tools/polyai_fetch.mjs` at a pinned commit; no message is committed here; the records in `data/route/` and
+`data/triage/` are derived from them under the same terms. See [NOTICE](NOTICE).
 
 Powered by the Konomi architecture, created by Thomas Frumkin. Code MIT.

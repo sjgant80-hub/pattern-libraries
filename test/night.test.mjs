@@ -213,3 +213,30 @@ test('library 2: the finance night runs the same steps, records its own library 
   assert.equal(FN.line(null), 'receipt reading library: no night recorded');
   assert.deepEqual([N.NIGHT.max7b, N.FIN_NIGHT.max7b, N.NIGHT.max7b + N.FIN_NIGHT.max7b], [3, 3, 6], 'N1: six local-7B calls a night for the two libraries together');
 });
+
+// ── library 3 (SEAL 3): routing and triage, each its own night, the free tiers only ──
+import TR from '../src/triage.mjs';
+test('library 3: routing and triage nights run the free tiers only, record their library, and routing measures the router whole', async () => {
+  const say = ['please track my card', 'link my card please', 'what exchange rate today'], gold = ['card_arrival', 'card_linking', 'exchange_rate'];
+  const units = {}, ids = [];
+  for (let i = 0; i < 90; i++) { const id = 'q' + i; ids.push(id); units[id] = TR.routeUnits({ id, text: say[i % 3] + ' ' + (i % 2 ? 'now' : 'soon'), intent: gold[i % 3] }); }
+  const plan = { meter: ids.slice(0, 30), seed: ids.slice(30, 60), batches: [ids.slice(60, 75), ids.slice(75, 90)] };
+  const RN = N.nightOf(N.ROUTE);
+  let asked = 0;
+  const r = await RN.night({ units, plan, cycle: 0, library: [], records: [], at: AT, ask: async () => { asked++; return { ok: true, text: '' }; } });
+  assert.equal(asked, 0, 'no model call: N4');
+  assert.deepEqual([r.ok, r.record.library, r.record.feed, r.record.replies.length], [true, 'route', 'banking77', 0]);
+  assert.ok(r.record.patterns > 0);
+  const k = r.record.meter.check;
+  assert.deepEqual(Object.keys(k), ['queries', 'routed', 'right', 'conflicts', 'baseRouted', 'baseRight']);
+  assert.equal(k.queries, 30);
+  assert.ok(r.state.records.every((x) => x.library === 'route' && x.type === 'route'));
+  assert.match(RN.line(r.record), /^routing library, night 0: \d+ patterns .* · the router: \d+ of 30 routed, \d+ right, \d+ with a conflict \(the keyword router: \d+ routed, \d+ right\) · final exam: /);
+  const TN = N.nightOf(N.TRIAGE);
+  const tu = {}, tids = [];
+  for (let i = 0; i < 60; i++) { const id = 't' + i; tids.push(id); tu[id] = TR.triageUnits({ id, text: i % 4 ? 'what time is checkout' : 'let me talk to a person', intents: i % 4 ? [] : ['handoff'] }); }
+  const t = await TN.night({ units: tu, plan: { meter: tids.slice(0, 20), seed: tids.slice(20, 40), batches: [tids.slice(40, 50), tids.slice(50, 60)] }, cycle: 0, library: [], records: [], at: AT });
+  assert.deepEqual([t.ok, t.record.library, t.record.feed, 'check' in t.record.meter], [true, 'triage', 'nlupp', false]);
+  assert.match(TN.line(t.record), /^triage library, night 0: /);
+  assert.deepEqual([N.ROUTE_NIGHT.max7b, N.TRIAGE_NIGHT.max7b, N.ROUTE.batches, N.TRIAGE.batches], [0, 0, 9, 4]);
+});

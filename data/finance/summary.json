@@ -3,7 +3,7 @@
  "series": [
   {
    "cycle": 0,
-   "at": "2026-11-10T21:40:54.619Z",
+   "at": "2026-11-11T11:28:12.210Z",
    "patterns": 0,
    "coverage": 0,
    "precision": null,
@@ -49,5 +49,55 @@
   "B",
   "C"
  ],
- "creditCalls": 0
+ "creditCalls": 0,
+ "void": [
+  {
+   "file": "void/cycle-0.json",
+   "cycle": 0,
+   "at": "2026-11-10T21:40:54.619Z",
+   "patterns": 0,
+   "coverage": 0,
+   "precision": null,
+   "answered": 0,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "file": "void/cycle-1.json",
+   "cycle": 1,
+   "at": "2026-11-11T03:14:04.168Z",
+   "patterns": 2,
+   "coverage": 0.1325,
+   "precision": 0.858491,
+   "answered": 106,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  }
+ ]
 }

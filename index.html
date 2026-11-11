@@ -59,11 +59,11 @@ details summary { cursor: pointer; color: var(--accent); }
 <main>
 <header class="top" id="what">
   <h1>Readers that have to prove every pattern they learn</h1>
-  <p class="lede">Paste a contract and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Paste a receipt and it reads the line items, subtotal, tax, service charge, discount, total, cash and change, then checks them against each other by plain arithmetic. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing. It answers only what it has proven, and the figures just below say how much that is today.</p>
-  <p>Both readers learn every night, on this laptop: the contract reader from 510 real commercial contracts, the receipt reader from 1,000 real receipts. A new pattern is kept only if it beats a cheap method on documents it has never seen, and then passes a second exam on documents nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your document never calls any model: it only applies the proven patterns.</p>
+  <p class="lede">Paste a contract and it reads it for the dates, the parties, the governing law, the renewal and notice terms, the money caps, and ten kinds of clause. Paste a receipt and it reads the line items, subtotal, tax, service charge, discount, total, cash and change, then checks them against each other by plain arithmetic. Paste a customer's message and it routes it to one of 77 banking teams, and flags it when the customer wants a human or something was lost or stolen. Each answer comes with the exact pattern that found it. When no proven pattern fits, it says <em>unknown</em> instead of guessing. It answers only what it has proven, and the figures just below say how much that is today.</p>
+  <p>The readers learn every night, on this laptop: the contract reader from 510 real commercial contracts, the receipt reader from 1,000 real receipts, the message router from 16,163 real customer messages. A new pattern is kept only if it beats a cheap method on documents it has never seen, and then passes a second exam on documents nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your document never calls any model: it only applies the proven patterns.</p>
   <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
   <nav class="toc" aria-label="On this page">
-    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
+    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#message">Try it on a message</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#library3">Messages: routing and triage</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
     <a href="#builds">How each pattern was built</a><a href="#wall">The credit wall</a><a href="#blueprint">Blueprint</a><a href="#libraries">The libraries</a><a href="#business">For your business</a><a href="#paper">White paper</a>
   </nav>
 </header>
@@ -87,11 +87,21 @@ details summary { cursor: pointer; color: var(--accent); }
   <p class="muted">"What ctrl-F would say" is the cheap method the library has to beat: for each amount, the first one at or after the first line holding its word (total, sub, tax, serv, disc, cash, change); for line items, every amount above the first line holding "total". The check below the table runs the same arithmetic on both: items add up to the subtotal; subtotal plus tax plus service, less discount, is the total; cash less change is the total. A receipt that does not add up is <strong>flagged</strong> for a person to look at; the check never changes an answer. A flagged receipt is not corrected and not booked by itself: it goes to whoever keys receipts today, with the sum that failed written out (as in the line above), so they know where to look. How your receipts are handled is under <a href="#business">Security, data protection and audit</a>.</p>
 </section>
 
+<section id="message" aria-labelledby="message-h">
+  <h2 id="message-h">Try it on a customer message (library 3)</h2>
+  <p>The sample is made up, in the style of the messages the library learns from. Paste a real one: a chat line or an email to a bank. It is read in your browser; nothing is sent anywhere.</p>
+  <textarea id="mdoc" aria-label="Customer message" style="min-height:90px"></textarea>
+  <p><button id="mread">Route it</button> <button id="msample" class="ghost">Put the sample back</button></p>
+  <div class="card" id="manswer" aria-live="polite"></div>
+  <p class="muted">The <strong>route</strong> is the team the first kept routing pattern points to; if patterns for other teams also fired, they are named, never hidden. Beside it is what the cheap method, a <strong>keyword router</strong>, would do: send the message to the first team whose own name's words are all in it. The <strong>flags</strong> say "wants a human" or "something lost or stolen" when a kept triage pattern fires; a message with no flag goes to the normal queue and is never called safe.</p>
+</section>
+
 <section id="start" aria-labelledby="start-h">
   <h2 id="start-h">Start here</h2>
   <ol class="steps">
     <li><strong>Read a contract.</strong> In <a href="#try">Try it</a>, press <em>Read it</em>. Every row is one question. An answer shows the words the library picked and the pattern that picked them, for example "near the word <code>governed</code>, a jurisdiction is the governing law". An <em>unknown</em> means no kept pattern fired; in a real deployment that question goes to a model or a person.</li>
     <li><strong>Read a receipt.</strong> In <a href="#receipt">Try it on a receipt</a>, press <em>Read it</em>. Each row is one amount; beside the library's answer is what the cheap method (ctrl-F) would have said. Under the table, the check adds the amounts up and says <em>reconciled</em>, <em>flagged</em> (it does not add up: look at it) or <em>unchecked</em> (too few amounts answered to check).</li>
+    <li><strong>Route a message.</strong> In <a href="#message">Try it on a message</a>, press <em>Route it</em>: the team its patterns point to (or unknown), any other team that also matched, what a keyword router would have done, and the flags raised.</li>
     <li><strong>See what it learned and why.</strong> <a href="#night">Last night, step by step</a> shows the real night: how many patterns were proposed, by whom (a free word-counting miner, or the local AI model), which were kept, and why every other one was thrown out.</li>
     <li><strong>See how it is tested.</strong> <a href="#exam">The fresh exam</a> shows how the 510 contracts are split so that every night is tested on contracts it never saw, and why no exam is ever used twice.</li>
     <li><strong>See what it costs.</strong> <a href="#wall">The credit wall</a> shows the paid tier: the last resort, capped per day, off until the keeper switches it on.</li>
@@ -132,6 +142,28 @@ details summary { cursor: pointer; color: var(--accent); }
   <div id="fin-climb" class="card"></div>
   <h3>Library 2's sealed claims, decided from the records</h3>
   <div class="table-wrap"><table id="fin-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
+  <h3>Nights kept but not counted (seal 4)</h3>
+  <div class="card" id="fin-void"></div>
+</section>
+
+<section id="library3" aria-labelledby="library3-h">
+  <h2 id="library3-h">Messages (library 3): routing and triage, last night</h2>
+  <p>Library 3 has two parts, each grown as its own library on its own sealed bars (<a href="CLAIMS.md">CLAIMS.md</a>, seal 3). <strong>Routing</strong> learns from Banking77: 13,083 online-banking customer messages, each labelled with one of 77 intents. <strong>Triage</strong> learns from NLU++: 3,080 banking and hotel messages whose labels include "wants a human" and "something lost or stolen". Both are by PolyAI, CC BY 4.0. Library 3 runs on the free proposers only: the local model's calls each night stay with libraries 1 and 2. Everything below is read from the nights' own records.</p>
+  <h3>Routing</h3>
+  <div class="card" id="l3r-flow"><p class="muted">Loading the night's record…</p></div>
+  <div class="card" id="l3r-router"></div>
+  <div class="table-wrap"><table id="l3r-kept"><thead><tr><th>Pattern</th><th>Team</th><th>Held-out: right / fired</th><th>Final: right / fired</th><th>Messages right vs the keyword router</th><th>Receipt</th></tr></thead><tbody></tbody></table></div>
+  <h3>Why the other routing proposals were thrown out</h3>
+  <div id="l3r-drops" class="card"></div>
+  <h3>Triage</h3>
+  <div class="card" id="l3t-flow"></div>
+  <div id="l3t-drops" class="card"></div>
+  <h3>Night by night</h3>
+  <div id="l3-climb" class="card"></div>
+  <h3>Library 3's sealed claims, decided from the records</h3>
+  <div class="table-wrap"><table id="l3-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
+  <h3>Nights kept but not counted (seal 4)</h3>
+  <div class="card" id="l3-void"></div>
 </section>
 
 <section id="how" aria-labelledby="how-h">
@@ -256,7 +288,26 @@ details summary { cursor: pointer; color: var(--accent); }
     <li><strong>The receipt reader learned on Indonesian shop and restaurant receipts.</strong> UK VAT receipts and supplier invoices need their own marked-up examples; the method and the check are the same.</li>
     <li><strong>It reads text, not photos.</strong> A receipt photo goes through text recognition first; the library reads the lines that come out.</li>
     <li><strong>No dates, suppliers or payment terms on receipts.</strong> The public set had them removed before it was published, so this library does not read them and does not claim to.</li>
+    <li><strong>The message router learned on one bank's kind of questions.</strong> Its 77 teams are Banking77's intents. Your teams and your customers' words need your own labelled messages; the method is the same.</li>
+    <li><strong>No flag does not mean safe.</strong> A message with no "wants a human" or "lost or stolen" flag goes to the normal queue, where a person reads it as today.</li>
   </ul>
+  <h3 id="tri-biz">Customer messages: routing and triage (library 3)</h3>
+  <p>Someone reads every incoming message to decide which team it belongs to, and whether it cannot wait. Library 3 takes that first pass: it sends a message to the team its proven patterns point to, names any other team that also matched, and raises a flag when the customer asks for a human or something was lost or stolen. What it cannot prove goes to the person who sorts messages today.</p>
+  <p class="card" id="tri-today"></p>
+  <div class="grid">
+    <div class="card"><strong>Head of customer service</strong><p>Each message it routes arrives with the pattern that put it there, and a conflict between two teams is shown rather than guessed away. How often it routes, and how often right, is measured every night and shown above.</p></div>
+    <div class="card"><strong>Operations</strong><p>The sorting step costs nothing per message and runs the same way every time; what comes back unknown is sorted by hand, exactly as today.</p></div>
+    <div class="card"><strong>Risk and compliance</strong><p>"Wants a human" and "lost or stolen" are flags you can audit: each names its rule, its exam scores and a receipt, and the record of every night is public.</p></div>
+    <div class="card"><strong>Technology and security</strong><p>Runs in the browser or on one machine, offline; no message leaves it, and no model reads it.</p></div>
+  </div>
+  <h3>What sorting time it gives back</h3>
+  <p>The inputs are yours; the example figures are placeholders. Only the share of messages the router routes, and only the share it routes right, count.</p>
+  <div class="card">
+    <div class="grid" id="tri-calc-in"></div>
+    <p class="big" id="tri-calc-out">—</p>
+    <p class="muted" id="tri-calc-why"></p>
+  </div>
+  <div class="card" id="tri-vs"></div>
   <h3 id="fin-biz">Receipts and bookkeeping (library 2)</h3>
   <p>Keying receipts is a person typing amounts that are already printed. Library 2 takes that first pass, line items, subtotal, tax, service, discount, total, cash and change, and then checks its own answers by arithmetic, so a receipt that does not add up is flagged for a person before anyone relies on it. Like library 1, it answers only what it has proven.</p>
   <p class="card" id="fin-today"></p>
@@ -285,14 +336,17 @@ details summary { cursor: pointer; color: var(--accent); }
   <p><strong>The bars were sealed first.</strong> The claims and every number in them were committed before any code (<a href="CLAIMS.md">CLAIMS.md</a>, seal 1). A claim that misses its bar is kept and shown as failed.</p>
   <div class="table-wrap"><table id="claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
   <p><strong>Library 2, receipts.</strong> The same night and the same two gates, on its own sealed bars (seal 2, committed before its code): seven amounts read one per receipt and the line items read many per receipt, against ctrl-F, on a fresh exam of 40 receipts per batch. On top sits a check that is not learned at all: three sums over the library's own answers. The check was itself tested first on the experts' answers, and a part that failed that test would have been dropped. A receipt the check marks <em>reconciled</em> is claimed to be right at least 95% of the time; one with a wrong amount is claimed to be <em>flagged</em> at least half the time. Both claims are decided on the measuring receipts once enough of them are answered, and shown above.</p>
+  <p><strong>Library 3, messages.</strong> Routing and triage, the same night and the same two gates, on their own sealed bars (seal 3): each of 77 teams is a question asked of every message, against a keyword router built from the teams' own names; the two triage flags against ctrl-F. The router is measured whole every night: how many messages it routed, how many right, how many with a conflict, and the keyword router's own figures on the same messages.</p>
+  <p><strong>A flaw found and fixed in the open (seal 4).</strong> Every library cut its exams from one fixed order of its documents, made by hashing their ids. For ids that are consecutive row numbers, that hash did not shuffle: library 3's routing exams held only about 50 of the 77 teams, and library 2's receipt meter came from 8 of 20 parts of its file. Libraries 2 and 3 now order by a hash that mixes (SHA-256); the nights made under the old order are kept, re-derived and shown, and counted toward nothing. Library 1 was not affected.</p>
   <p><strong>What it does not do.</strong> It does not read scanned images; it does not decide anything; it does not learn from your documents unless you run it on your own machine with your consent.</p>
   <p><strong>Re-run it.</strong> The repository holds the code, the night records and a tool that re-derives every night byte for byte from the public contracts: <code>node tools/rederive.mjs CUADv1.json</code>. GitHub's own computers do this on every change.</p>
   <details><summary>The data and its licence</summary><p>CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Hendrycks, Burns, Chen, Ball; NeurIPS 2021), licensed CC BY 4.0. 510 contracts from SEC EDGAR, marked up by trained reviewers. The patterns and records here are derived from it and shared under the same terms.</p>
-  <p>CORD v2, the Consolidated Receipt Dataset for Post-OCR Parsing, by NAVER CLOVA (Park, Shin, Lee, Lee, Surh, Seo and Lee; Document Intelligence Workshop at NeurIPS 2019), licensed CC BY 4.0. 1,000 Indonesian receipts with every kept word labelled; store and payment details were removed by its makers before publishing. Only the text and labels are read, never the images. The patterns and records here are derived from it and shared under the same terms. Re-run library 2: <code>python -I tools/cord_fetch.py cord.jsonl</code>, then <code>node tools/rederive.mjs CUADv1.json --cord cord.jsonl</code>.</p></details>
+  <p>CORD v2, the Consolidated Receipt Dataset for Post-OCR Parsing, by NAVER CLOVA (Park, Shin, Lee, Lee, Surh, Seo and Lee; Document Intelligence Workshop at NeurIPS 2019), licensed CC BY 4.0. 1,000 Indonesian receipts with every kept word labelled; store and payment details were removed by its makers before publishing. Only the text and labels are read, never the images. The patterns and records here are derived from it and shared under the same terms. Re-run library 2: <code>python -I tools/cord_fetch.py cord.jsonl</code>, then <code>node tools/rederive.mjs CUADv1.json --cord cord.jsonl</code>.</p>
+  <p>Banking77 (Casanueva, Temčinas, Gerz, Henderson and Vulić, 2020) and NLU++ (Casanueva, Vulić, Spithourakis and Budzianowski, 2022), by PolyAI, licensed CC BY 4.0, from github.com/PolyAI-LDN/task-specific-datasets at one pinned commit. 13,083 and 3,080 customer messages with their makers' labels. The patterns and records here are derived from them and shared under the same terms. Re-run library 3: <code>node tools/polyai_fetch.mjs polyai</code>, then <code>node tools/rederive.mjs CUADv1.json --polyai polyai</code>.</p></details>
 </section>
 
 <footer>
-  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · <a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
+  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · message data Banking77 and NLU++ by PolyAI, CC BY 4.0 ·<a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
   <p>Powered by the Konomi architecture, created by Thomas Frumkin.</p>
 </footer>
 </main>

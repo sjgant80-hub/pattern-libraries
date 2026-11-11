@@ -26,13 +26,15 @@ jobs:
           mkdir -p /tmp/cord
           python -I tools/cord_fetch.py /tmp/cord/cord-v2-ground-truth.jsonl
           echo "272432829e501edde76ee9457a04c146e4e6e5d7fb40c0c395fc71a93f82c613  /tmp/cord/cord-v2-ground-truth.jsonl" | sha256sum -c -
-      - name: every committed night of both libraries re-derives byte for byte from the public data (X3, F3), with R0 re-run
-        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl
+      - name: the pinned PolyAI messages (Banking77 + NLU++, commit 57ec275), checked by their manifest hash
+        run: node tools/polyai_fetch.mjs /tmp/polyai --check d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5
+      - name: every committed night of every library re-derives byte for byte from the public data (X3, F3, T3), with R0 re-run and the void nights replayed under their old order (seal 4)
+        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl --polyai /tmp/polyai
       # Pinned. An unpinned gate is a gate somebody else can change.
       - name: witness - every mutant of every kernel must die, and the committed counts must re-derive
         run: |
           git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git /tmp/witness
-          for n in extract cycle build night oauth value finance; do
+          for n in extract cycle build night oauth value finance triage; do
             node /tmp/witness/witness.mjs mutate "src/$n.mjs" --timeout 60000 --cap 2000 --test node --test "test/$n.test.mjs" > "/tmp/w-$n.json" || true
             node tools/witness-check.mjs "$n" "/tmp/w-$n.json"
           done

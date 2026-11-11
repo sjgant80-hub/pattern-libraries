@@ -17,6 +17,14 @@ DATA
   commits no receipt text from it; the patterns, scores and records in data/finance/ are derived from it and are shared
   under the same CC BY 4.0 terms. The sample receipt on the live page is made up.
 
+- Banking77 (Iñigo Casanueva, Tadas Temčinas, Daniela Gerz, Matthew Henderson, Ivan Vulić; "Efficient Intent Detection
+  with Dual Sentence Encoders", 2020) and NLU++ (Iñigo Casanueva, Ivan Vulić, Georgios Spithourakis, Paweł Budzianowski,
+  2022), by PolyAI, licensed CC BY 4.0 (https://github.com/PolyAI-LDN/task-specific-datasets, commit
+  57ec275d8078af65b7731c2a98be812d844a6d6b; the 45 files used hash to the manifest
+  d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5, made by tools/polyai_fetch.mjs). This repository
+  commits no message from them; the patterns, scores and records in data/route/ and data/triage/ are derived from them
+  and are shared under the same CC BY 4.0 terms. The sample message on the live page is made up.
+
 REUSED CODE (vendored byte for byte, each pinned by hash in test/vendor.test.mjs)
 - vendor/patlib/patlib.mjs: Kar's pattern-library law (si-didy, sealed 2026-11-06, 53cfed8).
 - vendor/mint/src/{baseline,experiment,journal}.mjs and vendor/mint/vendor/fall-kit/light/sha256.mjs: the baseline

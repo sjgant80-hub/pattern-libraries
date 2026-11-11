@@ -20,6 +20,7 @@
 //   recipe(records, task, type)  the build-pattern lookup: words that worked for another task of the same kind (P3)
 import P from '../vendor/patlib/patlib.mjs';
 import { agreement, outcome } from '../vendor/mint/src/baseline.mjs';
+import { sha256, hex } from '../vendor/mint/vendor/fall-kit/light/sha256.mjs';
 import E from './extract.mjs';
 
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
@@ -37,11 +38,15 @@ export const FIELD_GATE = Object.freeze({
 export const EXAM = Object.freeze({ minImprovement: 0.1, zCrit: 1.96, alpha: 0.05, minSample: 20 });
 export const METER_BAR = 0.75;
 
-/** schedule(ids, s) → the fixed order (FNV-1a of salt + id, then the id) and its slices */
+/** schedule(ids, s) → the fixed order and its slices. The order is FNV-1a of salt + id, then the id (seal 1); a schedule
+ *  with hash 'sha256' orders by the SHA-256 hex of salt + id instead, then the id (seal 4: FNV-1a does not shuffle ids
+ *  that are consecutive row numbers) */
 export function schedule(ids, s = SCHEDULE) {
   const S = isObj(s) ? s : SCHEDULE;
-  const order = [...new Set(arr(ids).filter((x) => typeof x === 'string' && x))]
-    .sort((a, b) => P.fnv(S.salt + a) - P.fnv(S.salt + b) || first(a, b));
+  const uniq = [...new Set(arr(ids).filter((x) => typeof x === 'string' && x))];
+  const h = new Map(S.hash === 'sha256' ? uniq.map((x) => [x, hex(sha256(new TextEncoder().encode(S.salt + x)))]) : []);
+  const order = S.hash === 'sha256' ? uniq.sort((a, b) => { const x = h.get(a), y = h.get(b); return x === y ? first(a, b) : first(x, y); })
+    : uniq.sort((a, b) => P.fnv(S.salt + a) - P.fnv(S.salt + b) || first(a, b));
   const meter = order.slice(0, S.meter), seed = order.slice(S.meter, S.meter + S.seed), rest = order.slice(S.meter + S.seed);
   const batches = [];
   for (let i = 0; i + S.batch <= rest.length; i += S.batch) batches.push(rest.slice(i, i + S.batch));

@@ -2,7 +2,8 @@
 // tools/rederive.mjs — X3 and F3: every committed night re-derives byte for byte from the pinned source and the recorded
 // replies. Nights are replayed in order from an empty library; each night's credit step (if it ran) is replayed from
 // its record too. Any difference is a failure. Library 2's nights also carry the rule's own test (R0), re-run here on
-// all 1,000 receipts.
+// all 1,000 receipts. Each library's void/ nights (seal 4: made under the FNV-1a order) are replayed too, under that old
+// order, to prove they are kept as they were written; they count toward nothing.
 //   node tools/rederive.mjs <CUADv1.json> [--dir data/doc/nights] [--cord <cord-v2-ground-truth.jsonl>] [--fdir data/finance/nights]
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -14,14 +15,17 @@ import N from '../src/night.mjs';
 import B from '../src/build.mjs';
 import E from '../src/extract.mjs';
 import F from '../src/finance.mjs';
+import T from '../src/triage.mjs';
+import PA from './polyai.mjs';
 import P from '../vendor/patlib/patlib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir'].includes(args[i - 1]));
+const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai'].includes(args[i - 1]));
 const DIR = opt('--dir') || fileURLToPath(new URL('../data/doc/nights', import.meta.url));
 const CORD = opt('--cord'), FDIR = opt('--fdir') || fileURLToPath(new URL('../data/finance/nights', import.meta.url));
-if (!src) { console.error('usage: rederive.mjs <CUADv1.json> [--dir <nights>] [--cord <cord-v2-ground-truth.jsonl>] [--fdir <nights>]'); process.exit(2); }
+const POLY = opt('--polyai');
+if (!src) { console.error('usage: rederive.mjs <CUADv1.json> [--dir <nights>] [--cord <cord-v2-ground-truth.jsonl>] [--fdir <nights>] [--polyai <dir>]'); process.exit(2); }
 const RUNNER = ['source', 'why7b', 'dry', 'r0'];
 const strip = (r) => { const o = { ...r }; for (const k of RUNNER) delete o[k]; return o; };
 const nightsIn = (dir) => (existsSync(dir) ? readdirSync(dir).filter((f) => /^cycle-\d+\.json$/.test(f)).sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0])) : []);
@@ -59,6 +63,14 @@ async function replay(L) {
   return bad;
 }
 
+/** voidToo(L, dir, oldPlan) → the live replay, then (if the library has one) its void folder under the old order */
+async function voidToo(L, oldPlan) {
+  let n = await replay(L);
+  const vdir = L.dir.replace(/nights$/, 'void');
+  if (existsSync(vdir) && nightsIn(vdir).length) { console.log(L.id + ' void (made under the old FNV-1a order, kept, not counted):'); n += await replay({ ...L, id: L.id + ' void', dir: vdir, plan: oldPlan }); }
+  return n;
+}
+
 let bad = 0;
 const docs = C.load(src);
 bad += await replay({ id: 'doc', dir: DIR, units: C.units(docs), plan: Y.schedule(docs.map((d) => d.id)), run: N, Q: Y, typeOf: E.typeOf,
@@ -69,10 +81,18 @@ if (CORD) {
   const ids = receipts.map((d) => d.id), units = C2.units(receipts);
   const r0 = F.ruleTest(units, ids), parts = F.partsOf(r0);
   console.log('finance R0, the rule on the experts\' own values: ' + F.PARTS.map((k) => k + ' held on ' + r0[k].held + ' of ' + r0[k].ran).join(', ') + ' · kept parts: ' + (parts.join(', ') || 'none'));
-  bad += await replay({ id: 'finance', dir: FDIR, units, plan: Y.schedule(ids, F.SCHEDULE), run: N.nightOf(N.FINANCE), Q: N.FINANCE.Y, typeOf: F.typeOf,
+  bad += await voidToo({ id: 'finance', dir: FDIR, units, plan: Y.schedule(ids, F.SCHEDULE), run: N.nightOf(N.FINANCE), Q: N.FINANCE.Y, typeOf: F.typeOf,
     sourceOk: (rec) => rec.source && rec.source.sha256 === C2.SOURCE.sha256,
     extra: (rec) => (JSON.stringify(rec.r0) === JSON.stringify(r0) ? '' : 'its R0 is not the one re-run here'),
-    input: () => ({ parts }) });
+    input: () => ({ parts }) }, Y.schedule(ids, { ...F.SCHEDULE, hash: 'fnv' }));
+}
+if (POLY) {
+  const q = PA.load(POLY);   // refuses files that are not the pinned ones
+  const ok = (rec) => rec.source && rec.source.manifest === PA.SOURCE.manifest && rec.source.commit === PA.SOURCE.commit;
+  bad += await voidToo({ id: 'route', dir: fileURLToPath(new URL('../data/route/nights', import.meta.url)), units: PA.routeUnits(q.routes), plan: Y.schedule(q.routes.map((d) => d.id), T.ROUTE_SCHEDULE),
+    run: N.nightOf(N.ROUTE), Q: N.ROUTE.Y, typeOf: T.ROUTE_DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) }, Y.schedule(q.routes.map((d) => d.id), { ...T.ROUTE_SCHEDULE, hash: 'fnv' }));
+  bad += await voidToo({ id: 'triage', dir: fileURLToPath(new URL('../data/triage/nights', import.meta.url)), units: PA.triageUnits(q.triage), plan: Y.schedule(q.triage.map((d) => d.id), T.TRIAGE_SCHEDULE),
+    run: N.nightOf(N.TRIAGE), Q: N.TRIAGE.Y, typeOf: T.TRIAGE_DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) }, Y.schedule(q.triage.map((d) => d.id), { ...T.TRIAGE_SCHEDULE, hash: 'fnv' }));
 }
 console.log(bad ? bad + ' night(s) did NOT re-derive' : 'every committed night re-derived byte for byte');
 process.exit(bad ? 1 : 0);

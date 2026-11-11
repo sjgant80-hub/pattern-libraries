@@ -17,6 +17,7 @@
 import P from '../vendor/patlib/patlib.mjs';
 import E from './extract.mjs';
 import F from './finance.mjs';
+import T from './triage.mjs';
 import Y from './cycle.mjs';
 import B from './build.mjs';
 
@@ -32,7 +33,15 @@ export const FIN_NIGHT = Object.freeze({ max7b: 3, clockMinutes: 25, numPredict:
 
 /** the libraries: what each night needs to know about its library */
 export const DOC = Object.freeze({ NIGHT, D: E, Y, name: 'document extraction', batches: 15 });
-export const FINANCE = Object.freeze({ NIGHT: FIN_NIGHT, D: F, Y: Object.freeze({ ...Y, ...Y.cycleFor(F.DOMAIN) }), name: 'receipt reading', batches: 15, check: true });
+export const FINANCE = Object.freeze({ NIGHT: FIN_NIGHT, D: F, Y: Object.freeze({ ...Y, ...Y.cycleFor(F.DOMAIN) }), name: 'receipt reading', batches: 15,
+  check: (lib, units, ids, I) => ({ parts: arr(I.parts), ...F.checkOn(lib, units, ids, arr(I.parts)) }) });
+// library 3 (SEAL 3): routing and triage, each its own night library; the free tiers only (N4: no 7B call, so no
+// credit-tier candidate); routing measures the router whole on its meter (T5)
+export const ROUTE_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: 'route', feed: 'banking77', prompt: 'prompt-v1', free: 2 });
+export const TRIAGE_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: 'triage', feed: 'nlupp', prompt: 'prompt-v1', free: 2 });
+export const ROUTE = Object.freeze({ NIGHT: ROUTE_NIGHT, D: T.ROUTE_DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(T.ROUTE_DOMAIN) }), name: 'routing', batches: 9,
+  check: (lib, units, ids) => T.routeOn(lib, units, ids) });
+export const TRIAGE = Object.freeze({ NIGHT: TRIAGE_NIGHT, D: T.TRIAGE_DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(T.TRIAGE_DOMAIN) }), name: 'triage', batches: 4 });
 
 const countBy = (list, key) => { const o = {}; for (const x of list) { const k = key(x); o[k] = (o[k] || 0) + 1; } return o; };
 
@@ -66,8 +75,9 @@ export function nightOf(L) {
     const meterIds = arr(plan.meter);
     const free = I.free === 1 ? 1 : NT.free;
     const base = { kind: 'library-night', v: 1, library: NT.library, feed: NT.feed, cycle, at, model, ...(free === 1 ? {} : { free }) };
-    // a library with a check measures it on the meter, with only the parts the rule's own test (R0) kept
-    const check = (lib) => (L.check ? { parts: arr(I.parts), ...F.checkOn(lib, units, meterIds, arr(I.parts)) } : null);
+    // a library with a check measures it on the meter: finance its arithmetic (only the parts R0 kept), routing the
+    // router whole (T5)
+    const check = (lib) => (typeof L.check === 'function' ? L.check(lib, units, meterIds, I) : null);
 
     const slices = Y.slicesFor(plan, cycle);
     if (!slices) {
@@ -150,7 +160,8 @@ export function nightOf(L) {
     const m = rec.meter || {}, x = rec.exam && rec.exam.receipt, k = m.check;
     return L.name + ' library, night ' + rec.cycle + ': ' + rec.patterns + ' patterns (' + arr(rec.promoted).length + ' kept tonight, ' + arr(rec.dropped).length + ' dropped: ' + (top || 'none') + ')'
       + ' · coverage on the meter ' + pct(m.before && m.before.coverage) + ' → ' + pct(m.after && m.after.coverage) + ', right ' + pct(m.after && m.after.precision) + ' when it answers'
-      + (isObj(k) ? ' · the check: ' + k.reconciled + ' reconciled, ' + k.flagged + ' flagged, ' + k.unchecked + ' unchecked' : '')
+      + (isObj(k) && 'reconciled' in k ? ' · the check: ' + k.reconciled + ' reconciled, ' + k.flagged + ' flagged, ' + k.unchecked + ' unchecked' : '')
+      + (isObj(k) && 'routed' in k ? ' · the router: ' + k.routed + ' of ' + k.queries + ' routed, ' + k.right + ' right, ' + k.conflicts + ' with a conflict (the keyword router: ' + k.baseRouted + ' routed, ' + k.baseRight + ' right)' : '')
       + ' · final exam: ' + (x && x.ok ? x.decision + ' (' + x.right + '/' + x.answered + ' vs the cheap baseline ' + x.baseRight + ')' : 'nothing carried in to examine')
       + ' · 7B ' + arr(rec.replies).length + ' calls · credit tier candidates: ' + (arr(rec.asks).map((a) => a.task).join(', ') || 'none');
   }
@@ -171,4 +182,4 @@ export function replayAsk(record) {
 // library 1, bound: the names every caller already uses
 export const { freeProposals, night, line } = nightOf(DOC);
 
-export default { NIGHT, FIN_NIGHT, DOC, FINANCE, nightOf, freeProposals, night, replayAsk, line };
+export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, nightOf, freeProposals, night, replayAsk, line };

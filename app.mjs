@@ -6,6 +6,7 @@ import B from './src/build.mjs';
 import V from './src/value.mjs';
 import O from './src/oauth.mjs';
 import F from './src/finance.mjs';
+import T from './src/triage.mjs';
 import P from './vendor/patlib/patlib.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -59,6 +60,9 @@ const PART = { A: ['the line items add up to', 'the subtotal'], B: ['subtotal + 
 const checkWords = (c) => (c.verdict === 'unchecked' ? 'too few amounts answered to check anything' : Object.entries(c.parts).map(([k, p]) => PART[k][0] + ' ' + F.money(p.left) + (p.holds ? ', and ' : ', but ') + PART[k][1] + ' is ' + F.money(p.right)).join('; '));
 // a reason the night runner cut at its length limit ends mid-sentence: show where it was cut, never mend the record
 const cutWords = (s) => (/[.!?)]$/.test(s) ? s : /[;,]?\s+\S*$/.test(s) ? s.replace(/[;,]?\s+\S*$/, '') + ' … (the record cuts it here).' : s + '.');
+// a made-up customer message in the style of the ones library 3 learns from
+const MSAMPLE = 'Hi, I need to unblock my pin, I typed it wrong three times. Can I talk to a person please?';
+const texplain = (rule) => { const { words, task } = ruleWords(rule); return 'near the word' + (words.length > 1 ? 's ' : ' ') + words.map((x) => '<code>' + esc(x) + '</code>').join(' and ') + ', ' + (T.FLAG_IDS.includes(task) ? 'the flag "' + esc(T.say(task).toLowerCase()) + '"' : 'the team "' + esc(T.say(task)) + '"'); };
 const checkChip = (c) => '<span class="chip ' + (c.verdict === 'reconciled' ? 'good' : c.verdict === 'flagged' ? 'bad' : 'wait') + '">' + esc(c.verdict.toUpperCase()) + '</span>';
 
 async function main() {
@@ -78,6 +82,13 @@ async function main() {
   const fseries = fsum && Array.isArray(fsum.series) ? fsum.series : [];
   const flast = fseries[fseries.length - 1] || null;
   const fparts = fsum && Array.isArray(fsum.parts) ? fsum.parts : [];
+  // library 3, messages: routing and triage, each its own records
+  const [rsum, rstate, tsum, tstate] = await Promise.all([json('data/route/summary.json'), json('data/route/state.json'), json('data/triage/summary.json'), json('data/triage/state.json')]);
+  const [rnight, tnight] = await Promise.all([rsum && rsum.latest ? json('data/route/' + rsum.latest) : null, tsum && tsum.latest ? json('data/triage/' + tsum.latest) : null]);
+  const rlib = rstate && Array.isArray(rstate.library) ? rstate.library : [], tlib = tstate && Array.isArray(tstate.library) ? tstate.library : [];
+  const rseries = rsum && Array.isArray(rsum.series) ? rsum.series : [], tseries = tsum && Array.isArray(tsum.series) ? tsum.series : [];
+  const rlast = rseries[rseries.length - 1] || null, tlast = tseries[tseries.length - 1] || null;
+  const rk = rlast && rlast.check ? rlast.check : null;
 
   // the chips at the top
   $('chips').innerHTML = !night ? '<span class="chip wait">no night recorded yet</span>'
@@ -86,6 +97,7 @@ async function main() {
       + '<span class="chip">coverage ' + esc(pct(last && last.coverage)) + ' of questions</span>'
       + '<span class="chip">right ' + esc(pct(last && last.precision)) + ' when it answers</span>'
       + (flast ? '<span class="chip">receipts: ' + esc(flib.length) + ' proven pattern' + (flib.length === 1 ? '' : 's') + ', coverage ' + esc(pct(flast.coverage)) + '</span>' : '')
+      + (rk ? '<span class="chip">messages: ' + esc(rlib.length) + ' routing pattern' + (rlib.length === 1 ? '' : 's') + ', ' + esc(pct(rk.queries ? rk.routed / rk.queries : null)) + ' routed</span>' : '')
       + '<span class="chip ' + (kernels.length && clean.length === kernels.length ? 'good' : 'bad') + '">' + esc(clean.length) + ' of ' + esc(kernels.length) + ' kernels witness-clean</span>';
 
   // try it
@@ -123,6 +135,21 @@ async function main() {
   $('rread').addEventListener('click', readReceipt);
   $('rsample').addEventListener('click', () => { rdoc.value = RSAMPLE; readReceipt(); });
   readReceipt();
+
+  // try it on a message: the route (or unknown) with any conflict, the keyword router's route, the flags raised
+  const mdoc = $('mdoc');
+  mdoc.value = MSAMPLE;
+  const routeIt = () => {
+    const m = T.read(mdoc.value, rlib, tlib);
+    $('manswer').innerHTML = '<p><strong>Route:</strong> ' + (m.route === 'unknown' ? '<span class="unknown">unknown — no proven routing pattern fired; it goes to the person who sorts messages today</span>' : esc(T.say(m.route)) + ' <span class="muted">(' + texplain(m.rule) + ' · <span class="mono">' + esc(m.receipt) + '</span>)</span>') + '</p>'
+      + (m.also.length ? '<p><strong>Also matched:</strong> ' + esc(m.also.map(T.say).join(', ')) + ' <span class="muted">(a conflict: shown, never hidden; the router took the pattern it kept first)</span></p>' : '')
+      + '<p><strong>The keyword router would say:</strong> ' + (m.keyword === 'unknown' ? '<span class="muted">nothing (no team\'s name words are all in it)</span>' : esc(T.say(m.keyword))) + '</p>'
+      + '<p><strong>Flags:</strong> ' + (m.flags.length ? m.flags.map((f) => '<span class="chip bad">' + esc(T.say(f.flag).toUpperCase()) + '</span> ' + texplain(f.rule)).join(' ') : '<span class="muted">none raised by a proven pattern (the normal queue; not "safe")</span>') + (m.cheapFlags.length ? ' <span class="muted">· ctrl-F would flag: ' + esc(m.cheapFlags.map((f) => T.say(f).toLowerCase()).join(', ')) + '</span>' : '') + '</p>'
+      + '<p class="muted">' + esc('Read in your browser with ' + rlib.length + ' routing pattern' + (rlib.length === 1 ? '' : 's') + ' and ' + tlib.length + ' triage pattern' + (tlib.length === 1 ? '' : 's') + '.') + '</p>';
+  };
+  $('mread').addEventListener('click', routeIt);
+  $('msample').addEventListener('click', () => { mdoc.value = MSAMPLE; routeIt(); });
+  routeIt();
 
   // last night, traced
   if (night) {
@@ -211,6 +238,57 @@ async function main() {
     $('fin-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
   }
 
+  // the nights kept but not counted (seal 4), read from each library's summary
+  const voidCard = (sum, name) => {
+    const v = sum && Array.isArray(sum.void) ? sum.void : [];
+    return v.length ? '<p>' + esc(name + ' ran ' + v.length + ' night' + (v.length === 1 ? '' : 's') + ' under the old exam order, which did not shuffle its row-numbered documents. They are kept exactly as written, re-derived on every change, and counted toward nothing:') + '</p><ul>'
+      + v.map((x) => '<li>' + esc('night ' + x.cycle + ' (' + String(x.at).slice(0, 16).replace('T', ' ') + '): ' + x.patterns + ' patterns, coverage ' + pct(x.coverage) + (x.check && 'routed' in x.check ? '; routed ' + x.check.routed + ', right ' + x.check.right : '')) + ' · <a href="data/' + esc(sum === fsum ? 'finance' : 'route') + '/' + esc(x.file) + '">the record</a></li>').join('') + '</ul><p class="muted">The library started again from empty under the fixed order; the nights above this card are the ones that count.</p>'
+      : '<p class="muted">None.</p>';
+  };
+  $('fin-void').innerHTML = voidCard(fsum, 'Library 2');
+  $('l3-void').innerHTML = voidCard(rsum, 'Routing') + (tsum && tsum.void && tsum.void.length ? '<p class="muted">' + esc('Triage likewise: ' + tsum.void.length + ' void nights, kept in data/triage/void/.') + '</p>' : '');
+
+  // library 3: routing and triage
+  const flowOf = (r, lib, name) => '<svg viewBox="0 0 900 170" role="img" aria-label="' + esc(name) + ', last night in numbers">'
+    + box(10, 'Free proposers', (r.proposed ? r.proposed.free : 0) + ' proposed', (r.promoted || []).length + ' kept', true)
+    + box(240, 'Local 7B', 'not used (seal 3)', 'its calls stay with 1 and 2', false)
+    + box(470, 'Paid tier', 'no candidate', 'needs the 7B to try first', false)
+    + box(700, 'The library', (r.patterns ?? lib.length) + ' patterns', 'night ' + r.cycle, true)
+    + '<path class="line" d="M200 85 H240 M430 85 H470 M660 85 H700"/></svg>'
+    + '<p>Night ' + esc(r.cycle) + ' (' + esc(String(r.at).slice(0, 10)) + '): ' + esc((r.proposed ? r.proposed.free : 0) + ' patterns proposed by the free miners, ' + (r.promoted || []).length + ' kept, ' + (r.dropped || []).length + ' dropped, every drop with its reason.') + '</p>';
+  if (rnight) {
+    $('l3r-flow').innerHTML = flowOf(rnight, rlib, 'Routing');
+    $('l3r-router').innerHTML = rk ? '<p><strong>The router on the ' + esc(rk.queries.toLocaleString('en-GB')) + ' measuring messages</strong> (never used to propose or test a pattern): ' + esc('it routed ' + rk.routed + ' (' + pct(rk.routed / rk.queries) + '), ' + rk.right + ' of them to the right team (' + pct(rk.routed ? rk.right / rk.routed : null) + '), with ' + rk.conflicts + ' conflict' + (rk.conflicts === 1 ? '' : 's') + '. The keyword router, on the same messages: routed ' + rk.baseRouted + ' (' + pct(rk.baseRouted / rk.queries) + '), ' + rk.baseRight + ' right (' + pct(rk.baseRouted ? rk.baseRight / rk.baseRouted : null) + ').') + '</p><p class="muted">The rest come back unknown and go to whoever sorts messages today. The router answers only where a proven pattern fires; the keyword router answers wherever a team\'s name words appear.</p>' : '';
+    $('l3r-kept').querySelector('tbody').innerHTML = (rnight.promoted || []).map((p) => { const { words, task } = ruleWords(p.rule); return '<tr><td>' + words.map((w) => '<code>' + esc(w) + '</code>').join(' + ') + '</td><td>' + esc(T.say(task)) + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td><td>' + esc('held-out ' + p.heldDocs.right + '/' + p.heldDocs.docs + ' vs ' + p.heldDocs.base + ' · final ' + p.finalDocs.right + '/' + p.finalDocs.docs + ' vs ' + p.finalDocs.base) + '</td><td class="mono">' + esc(p.receipt) + '</td></tr>'; }).join('') || '<tr><td colspan="6" class="muted">nothing kept on this night</td></tr>';
+    dropTable(rnight.dropped, 'l3r-drops');
+  }
+  if (tnight) {
+    $('l3t-flow').innerHTML = flowOf(tnight, tlib, 'Triage') + ((tnight.promoted || []).length ? '' : '<p>' + esc('No triage pattern has passed both exams yet, so no message is flagged by the library; the reasons are below. "Wants a human" and "lost or stolen" are each on under 3% of these messages, which is why their exams are batches of 500.') + '</p>');
+    dropTable(tnight.dropped, 'l3t-drops');
+  }
+  $('l3-climb').innerHTML = (rseries.length || tseries.length) ? '<div class="table-wrap"><table><thead><tr><th>Part</th><th>Night</th><th>Date</th><th>Patterns</th><th>Answered (messages × questions)</th><th>Right when it answers</th><th>Router: routed / right / conflicts</th></tr></thead><tbody>'
+    + [...rseries.map((s) => ['routing', s]), ...tseries.map((s) => ['triage', s])].map(([n, s]) => '<tr><td>' + n + '</td><td>' + esc(s.cycle) + '</td><td>' + esc(String(s.at).slice(0, 10)) + '</td><td>' + esc(s.patterns) + '</td><td>' + esc(s.answered + ' of ' + s.cases.toLocaleString('en-GB')) + '</td><td>' + esc(pct(s.precision)) + '</td><td>' + esc(s.check && 'routed' in s.check ? s.check.routed + ' / ' + s.check.right + ' / ' + s.check.conflicts : '') + '</td></tr>').join('') + '</tbody></table></div>'
+    + '<p class="muted">Each message is asked 77 questions (one per team) for routing and 2 for triage; "answered" counts the questions a pattern said yes to. The router\'s own figures are the ones a buyer reads.</p>' : '<p class="muted">No night recorded yet.</p>';
+  {
+    const exam = (n) => { const x = n && n.exam && n.exam.receipt; return { x, v: !x || !x.ok ? null : x.decision === 'PROMOTE' ? true : x.decision === 'INSUFFICIENT' ? null : false }; };
+    const re = exam(rnight), te = exam(tnight);
+    const p1 = (n) => (n ? (n.promoted || []).every((p) => p.heldDocs && p.heldDocs.ok && p.finalDocs && p.finalDocs.ok) && n.dropped.length >= 1 && n.dropped.every((x) => typeof x.why === 'string' && x.why) : null);
+    const t2 = (s) => (s && typeof s.precision === 'number' ? s.precision >= T.METER_BAR : null);
+    const t5 = rk ? ['queries', 'routed', 'right', 'conflicts', 'baseRouted', 'baseRight'].every((k) => Number.isInteger(rk[k])) : null;
+    const xchip = (e) => chip(e.v, 'HELD', 'FAILED', e.x && e.x.answered === 0 ? 'NOTHING TO EXAMINE YET' : 'INSUFFICIENT') + (e.x ? ' ' + esc(e.x.why) : '');
+    const rows = [
+      ['P1', 'Only patterns that beat the cheap method on fresh unseen messages are kept; every drop is logged with its reason.', chip(p1(rnight), 'HELD', 'FAILED') + ' routing ' + esc(rnight ? (rnight.promoted || []).length + ' kept, ' + rnight.dropped.length + ' dropped' : '') + ' · ' + chip(p1(tnight), 'HELD', 'FAILED') + ' triage ' + esc(tnight ? (tnight.promoted || []).length + ' kept, ' + tnight.dropped.length + ' dropped' : '')],
+      ['P4', 'Coverage climbs night over night.', chip(null, '', '', 'PENDING') + ' ' + esc(rseries.length + ' routing night(s), ' + tseries.length + ' triage night(s) measured; decided on the nights after the first')],
+      ['T1', 'Each night\'s library beats the cheap method on that night\'s fresh final exam (signed), for routing and for triage apart.', 'routing ' + xchip(re) + ' · triage ' + xchip(te)],
+      ['T2', 'Where it answers on the measuring messages, it is right at least ' + (T.METER_BAR * 100) + '% of the time.', 'routing ' + chip(t2(rlast), 'HELD', 'FAILED', 'NOTHING ANSWERED YET') + (rlast && typeof rlast.precision === 'number' ? ' ' + esc(pct(rlast.precision)) : '') + ' · triage ' + chip(t2(tlast), 'HELD', 'FAILED', 'NOTHING ANSWERED YET')],
+      ['T3', 'Every night re-derives byte for byte from the public messages.', '<span class="chip">re-derived in CI</span>'],
+      ['T4', 'The sources carry their licence and credit.', chip(true, 'HELD', 'FAILED') + ' Banking77 and NLU++, PolyAI, CC BY 4.0'],
+      ['T5', 'The router is measured whole every night against the keyword router: routed, right, conflicts, and the keyword router\'s routed and right.', chip(t5, 'HELD', 'FAILED')],
+      ['N4', 'It runs in the same night as libraries 1 and 2, after them, on the free proposers only (the local model\'s calls stay with 1 and 2), within the same 25-minute clock.', '<span class="chip">wired; it ran at 03:14 on 2026-11-11 (a night now void under seal 4)</span>'],
+    ];
+    $('l3-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
+  }
+
   // the fresh exam bar
   const S = Y.SCHEDULE, used = night && !night.exhausted ? 2 * (night.cycle + 1) : night && night.exhausted ? Infinity : 0;
   const total = S.meter + S.seed + 15 * S.batch, w = (n) => (n / total) * 860;
@@ -233,6 +311,7 @@ async function main() {
   const proof = (n) => { const x = k(n); return x ? esc('witness ' + x.killed + '/' + x.total + (x.killed === x.total ? ', clean' : '')) : 'not gated'; };
   $('organs').innerHTML = [
     ['src/extract.mjs', 'the scanners (dates, money, durations, jurisdictions, company names, sentences), the words around each candidate, the cheap method, and the answer', proof('extract')],
+    ['src/triage.mjs', 'library 3: the 77 teams and the two flags, each message as one question per team, the keyword router and ctrl-F, the router (first kept pattern, conflicts named) and its whole measure', proof('triage')],
     ['src/finance.mjs', 'library 2: the amount scanner, the words and places around each amount, the experts\' value words, ctrl-F, the answer, the three-part check, the check\'s own test on the experts\' receipts', proof('finance')],
     ['src/cycle.mjs', 'the fixed order and the fresh exam per night, the field gate (one pick per document, or every pick for line items), the meter, the signed exam, the two-word miner, the recipe lookup, the prompt; one cycle per library', proof('cycle')],
     ['src/night.mjs', 'one night, cheapest tier first, and its replay from the record', proof('night')],
@@ -246,7 +325,8 @@ async function main() {
 
   // the libraries
   const live = { doc: last ? 'From the records: ' + library.length + ' proven patterns after night ' + last.cycle + '; coverage ' + pct(last.coverage) + ' on the measuring contracts.' : '',
-    finance: flast ? 'From the records: ' + flib.length + ' proven pattern' + (flib.length === 1 ? '' : 's') + ' after night ' + flast.cycle + '; coverage ' + pct(flast.coverage) + ' on the measuring receipts.' : '' };
+    finance: flast ? 'From the records: ' + flib.length + ' proven pattern' + (flib.length === 1 ? '' : 's') + ' after night ' + flast.cycle + '; coverage ' + pct(flast.coverage) + ' on the measuring receipts.' : '',
+    triage: rk ? 'From the records: ' + rlib.length + ' routing pattern' + (rlib.length === 1 ? '' : 's') + ' and ' + tlib.length + ' triage pattern' + (tlib.length === 1 ? '' : 's') + ' after night ' + rlast.cycle + '; it routes ' + pct(rk.routed / rk.queries) + ' of the measuring messages, ' + pct(rk.routed ? rk.right / rk.routed : null) + ' to the right team.' : '' };
   $('libs').innerHTML = (libs && Array.isArray(libs.libraries) ? libs.libraries : []).map((l) => '<div class="card"><p><strong>' + esc(l.name) + '</strong> <span class="chip ' + (l.status === 'landed' ? 'good' : 'wait') + '">' + esc(l.status.toUpperCase()) + '</span></p><p>' + esc(l.what) + '</p>' + (l.data ? '<p class="muted">Data: ' + esc(l.data) + '</p>' : '') + (live[l.id] ? '<p class="muted">' + esc(live[l.id]) + '</p>' : '') + (l.why ? '<p class="muted">' + esc(l.why) + '</p>' : '') + '</div>').join('');
 
   // what it answers today, from the library itself, so the brochure never claims more than the patterns do
@@ -286,6 +366,23 @@ async function main() {
   const fchars = fsum && fsum.corpus ? fsum.corpus.avgChars : null;
   const fopus = V.modelCost(prices, 'claude-opus-5-5', fchars, 300), fsonnet = V.modelCost(prices, 'claude-sonnet-5-5', fchars, 300);
   $('fin-vs').innerHTML = '<p><strong>Against a frontier model.</strong> An average receipt in the public set is short (' + (fchars ? esc(fchars.toLocaleString('en-GB')) : '?') + ' characters of text). Reading one once with a short structured answer costs about <strong>' + (fopus === null ? '?' : '$' + fopus.toFixed(4)) + '</strong> on Claude Opus 5.5 or <strong>' + (fsonnet === null ? '?' : '$' + fsonnet.toFixed(4)) + '</strong> on Claude Sonnet 5.5 at the published API prices (read ' + esc(prices ? prices.read : '?') + '), before any check. A proven pattern costs nothing per receipt, shows the rule it used, and its answers are added up against each other before anyone relies on them. The larger cost is the person keying: see the figures above.</p>';
+  // library 3 in the brochure: what it routes and flags today, from the library itself; sorting time on the buyer's figures
+  const teams = [...new Set(rlib.map((r) => r.then))], flagsKept = [...new Set(tlib.map((r) => r.then))];
+  $('tri-today').innerHTML = '<strong>Today</strong> ' + esc('it routes messages to ' + teams.length + ' of the 77 teams, from ' + rlib.length + ' proven pattern' + (rlib.length === 1 ? '' : 's') + (rk ? '; on the measuring messages it routes ' + pct(rk.routed / rk.queries) + ' of them, ' + pct(rk.routed ? rk.right / rk.routed : null) + ' to the right team' : '') + '. ' + (flagsKept.length ? 'It raises the flags ' + flagsKept.map((t) => '"' + T.say(t).toLowerCase() + '"').join(' and ') + '.' : 'It raises no flag yet: no triage pattern has passed both exams.') + ' Everything else comes back unknown and is sorted as today.') + (teams.length ? ' <span class="muted">Teams it routes to now: ' + esc(teams.map(T.say).join(', ')) + '.</span>' : '');
+  const tinputs = [['receipts', 'Messages a month', 5000, 'an example: put in yours'], ['minutes', 'Minutes to read and route one by hand', 1, 'an example: put in yours'], ['rate', 'Cost of an hour of that work', 25, 'an example: put in yours']];
+  $('tri-calc-in').innerHTML = tinputs.map(([id, label, v, src]) => '<label class="inp" for="tri-' + id + '">' + esc(label) + '<input id="tri-' + id + '" type="number" min="0" step="any" value="' + v + '"><span class="muted">' + esc(src) + '</span></label>').join('');
+  const tmeasured = { coverage: rk && rk.queries ? rk.routed / rk.queries : 0, precision: rk && rk.routed ? rk.right / rk.routed : null };
+  const tcalc = () => {
+    const i = Object.fromEntries(tinputs.map(([id]) => [id, Number($('tri-' + id).value)]));
+    const r = V.keying(i, tmeasured);
+    $('tri-calc-out').textContent = r.ok ? r.hours.toLocaleString('en-GB') + ' hours of sorting a month given back, worth ' + r.cost.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' in your currency' : 'Check the inputs';
+    $('tri-calc-why').textContent = r.ok ? 'It routes ' + pct(tmeasured.coverage) + ' of the measuring messages and is right ' + pct(tmeasured.precision) + ' of the time when it does: it stands in for ' + pct(r.share) + ' of the sorting. A wrong route still costs a person the time to move it. This grows as the coverage grows.' : r.why;
+  };
+  for (const [id] of tinputs) $('tri-' + id).addEventListener('input', tcalc);
+  tcalc();
+  const mchars = rsum && rsum.corpus ? rsum.corpus.avgChars : null;
+  const mopus = V.modelCost(prices, 'claude-opus-5-5', mchars, 50), msonnet = V.modelCost(prices, 'claude-sonnet-5-5', mchars, 50);
+  $('tri-vs').innerHTML = '<p><strong>Against a frontier model.</strong> An average message in the public set is ' + (mchars ? esc(mchars.toLocaleString('en-GB')) : '?') + ' characters. At the published API prices (read ' + esc(prices ? prices.read : '?') + '), sending just the message and getting a short answer back costs about <strong>' + (mopus === null ? '?' : '$' + mopus.toFixed(5)) + '</strong> on Claude Opus 5.5 or <strong>' + (msonnet === null ? '?' : '$' + msonnet.toFixed(5)) + '</strong> on Claude Sonnet 5.5, before adding the list of 77 teams and the instructions a model would also need. A proven pattern costs nothing per message, offline, and names the rule it used.</p>';
   $('board').innerHTML = '<p><strong>The ask:</strong> a first pass on every contract, on your own hardware, with every answer traceable to a rule and an exam score. <strong>The evidence:</strong> ' + esc(library.length) + ' patterns, each kept only after beating a cheap method on contracts it had never seen; coverage ' + esc(pct(measured.coverage)) + ' today, measured on contracts kept apart, over ' + esc(series.length) + ' night' + (series.length === 1 ? '' : 's') + ' so far, and published night by night: the record over time is on this page as it builds up. <strong>The risk:</strong> it answers part of each contract, and says so; the rest goes where it goes today. <strong>The exit:</strong> plain files and MIT code you keep.</p>';
 
   // the claims, decided from the records where the records can decide them
@@ -299,7 +396,7 @@ async function main() {
     ['P1', 'Only patterns that beat the baseline on fresh unseen contracts are kept; every drop is logged with its reason.', chip(p1, 'HELD', 'FAILED') + (night ? ' ' + esc(kept.length + ' kept, ' + night.dropped.length + ' dropped with reasons') : '')],
     ['P2', 'The paid tier is the last tier and the daily cap is never exceeded.', chip(null, '', '', 'NO CALL YET') + ' the tier is off; nothing has been spent'],
     ['P3', 'How each pattern was built is captured, and spend per library falls over time.', chip(null, '', '', 'PENDING') + ' needs two weeks of nights that used the paid tier'],
-    ['P4', 'Coverage climbs night over night.', chip(null, '', '', 'PENDING') + ' ' + esc(series.length + ' night(s) measured; decided on the nights after the first')],
+    ['P4', 'Coverage climbs night over night.', p4row(series)],
     ['P5', 'Nothing outward at night; every pattern gated; the model only proposes.', '<span class="chip">source scan in CI</span>'],
     ['X1', 'Each night\'s library beats the cheap method on that night\'s fresh final exam (signed).', chip(x1v, 'HELD', 'FAILED', x1 && x1.answered === 0 ? 'NOTHING TO EXAMINE YET' : 'INSUFFICIENT') + (x1 ? ' ' + esc(x1.why) : '')],
     ['X2', 'Where it answers on the measuring contracts, it is right at least ' + (Y.METER_BAR * 100) + '% of the time.', chip(x2v, 'HELD', 'FAILED') + (last ? ' ' + esc(pct(last.precision)) : '')],
@@ -309,6 +406,15 @@ async function main() {
     ['B2', 'Kar\'s own build checks are kept with their provenance, on Kar\'s machine.', '<span class="chip">local only</span> ' + esc(summary && Number.isInteger(summary.checks) ? summary.checks + ' checks' : '')],
   ];
   $('claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
+}
+
+// P4 read from a library's nights: coverage never falls, and rises on every night whose pattern count grew. It is a claim
+// over every real night, so while it holds it is HOLDING, never a final HELD
+function p4row(series) {
+  const s = Array.isArray(series) ? series : [];
+  if (s.length < 2) return chip(null, '', '', 'PENDING') + ' ' + esc(s.length + ' night(s) measured; decided on the nights after the first');
+  const bad = s.slice(1).filter((x, i) => x.coverage < s[i].coverage || (x.patterns > s[i].patterns && !(x.coverage > s[i].coverage)));
+  return (bad.length ? chip(false, '', 'FAILED') : '<span class="chip good">HOLDING</span>') + ' ' + esc('over ' + s.length + ' nights: ' + s.map((x) => pct(x.coverage)).join(' → ') + (bad.length ? '; it did not rise on night ' + bad.map((x) => x.cycle).join(', ') : '; it rose on every night that kept a pattern'));
 }
 
 function box(x, title, a, b, hot) {

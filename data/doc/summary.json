@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-0.json",
+ "latest": "nights/cycle-1.json",
  "series": [
   {
    "cycle": 0,
@@ -9,6 +9,15 @@
    "precision": 0.969697,
    "answered": 33,
    "cases": 1140
+  },
+  {
+   "cycle": 1,
+   "at": "2026-11-11T03:14:04.168Z",
+   "patterns": 4,
+   "coverage": 0.048246,
+   "precision": 0.963636,
+   "answered": 55,
+   "cases": 1140
   }
  ],
  "corpus": {
@@ -17,5 +26,5 @@
   "avgChars": 52563
  },
  "creditCalls": 0,
- "checks": 99
+ "checks": 111
 }

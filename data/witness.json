@@ -13,8 +13,8 @@
   {
    "name": "cycle",
    "file": "src/cycle.mjs",
-   "total": 66,
-   "killed": 66,
+   "total": 69,
+   "killed": 69,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -31,8 +31,8 @@
   {
    "name": "night",
    "file": "src/night.mjs",
-   "total": 41,
-   "killed": 41,
+   "total": 44,
+   "killed": 44,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -60,6 +60,15 @@
    "file": "src/finance.mjs",
    "total": 93,
    "killed": 93,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "triage",
+   "file": "src/triage.mjs",
+   "total": 31,
+   "killed": 31,
    "ignored": 0,
    "clean": true,
    "capped": false

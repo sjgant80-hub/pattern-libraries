@@ -331,3 +331,19 @@ test('library 2: line items are right on the meter only when exactly the experts
   assert.notEqual(r.receipt, Y.receipt({ total: ex.total }).receipt, 'library 2 signs its own job, data and cheap method');
   assert.equal(many.length, 30);
 });
+
+// ── seal 4: the SHA-256 order for row-numbered ids ──
+import { createHash } from 'node:crypto';
+test('seal 4: a schedule with hash sha256 orders by the SHA-256 hex of salt + id (as Node computes it); without it, FNV-1a as sealed', () => {
+  const ids = Array.from({ length: 30 }, (_, i) => 'train-' + String(i).padStart(3, '0'));
+  const s = { meter: 5, seed: 5, batch: 10, salt: 'cord:', hash: 'sha256' };
+  const hex = (x) => createHash('sha256').update(x, 'utf8').digest('hex');
+  const want = [...ids].sort((a, b) => (hex('cord:' + a) < hex('cord:' + b) ? -1 : 1));
+  const p = Y.schedule([...ids, ...ids, '', 5], s);
+  assert.deepEqual(p.order, want);
+  assert.notDeepEqual(p.order, ids, 'not the id order');
+  assert.notDeepEqual(p.order, Y.schedule(ids, { ...s, hash: undefined }).order, 'not the FNV order');
+  assert.deepEqual([p.meter, p.seed, p.batches, p.spare], [want.slice(0, 5), want.slice(5, 10), [want.slice(10, 20), want.slice(20, 30)], []]);
+  assert.deepEqual(Y.schedule(['é-1', 'é-2'], { ...s, salt: 'ü:' }).order, ['é-1', 'é-2'].sort((a, b) => (hex('ü:' + a) < hex('ü:' + b) ? -1 : 1)), 'UTF-8 bytes');
+  assert.deepEqual(Y.schedule(ids).order, Y.schedule(ids, Y.SCHEDULE).order, 'library 1 keeps FNV-1a');
+});

@@ -211,7 +211,8 @@ export function read(text, rules, parts = PARTS) {
 }
 
 // ── the library's place in the cycle, and the rule's own tests (SEAL 2) ──────────────────────────────────────────────
-export const SCHEDULE = Object.freeze({ meter: 100, seed: 300, batch: 40, salt: 'cord:' });
+// hash 'sha256': seal 4 (FNV-1a did not shuffle CORD's consecutive row ids); sizes and salt as seal 2
+export const SCHEDULE = Object.freeze({ meter: 100, seed: 300, batch: 40, salt: 'cord:', hash: 'sha256' });
 export const METER_BAR = 0.9;
 export const R_BARS = Object.freeze({ r0: 0.8, r2: Object.freeze({ min: 10, share: 0.95 }), r3: Object.freeze({ min: 5, share: 0.5 }) });
 // the amounts each part of the check uses (tax, service and discount only when answered)

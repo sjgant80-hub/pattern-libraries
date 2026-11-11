@@ -28,17 +28,18 @@
    "kind": "income",
    "status": "running",
    "what": "Built to read a receipt's line items, subtotal, tax, service charge, discount, total, cash and change, each answer with the pattern that gave it, and then to check them against each other by arithmetic (items to subtotal, subtotal plus tax to total, cash less change to total): reconciled, flagged or unchecked. It answers only what its patterns have proven so far. Dates, suppliers and payment terms are not in its data, so it does not read them.",
-   "why": "Running, not landed: F1 (beating ctrl-F on a fresh final exam), F2, P4 (the coverage climb), R2 and R3 (the check on its own answers) are decided on the nights after night 0, the first on 2026-11-11 at 03:00; P2 and P3 only once the keeper switches the paid tier on. R0 (the check tested on the experts' own receipts) is decided.",
+   "why": "Running, not landed: F1, F2, P4 (the coverage climb), R2 and R3 are decided on the nights after its fresh night 0 (seal 4 re-ran it under an exam order that shuffles; the first two nights are kept as void); P2 and P3 only once the keeper switches the paid tier on. R0 (the check tested on the experts' own receipts) is decided.",
    "data": "CORD v2, 1,000 real Indonesian receipts (NAVER CLOVA, CC BY 4.0); text and labels only, never the images"
   },
   {
-   "n": 4,
+   "n": 3,
    "id": "triage",
-   "name": "Triage and routing",
+   "name": "Triage and routing (customer messages)",
    "kind": "income",
-   "status": "not landed",
-   "what": "Urgent or not, hot lead or cold, risky claim, needs a human.",
-   "why": "Not built yet: its own data and seal first."
+   "status": "running",
+   "what": "Built to send a customer's message to the right one of 77 banking teams, naming any other team that also matched, and to flag it when the customer wants a human or something was lost or stolen; each answer with the pattern that gave it. It answers only what its patterns have proven so far; a message with no flag goes to the normal queue, never called safe.",
+   "why": "Running, not landed: T1 (beating the cheap method on a fresh final exam) and P4 (the climb) are decided on the nights after night 0; triage has no proven pattern yet. It runs on the free proposers only, so the paid-tier claims cannot arise. Its first nights, run under an exam order that did not shuffle, are kept as void (seal 4).",
+   "data": "Banking77 (13,083 messages, 77 intents) and NLU++ (3,080 messages, with \"wants a human\" and \"lost or stolen\" labels), by PolyAI, CC BY 4.0"
   },
   {
    "n": 4,

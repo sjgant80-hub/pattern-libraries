@@ -44,7 +44,7 @@ Witness v0.6, uncapped, nothing baselined, re-derived on the runner: extract 99/
 
 ## Landed or not
 
-By the seal's own rule (a library is landed only when all its claims are decided on a real run), **document extraction and the build-pattern library are RUNNING, not landed**: built, gated, live and growing every night; X1 and P4 are first decided on night 1 (2026-11-11, 03:00), P2 and P3 only once Simon switches the paid tier on. **Finance is RUNNING** (library 2, below, since 2026-11-10); **triage, sales, novel angles and compression are NOT LANDED** (not built).
+By the seal's own rule (a library is landed only when all its claims are decided on a real run), **document extraction and the build-pattern library are RUNNING, not landed**: built, gated, live and growing every night; X1 and P4 are first decided on night 1 (2026-11-11, 03:00), P2 and P3 only once Simon switches the paid tier on. **Finance is RUNNING** (library 2, below, since 2026-11-10) and **triage and routing is RUNNING** (library 3, below, since 2026-11-11); **sales, novel angles and compression are NOT LANDED** (not built).
 
 ## Disclosures: what changed after seal 1, before night 0 was read (and which way it moves the bar)
 
@@ -156,3 +156,100 @@ only once Simon switches the paid tier on. R0 is decided (held).
    night 1, which stays the 03:00 run. No gate or bar is touched.
 6. **The runner cuts the 7B reason at 200 characters**, and night 0's reason was cut mid-sentence. The record is kept as
    written; the page marks where it was cut.
+
+---
+
+# Seal 4 · a flaw in the exam order, found and fixed (2026-11-11)
+
+Library 3's first routing night kept `visa ⇒ visa-or-mastercard` after it was right on 16 of 16 held-out and 15 of 15
+final-exam queries, yet it answered none of the 1,000 measuring queries: the meter held no query of that intent. The
+order every library cuts its slices from (FNV-1a of salt + id, seal 1) does not shuffle ids that are consecutive row
+numbers. Measured on the ids alone: routing's meter held 47 of the 77 intents and every exam batch 46 to 52; the receipt
+meter came from 8 of CORD's 20 blocks of 50 rows; library 1 (contract titles) was not affected. Simon chose the fix in
+chat, and seal 4 (`3f9b024`) was committed alone before any night under it: libraries 2 and 3 order by SHA-256 of salt +
+id, which puts all 77 intents in every routing slice. No bar moved.
+
+**What it voids.** Six nights ran under the old order: night 0 of libraries 2 and 3 at build time, and their night 1,
+which the scheduled 03:00 night ran at 03:14 (the runner already carried library 3), before seal 4 existed. All six are
+kept as written in `data/<library>/void/`, re-derived in CI under the old order, and counted toward nothing; the
+library 2 results above (its night 0) are therefore void. The patterns they kept (finance 2, routing 20) did not carry
+over. Libraries 2 and 3 started again from empty with a fresh night 0 under the new order, on the free tiers, like the
+void night 0s.
+
+**Disclosure.** Seal 4's commit was amended once before it was pushed: as first written it counted three void nights;
+the three 03:14 night 1s were found after it was committed and the seal was corrected to six. Nothing else changed.
+
+## Library 1, night 1 (the scheduled 03:00 night, 2026-11-11 03:14; not affected by seal 4)
+
+- 114 proposals, **2 kept**, both from the free miners: `governed ⇒ governing law` and `renew ⇒ renewal term`.
+- **The local 7B's first night**: 3 calls. `party` and `liability-cap` answered with 9 rules, none of which passed
+  (`corporation ⇒ party` only tied the baseline; `inc ⇒ party` was right 41 of 61); the `notice-period` call failed
+  ("no first token in 600s", the shared model) and is recorded as an error. Those two open tasks are the credit tier's
+  candidates; the tier is off, so no call.
+- **Coverage on the measuring contracts 2.9% → 4.8%**, right 96.4% when it answers: P4 HOLDING (it rose on the night
+  that kept patterns). X1: **INSUFFICIENT** (the library as carried in answered 12 final-exam cases, all right, against the
+  cheap method's 6; the agreement needs 20). It re-derives byte for byte, the 7B's replies replayed from the record.
+
+## Library 2, fresh night 0 under seal 4's order (2026-11-11)
+
+53 proposals, **0 kept**: 37 met fewer than 5 amounts in the 40 unseen receipts, 11 only tied ctrl-F (`beats the cheap
+baseline by 0.000`), 2 were right on fewer than 80% of amounts, 2 on fewer than 80% of receipts, 1 failed the final
+exam. Coverage 0.0%; the check ran on none of the 100 measuring receipts. R0 is unchanged (it reads all 1,000 receipts,
+in any order). Library 2 is **RUNNING, not landed**, with no proven pattern yet.
+
+---
+
+# Results · library 3 (triage and routing), night 0 under seal 4's order (2026-11-11)
+
+Sealed first in SEAL 3 (`d6a9001`). Data: Banking77 and NLU++ (PolyAI, CC BY 4.0) at commit 57ec275, 45 files,
+1,925,654 bytes, manifest sha256 `d014c397…`; the committed fetch tool reproduces it, and CI fetches and checks it.
+Library 3 runs on the free proposers only (N4).
+
+## Routing (Banking77)
+
+- **396 proposals, 20 kept, 376 dropped**: 265 met fewer than 5 unseen queries, 73 were right less than 80% of the
+  time, 17 were duplicates and 2 near-duplicates of kept patterns, 14 failed the final exam, 5 only tied the keyword
+  router. The 20 route 16 of the 77 teams (for example `unblock ⇒ pin blocked`, `passcode ⇒ passcode forgotten`,
+  `duplicate ⇒ transaction charged twice`, `countries ⇒ country support`).
+- **T5, the router on the 1,000 measuring queries:** it routed 117 (11.7%), 105 to the right team (89.7%), with 1
+  conflict. The keyword router, on the same queries: 185 routed (18.5%), 139 right (75.1%).
+- **T2 HELD on this night**: right 89.8% where it answers (106 of 118 (query, team) answers, the one conflict counted on
+  both teams), against a bar of 80%.
+
+## Triage (NLU++)
+
+- **10 proposals, 0 kept**: 5 met fewer than 5 unseen queries (the two flags are each on under 3% of queries), 3 were
+  right less than 80% of the time, 2 only tied ctrl-F. No flag is raised yet.
+
+## The claims
+
+| claim | verdict | from |
+|---|---|---|
+| P1 only fresh-exam winners kept; drops logged | **HELD** (routing 20 kept, 376 dropped; triage 0 kept, 10 dropped) | `nights/cycle-0.json` |
+| P2 the paid tier last; the day cap never exceeded | **NO CALL, by construction** (no 7B call, so no candidate) | N4 |
+| P3 how each was built; spend falls | records **HELD** (20 of 20); the fall cannot arise (no paid tier) | `state.json` |
+| P4 coverage climbs night over night | **PENDING** (night 0 measured) | from 2026-11-12 03:00 |
+| P5 nothing outward at night | **HELD** by the source scans | CI |
+| T1 beats the cheap method on each night's fresh final exam | **UNDECIDED** (nothing carried in) | `nights/cycle-0.json` |
+| T2 right ≥ 80% where it answers | routing **HELD** (89.8%); triage **UNDECIDED** (nothing answered) | `summary.json` |
+| T3 re-derives byte for byte | **HELD** (local and CI, live and void nights) | CI |
+| T4 licence and credit | **HELD** (PolyAI, CC BY 4.0; both papers cited) | NOTICE, README, the page |
+| T5 the router measured whole every night | **HELD** (all six counts in the record, re-derived) | `nights/cycle-0.json` |
+| N4 inside the same night, free tiers only, one clock | **WIRED** and ran at 03:14 (a night now void) | `night/patlibs-night.mjs` |
+
+Witness v0.6, uncapped, nothing baselined: **triage 31/31** (new), cycle 69/69 (the SHA-256 order), night 44/44 (a
+check per library), finance 93/93; extract 99/99, build 37/37, oauth 26/26, value 27/27 unchanged.
+
+## Landed or not
+
+**Library 3 is RUNNING, not landed**: built, gated, live and run every night; routing has 20 proven patterns, triage
+none yet. T1 and P4 are decided on the nights that follow.
+
+## Disclosures
+
+1. **Two parts, two libraries in the night.** Routing and triage have separate schedules and records (`route`, `triage`),
+   as seal 3 describes; the page shows them as one library.
+2. **The keyword router reads every word; the patterns read the first 40**, as sealed. Banking77 queries are short (58
+   characters on average), so the cut rarely bites.
+3. **The router's precision on the generic meter counts a conflict once per team it fired on** (106 of 118); the
+   router's own count (105 of 117) counts each query once. Both are in the record.

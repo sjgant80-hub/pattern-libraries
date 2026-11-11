@@ -1,0 +1,2592 @@
+{
+ "kind": "library-night",
+ "v": 1,
+ "library": "doc",
+ "feed": "cuad-v1",
+ "cycle": 1,
+ "at": "2026-11-11T03:14:04.168Z",
+ "model": "qwen2.5:7b",
+ "free": 2,
+ "slices": {
+  "train": 190,
+  "held": [
+   "AMERICASSHOPPINGMALLINC_12_10_1999-EX-10.2-SITE DEVELOPMENT AND HOSTING AGREEMENT",
+   "MIDDLEBROOKPHARMACEUTICALS,INC_03_18_2010-EX-10.1-PROMOTION AGREEMENT",
+   "OPERALTD_04_30_2020-EX-4.14-SERVICE AGREEMENT",
+   "AimmuneTherapeuticsInc_20200205_8-K_EX-10.3_11967170_EX-10.3_Development Agreement",
+   "GSVINC_05_15_1998-EX-10-SPONSORSHIP AGREEMENT",
+   "VertexEnergyInc_20200113_8-K_EX-10.1_11943624_EX-10.1_Marketing Agreement",
+   "MOSSIMOINC_04_14_2000-EX-10.14-ENDORSEMENT AGREEMENT",
+   "OPTIMIZEDTRANSPORTATIONMANAGEMENT,INC_07_26_2000-EX-6.6-DISTRIBUTOR AGREEMENT",
+   "NEOMEDIATECHNOLOGIESINC_12_15_2005-EX-16.1-DISTRIBUTOR AGREEMENT",
+   "CreditcardscomInc_20070810_S-1_EX-10.33_362297_EX-10.33_Affiliate Agreement",
+   "KNOWLABS,INC_08_15_2005-EX-10-INTELLECTUAL PROPERTY AGREEMENT",
+   "WHITESMOKE,INC_11_08_2011-EX-10.26-PROMOTION AND DISTRIBUTION AGREEMENT",
+   "VnueInc_20150914_8-K_EX-10.1_9259571_EX-10.1_Promotion Agreement",
+   "MERITLIFEINSURANCECO_06_19_2020-EX-10.(XIV)-MASTER SERVICES AGREEMENT",
+   "PharmagenInc_20120803_8-KA_EX-10.1_7693204_EX-10.1_Endorsement Agreement",
+   "XENCORINC_10_25_2013-EX-10.24-COLLABORATION AGREEMENT (3)",
+   "MetLife, Inc. - Remarketing Agreement",
+   "PFSFUNDS_06_26_2020-EX-99.H OTH MAT CONT-SERVICES AGREEMENT",
+   "ARMSTRONGFLOORING,INC_01_07_2019-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT",
+   "SightLife Surgical, Inc. - STRATEGIC SALES _ MARKETING AGREEMENT"
+  ],
+  "final": [
+   "Reinsurance Group of America, Incorporated - A_R REMARKETING  AGREEMENT",
+   "BravatekSolutionsInc_20170418_8-K_EX-10.1_10205739_EX-10.1_Reseller Agreement",
+   "KIROMICBIOPHARMA,INC_05_11_2020-EX-10.23-CONSULTING AGREEMENT",
+   "TEARDROPGOLFCO_10_23_1996-EX-10.12-ENDORSEMENT AGREEMENT",
+   "OFGBANCORP_03_28_2007-EX-10.23-OUTSOURCING AGREEMENT",
+   "ZEBRATECHNOLOGIESCORP_04_16_2014-EX-10.1-INTELLECTUAL PROPERTY AGREEMENT",
+   "RUBIOSRESTAURANTSINC_03_31_2008-EX-10.75-SPONSORSHIP AGREEMENT",
+   "CERES,INC_01_25_2012-EX-10.20-Collaboration Agreement",
+   "IMAGEWARESYSTEMSINC_12_20_1999-EX-10.22-MAINTENANCE AGREEMENT",
+   "CCAINDUSTRIESINC_04_14_2014-EX-10.1-OUTSOURCING AGREEMENT",
+   "PrudentialBancorpInc_20170606_8-K_EX-10.4_10474434_EX-10.4_Endorsement Agreement",
+   "CANOPETROLEUM,INC_12_13_2007-EX-10.1-Sponsorship Agreement",
+   "WEBHELPCOMINC_03_22_2000-EX-10.8-HOSTING AGREEMENT",
+   "GALACTICOMMTECHNOLOGIESINC_11_07_1997-EX-10.46-WEB HOSTING AGREEMENT",
+   "VNUE,INC_07_10_2015-EX-10.1-SPONSORSHIP AGREEMENT",
+   "SPIENERGYCO,LTD_07_10_2014-EX-10-Cooperation Agreement of 50MWp Photovoltaic Grid-connected Power Generation Project in Yangqiao of~1",
+   "NETGEAR,INC_04_21_2003-EX-10.16-DISTRIBUTOR AGREEMENT",
+   "LUCIDINC_04_15_2011-EX-10.9-DISTRIBUTOR AGREEMENT",
+   "ASPIRITYHOLDINGSLLC_05_07_2012-EX-10.6-OUTSOURCING AGREEMENT",
+   "BICYCLETHERAPEUTICSPLC_03_10_2020-EX-10.11-SERVICE AGREEMENT"
+  ]
+ },
+ "carried": 2,
+ "exam": {
+  "total": {
+   "cases": 380,
+   "answered": 12,
+   "right": 12,
+   "baseRight": 6,
+   "withGold": 158
+  },
+  "receipt": {
+   "ok": true,
+   "answered": 12,
+   "right": 12,
+   "baseRight": 6,
+   "rate": 1,
+   "baseRate": 0.5,
+   "decision": "INSUFFICIENT",
+   "beats": false,
+   "receipt": "3250048a729d18d6c9c6c9eafd798ff96236b44f8d84cad39b0e916c13261a61",
+   "why": "only 12 of the sealed 20 per arm — cannot conclude"
+  }
+ },
+ "proposed": {
+  "free": 105,
+  "7b": 9
+ },
+ "replies": [
+  {
+   "task": "party",
+   "ok": true,
+   "code": "ok",
+   "why": "",
+   "text": "WHEN corporation THEN party\nWHEN inc THEN party\nWHEN llc THEN party\nWHEN inc AND virgin THEN party\nWHEN corporation AND incorporated THEN party",
+   "proposed": 5
+  },
+  {
+   "task": "notice-period",
+   "ok": false,
+   "code": "error",
+   "why": "no first token in 600s",
+   "text": "",
+   "proposed": 0
+  },
+  {
+   "task": "liability-cap",
+   "ok": true,
+   "code": "ok",
+   "why": "",
+   "text": "WHEN exceed THEN liability-cap\nWHEN shall THEN liability-cap\nWHEN amount THEN liability-cap\nWHEN damages THEN liability-cap",
+   "proposed": 4
+  }
+ ],
+ "proposals": [
+  {
+   "when": [
+    "biotec"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "bellicum"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "miltenyi"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "copy",
+    "execution"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "biotec",
+    "copy"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "made"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "execution"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "copy"
+   ],
+   "then": "agreement-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "biotec"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "bellicum"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "miltenyi"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "biotec",
+    "copy"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "biotec",
+    "execution"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "copy"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "biotec"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "bellicum"
+   ],
+   "then": "effective-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "extended"
+   ],
+   "then": "expiration-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "1st"
+   ],
+   "then": "expiration-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "continue"
+   ],
+   "then": "expiration-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "continue",
+    "until"
+   ],
+   "then": "expiration-date",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2458,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "conflict"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "conflicts"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "choice"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "angeles",
+    "los"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "conflict",
+    "giving"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "governed"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "accordance"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "construed"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "105216871"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "docs"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "organized"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "105216871",
+    "docs"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "2020"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "zfirst"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "effective"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "renew"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "automatically"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "condensate"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "automatically",
+    "renewed"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "automatically",
+    "renew"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "automatically"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "renew"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "condensate"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "condensate"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "extension"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "automatically"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "automatically",
+    "renew"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "condensate",
+    "natural"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "condensate"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "extension"
+   ],
+   "then": "notice-period",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "damages"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "actual"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "charges"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "customer",
+    "direct"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "damages"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "executing"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "february"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "iia"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "dates",
+    "july"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "dates",
+    "october"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "july"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "dates"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "october"
+   ],
+   "then": "minimum-commitment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "miles"
+   ],
+   "then": "non-compete",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "families"
+   ],
+   "then": "non-compete",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "competing"
+   ],
+   "then": "non-compete",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "shuffler"
+   ],
+   "then": "exclusivity",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "950"
+   ],
+   "then": "exclusivity",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "autograph"
+   ],
+   "then": "exclusivity",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "shuffler"
+   ],
+   "then": "exclusivity",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "telegram"
+   ],
+   "then": "termination-for-convenience",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "prerequisite"
+   ],
+   "then": "termination-for-convenience",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "rationale"
+   ],
+   "then": "termination-for-convenience",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "undergoes"
+   ],
+   "then": "change-of-control",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "merge"
+   ],
+   "then": "change-of-control",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "undergoing"
+   ],
+   "then": "change-of-control",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "purported"
+   ],
+   "then": "anti-assignment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "null"
+   ],
+   "then": "anti-assignment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "delegate"
+   ],
+   "then": "anti-assignment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "assign",
+    "void"
+   ],
+   "then": "anti-assignment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "null",
+    "purported"
+   ],
+   "then": "anti-assignment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "inspect"
+   ],
+   "then": "audit-rights",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "examine"
+   ],
+   "then": "audit-rights",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "examined"
+   ],
+   "then": "audit-rights",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "audit",
+    "inspect"
+   ],
+   "then": "audit-rights",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "audit",
+    "examine"
+   ],
+   "then": "audit-rights",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "coverages"
+   ],
+   "then": "insurance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "umbrella"
+   ],
+   "then": "insurance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "employers"
+   ],
+   "then": "insurance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "coverages"
+   ],
+   "then": "insurance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "umbrella"
+   ],
+   "then": "insurance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "employers"
+   ],
+   "then": "insurance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "possibility"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "consequential"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "exemplary"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "consequential",
+    "tort"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "possibility",
+    "punitive"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "possibility"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "workmanship"
+   ],
+   "then": "warranty-duration",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "starts"
+   ],
+   "then": "warranty-duration",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "integrator"
+   ],
+   "then": "warranty-duration",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "stocks"
+   ],
+   "then": "post-termination-services",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "ever"
+   ],
+   "then": "post-termination-services",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "smooth"
+   ],
+   "then": "post-termination-services",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "ever",
+    "terminates"
+   ],
+   "then": "post-termination-services",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 51396,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "corporation"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "inc"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "llc"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "inc",
+    "virgin"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "corporation",
+    "incorporated"
+   ],
+   "then": "party",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 3963,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "exceed"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "shall"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "amount"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "prompt-v1 salt 1"
+   }
+  },
+  {
+   "when": [
+    "damages"
+   ],
+   "then": "liability-cap",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 620,
+    "recipe": "prompt-v1 salt 1"
+   }
+  }
+ ],
+ "promoted": [
+  {
+   "rule": "governed=>governing-law",
+   "source": "mined",
+   "recipe": "mine-cover",
+   "receipt": "b29252b4",
+   "held": {
+    "cover": 20,
+    "right": 19,
+    "prec": 0.95,
+    "basePrec": 0.05
+   },
+   "final": {
+    "cover": 17,
+    "right": 16,
+    "prec": 0.9411764705882353,
+    "basePrec": 0.058823529411764705
+   },
+   "heldDocs": {
+    "ok": true,
+    "docs": 17,
+    "right": 16,
+    "base": 3,
+    "rightRate": 0.941176,
+    "baseRate": 0.176471,
+    "why": ""
+   },
+   "finalDocs": {
+    "ok": true,
+    "docs": 14,
+    "right": 13,
+    "base": 9,
+    "rightRate": 0.928571,
+    "baseRate": 0.642857,
+    "why": ""
+   }
+  },
+  {
+   "rule": "renew=>renewal-term",
+   "source": "mined",
+   "recipe": "mine-1",
+   "receipt": "bb000038",
+   "held": {
+    "cover": 5,
+    "right": 4,
+    "prec": 0.8,
+    "basePrec": 0.2
+   },
+   "final": {
+    "cover": 8,
+    "right": 8,
+    "prec": 1,
+    "basePrec": 0
+   },
+   "heldDocs": {
+    "ok": true,
+    "docs": 3,
+    "right": 3,
+    "base": 2,
+    "rightRate": 1,
+    "baseRate": 0.666667,
+    "why": ""
+   },
+   "finalDocs": {
+    "ok": true,
+    "docs": 6,
+    "right": 6,
+    "base": 3,
+    "rightRate": 1,
+    "baseRate": 0.5,
+    "why": ""
+   }
+  }
+ ],
+ "dropped": [
+  {
+   "rule": "biotec=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "bellicum=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "miltenyi=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "copy+execution=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "biotec+copy=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "made=>agreement-date",
+   "source": "mined",
+   "why": "held-out: right 6 of 9, needs 0.8"
+  },
+  {
+   "rule": "execution=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "copy=>agreement-date",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "biotec=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "bellicum=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "miltenyi=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "biotec+copy=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "biotec+execution=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "copy=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "biotec=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "bellicum=>effective-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "extended=>expiration-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "1st=>expiration-date",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "continue=>expiration-date",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "continue+until=>expiration-date",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "conflict=>governing-law",
+   "source": "mined",
+   "why": "a duplicate of conflict=>governing-law"
+  },
+  {
+   "rule": "conflicts=>governing-law",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "choice=>governing-law",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "angeles+los=>governing-law",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "conflict+giving=>governing-law",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "accordance=>governing-law",
+   "source": "mined",
+   "why": "held-out: right 16 of 21, needs 0.8"
+  },
+  {
+   "rule": "construed=>governing-law",
+   "source": "mined",
+   "why": "a duplicate of construed=>governing-law"
+  },
+  {
+   "rule": "105216871=>party",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "docs=>party",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "organized=>party",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "105216871+docs=>party",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "2020=>party",
+   "source": "mined",
+   "why": "held-out: beats the baseline by 0.000, needs 0.2"
+  },
+  {
+   "rule": "zfirst=>party",
+   "source": "mined",
+   "why": "held-out: beats the baseline by 0.000, needs 0.2"
+  },
+  {
+   "rule": "effective=>party",
+   "source": "mined",
+   "why": "held-out: beats the baseline by 0.000, needs 0.2"
+  },
+  {
+   "rule": "automatically=>renewal-term",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "condensate=>renewal-term",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "automatically+renewed=>renewal-term",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "automatically+renew=>renewal-term",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "automatically=>renewal-term",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "renew=>renewal-term",
+   "source": "mined",
+   "why": "a duplicate of renew=>renewal-term"
+  },
+  {
+   "rule": "condensate=>renewal-term",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "condensate=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "extension=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "automatically=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "automatically+renew=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "condensate+natural=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "condensate=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "extension=>notice-period",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "damages=>liability-cap",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "actual=>liability-cap",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "charges=>liability-cap",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "customer+direct=>liability-cap",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "damages=>liability-cap",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "executing=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "february=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "iia=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "dates+july=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "dates+october=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "july=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "dates=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "october=>minimum-commitment",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "miles=>non-compete",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "families=>non-compete",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "competing=>non-compete",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "shuffler=>exclusivity",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "950=>exclusivity",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "autograph=>exclusivity",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "shuffler=>exclusivity",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "telegram=>termination-for-convenience",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "prerequisite=>termination-for-convenience",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "rationale=>termination-for-convenience",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "undergoes=>change-of-control",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "merge=>change-of-control",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "undergoing=>change-of-control",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "purported=>anti-assignment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "null=>anti-assignment",
+   "source": "mined",
+   "why": "held-out: right 2 of 5, needs 0.8"
+  },
+  {
+   "rule": "delegate=>anti-assignment",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "assign+void=>anti-assignment",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "null+purported=>anti-assignment",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "inspect=>audit-rights",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "examine=>audit-rights",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "examined=>audit-rights",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "audit+inspect=>audit-rights",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "audit+examine=>audit-rights",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "coverages=>insurance",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "umbrella=>insurance",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "employers=>insurance",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "coverages=>insurance",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "umbrella=>insurance",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "employers=>insurance",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "possibility=>cap-on-liability",
+   "source": "mined",
+   "why": "final exam: right 4 of 6, needs 0.8"
+  },
+  {
+   "rule": "consequential=>cap-on-liability",
+   "source": "mined",
+   "why": "final exam: right 10 of 14, needs 0.8"
+  },
+  {
+   "rule": "exemplary=>cap-on-liability",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "consequential+tort=>cap-on-liability",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "possibility+punitive=>cap-on-liability",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "possibility=>cap-on-liability",
+   "source": "mined",
+   "why": "final exam: right 4 of 6, needs 0.8"
+  },
+  {
+   "rule": "workmanship=>warranty-duration",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "starts=>warranty-duration",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "integrator=>warranty-duration",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "stocks=>post-termination-services",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "ever=>post-termination-services",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "smooth=>post-termination-services",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "ever+terminates=>post-termination-services",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "corporation=>party",
+   "source": "7b",
+   "why": "held-out: beats the baseline by 0.000, needs 0.2"
+  },
+  {
+   "rule": "inc=>party",
+   "source": "7b",
+   "why": "held-out: right 41 of 61, needs 0.8"
+  },
+  {
+   "rule": "llc=>party",
+   "source": "7b",
+   "why": "held-out: right 7 of 10, needs 0.8"
+  },
+  {
+   "rule": "inc+virgin=>party",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "corporation+incorporated=>party",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "exceed=>liability-cap",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "shall=>liability-cap",
+   "source": "7b",
+   "why": "held-out: right 1 of 7, needs 0.8"
+  },
+  {
+   "rule": "amount=>liability-cap",
+   "source": "7b",
+   "why": "held-out: right 0 of 10, needs 0.8"
+  },
+  {
+   "rule": "damages=>liability-cap",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  }
+ ],
+ "keptFree": {
+  "governing-law": 1,
+  "renewal-term": 1
+ },
+ "tried7b": {
+  "party": 5,
+  "liability-cap": 4
+ },
+ "passed7b": {},
+ "asks": [
+  {
+   "task": "party",
+   "evidence": {
+    "tier1": {
+     "asked": true,
+     "answered": false,
+     "what": "the recipe lookup and the miners for party"
+    },
+    "tier2": {
+     "tried": 5,
+     "passed": 0,
+     "model": "qwen2.5:7b",
+     "dropped": [
+      "corporation=>party: held-out: beats the baseline by 0.000, needs 0.2",
+      "inc=>party: held-out: right 41 of 61, needs 0.8",
+      "llc=>party: held-out: right 7 of 10, needs 0.8",
+      "inc+virgin=>party: held-out: covers 0, needs 5",
+      "corporation+incorporated=>party: held-out: covers 0, needs 5"
+     ]
+    }
+   }
+  },
+  {
+   "task": "liability-cap",
+   "evidence": {
+    "tier1": {
+     "asked": true,
+     "answered": false,
+     "what": "the recipe lookup and the miners for liability-cap"
+    },
+    "tier2": {
+     "tried": 4,
+     "passed": 0,
+     "model": "qwen2.5:7b",
+     "dropped": [
+      "exceed=>liability-cap: held-out: covers 0, needs 5",
+      "shall=>liability-cap: held-out: right 1 of 7, needs 0.8",
+      "amount=>liability-cap: held-out: right 0 of 10, needs 0.8",
+      "damages=>liability-cap: held-out: covers 0, needs 5"
+     ]
+    }
+   }
+  }
+ ],
+ "meter": {
+  "before": {
+   "coverage": 0.028947,
+   "precision": 0.969697,
+   "answered": 33,
+   "cases": 1140
+  },
+  "after": {
+   "coverage": 0.048246,
+   "precision": 0.963636,
+   "answered": 55,
+   "right": 53,
+   "cases": 1140,
+   "withGold": 454
+  },
+  "per": {
+   "agreement-date": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 44
+   },
+   "effective-date": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 28
+   },
+   "expiration-date": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 8
+   },
+   "governing-law": {
+    "cases": 60,
+    "answered": 46,
+    "right": 45,
+    "baseRight": 13,
+    "withGold": 49
+   },
+   "party": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 57
+   },
+   "renewal-term": {
+    "cases": 60,
+    "answered": 9,
+    "right": 8,
+    "baseRight": 4,
+    "withGold": 23
+   },
+   "notice-period": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "liability-cap": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 7
+   },
+   "minimum-commitment": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 6
+   },
+   "non-compete": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "exclusivity": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 22
+   },
+   "termination-for-convenience": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 23
+   },
+   "change-of-control": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "anti-assignment": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 44
+   },
+   "audit-rights": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 24
+   },
+   "insurance": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 21
+   },
+   "cap-on-liability": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 30
+   },
+   "warranty-duration": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "post-termination-services": {
+    "cases": 60,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 21
+   }
+  },
+  "receipt": {
+   "ok": true,
+   "answered": 55,
+   "right": 53,
+   "baseRight": 17,
+   "rate": 0.963636,
+   "baseRate": 0.309091,
+   "decision": "PROMOTE",
+   "beats": true,
+   "receipt": "208c39c29721e4decd3767885130cfdab07c0ff911df4f605158b2ea93ab0ede",
+   "why": "+0.654545 on right when answered (sealed margin 0.1), stat 7.135425 reaches zCrit 1.96, n at least 20"
+  }
+ },
+ "patterns": 4,
+ "built": 2,
+ "source": {
+  "file": "data.zip",
+  "sha256": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a"
+ },
+ "why7b": null,
+ "dry": false
+}

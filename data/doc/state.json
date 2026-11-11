@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 2,
  "library": [
   {
    "when": [
@@ -96,6 +96,102 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "governed"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2425,
+    "recipe": "mine-cover"
+   },
+   "receipt": "b29252b4",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 20,
+     "right": 19,
+     "prec": 0.95,
+     "basePrec": 0.05
+    },
+    "final": {
+     "cover": 17,
+     "right": 16,
+     "prec": 0.9411764705882353,
+     "basePrec": 0.058823529411764705
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 16,
+     "base": 3,
+     "rightRate": 0.941176,
+     "baseRate": 0.176471,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 14,
+     "right": 13,
+     "base": 9,
+     "rightRate": 0.928571,
+     "baseRate": 0.642857,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "renew"
+   ],
+   "then": "renewal-term",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-11T03:14:04.168Z",
+    "feed": "cuad-v1",
+    "trainN": 2830,
+    "recipe": "mine-1"
+   },
+   "receipt": "bb000038",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.666667,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.5,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -138,6 +234,46 @@
     "then": "governing-law"
    },
    "receipt": "0991e8bc"
+  },
+  {
+   "library": "doc",
+   "task": "governing-law",
+   "type": "place",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-11T03:14:04.168Z",
+   "rule": {
+    "when": [
+     "governed"
+    ],
+    "then": "governing-law"
+   },
+   "receipt": "b29252b4"
+  },
+  {
+   "library": "doc",
+   "task": "renewal-term",
+   "type": "duration",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-11T03:14:04.168Z",
+   "rule": {
+    "when": [
+     "renew"
+    ],
+    "then": "renewal-term"
+   },
+   "receipt": "bb000038"
   }
  ]
 }
