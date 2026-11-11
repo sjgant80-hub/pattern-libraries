@@ -89,11 +89,11 @@ details summary { cursor: pointer; color: var(--accent); }
 
 <section id="message" aria-labelledby="message-h">
   <h2 id="message-h">Try it on a customer message (library 3)</h2>
-  <p>The sample is made up, in the style of the messages the library learns from. Paste a real one: a chat line or an email to a bank. It is read in your browser; nothing is sent anywhere.</p>
+  <p>The message in the box is an invented example. To try your own, replace it with a real customer message (a chat line or an email to a bank) and press <em>Route this message</em>. It is read by code in your browser; nothing is sent anywhere.</p>
   <textarea id="mdoc" aria-label="Customer message" style="min-height:90px"></textarea>
-  <p><button id="mread">Route it</button> <button id="msample" class="ghost">Put the sample back</button></p>
+  <p><button id="mread">Route this message</button> <button id="msample" class="ghost">Bring back the example</button></p>
   <div class="card" id="manswer" aria-live="polite"></div>
-  <p class="muted">The <strong>route</strong> is the team the first kept routing pattern points to; if patterns for other teams also fired, they are named, never hidden. Beside it is what the cheap method, a <strong>keyword router</strong>, would do: send the message to the first team whose own name's words are all in it. The <strong>flags</strong> say "wants a human" or "something lost or stolen" when a kept triage pattern fires; a message with no flag goes to the normal queue and is never called safe.</p>
+  <p class="muted">The <strong>route</strong> is the team the first kept routing pattern points to; if patterns for other teams also fired (a <strong>conflict</strong>), they are named, never hidden; if none fires, the answer is unknown and the message goes to a person. Beside it is what the cheap method, a <strong>keyword router</strong>, would do: send the message to the first team whose own name's words are all in it. The <strong>flags</strong> say "wants a human" or "something lost or stolen" when a kept triage pattern fires; a message with no flag goes to the normal queue and is never called safe.</p>
 </section>
 
 <section id="start" aria-labelledby="start-h">
@@ -148,7 +148,7 @@ details summary { cursor: pointer; color: var(--accent); }
 
 <section id="library3" aria-labelledby="library3-h">
   <h2 id="library3-h">Messages (library 3): routing and triage, last night</h2>
-  <p>Library 3 has two parts, each grown as its own library on its own sealed bars (<a href="CLAIMS.md">CLAIMS.md</a>, seal 3). <strong>Routing</strong> learns from Banking77: 13,083 online-banking customer messages, each labelled with one of 77 intents. <strong>Triage</strong> learns from NLU++: 3,080 banking and hotel messages whose labels include "wants a human" and "something lost or stolen". Both are by PolyAI, CC BY 4.0. Library 3 runs on the free proposers only: the local model's calls each night stay with libraries 1 and 2. Everything below is read from the nights' own records.</p>
+  <p>Library 3 has two parts, each grown as its own library on its own sealed bars (<a href="CLAIMS.md">CLAIMS.md</a>, seal 3). <strong>Routing</strong> learns from Banking77: 13,083 online-banking customer messages, each labelled with one of 77 intents. <strong>Triage</strong> learns from NLU++: 3,080 banking and hotel messages whose labels include "wants a human" and "something lost or stolen". Both are by PolyAI, CC BY 4.0. Library 3 runs on the free proposers only: plain code counts which words go with which team in the training messages and proposes those; no AI model proposes or reads anything in library 3 (the local model's calls each night stay with libraries 1 and 2). A message counts as routed <strong>right</strong> when it goes to the team the dataset's makers labelled it with; the router is only ever scored on messages it never learned from. Everything below is read from the nights' own records.</p>
   <h3>Routing</h3>
   <div class="card" id="l3r-flow"><p class="muted">Loading the night's record…</p></div>
   <div class="card" id="l3r-router"></div>
@@ -292,7 +292,7 @@ details summary { cursor: pointer; color: var(--accent); }
     <li><strong>No flag does not mean safe.</strong> A message with no "wants a human" or "lost or stolen" flag goes to the normal queue, where a person reads it as today.</li>
   </ul>
   <h3 id="tri-biz">Customer messages: routing and triage (library 3)</h3>
-  <p>Someone reads every incoming message to decide which team it belongs to, and whether it cannot wait. Library 3 takes that first pass: it sends a message to the team its proven patterns point to, names any other team that also matched, and raises a flag when the customer asks for a human or something was lost or stolen. What it cannot prove goes to the person who sorts messages today.</p>
+  <p>Today a person reads every incoming message to decide which team it belongs to, and whether it cannot wait. Library 3 takes that first pass: it sends a message to the team its proven patterns point to, names any other team that also matched, and raises a flag when the customer asks for a human or something was lost or stolen. What it cannot prove goes to the person who sorts messages today.</p>
   <p class="card" id="tri-today"></p>
   <div class="grid">
     <div class="card"><strong>Head of customer service</strong><p>Each message it routes arrives with the pattern that put it there, and a conflict between two teams is shown rather than guessed away. How often it routes, and how often right, is measured every night and shown above.</p></div>

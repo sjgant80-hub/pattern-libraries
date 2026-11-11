@@ -10,10 +10,12 @@ const ROOT = new URL('../', import.meta.url);
 const read = (p) => readFileSync(new URL(p, ROOT), 'utf8');
 // --finance walks library 2 (receipts): its sections, its records' figures, its buyers; writes data/walk-7b-finance.md
 const FIN = process.argv.includes('--finance');
+// --messages walks library 3 (routing and triage); writes data/walk-7b-messages.md
+const MSG = process.argv.includes('--messages');
 // the sections a buyer decides on: the whole page does not fit the loaded model's 4,096-token window
 const page = read('index.html');
 const section = (id) => { const i = page.indexOf('id="' + id + '"'); if (i < 0) return ''; const s = page.lastIndexOf('<', i); const e = page.indexOf(id === 'what' ? '</header>' : '</section>', i); return page.slice(s, e); };
-const html = (FIN ? ['receipt', 'fin-biz'] : ['what', 'start', 'wall', 'business', 'paper']).map(section).join('\n').replace(/<svg[\s\S]*?<\/svg>/g, ' [diagram] ')
+const html = (MSG ? ['message', 'tri-biz'] : FIN ? ['receipt', 'fin-biz'] : ['what', 'start', 'wall', 'business', 'paper']).map(section).join('\n').replace(/<svg[\s\S]*?<\/svg>/g, ' [diagram] ')
   .replace(/<[^>]+>/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').replace(/\s*\n\s*/g, '\n').trim();
 const summary = JSON.parse(read('data/doc/summary.json')), state = JSON.parse(read('data/doc/state.json')), night = JSON.parse(read('data/doc/' + summary.latest));
 const last = summary.series[summary.series.length - 1];
@@ -38,7 +40,22 @@ async function financeFigures() {
     'The keying calculator uses the buyer\'s own inputs (placeholders 500 receipts a month, 2 minutes each, 25 an hour) times the measured coverage and precision: today it shows 0 hours.',
   ].join('\n');
 }
-const figures = FIN ? await financeFigures() : [
+// library 3's figures, from its records and from the kernel run on the page's own sample message
+async function messageFigures() {
+  const T = (await import(new URL('src/triage.mjs', ROOT).href)).default;
+  const rs = JSON.parse(read('data/route/summary.json')), rst = JSON.parse(read('data/route/state.json')), ts = JSON.parse(read('data/triage/summary.json')), tst = JSON.parse(read('data/triage/state.json'));
+  const rn = JSON.parse(read('data/route/' + rs.latest)), tn = JSON.parse(read('data/triage/' + ts.latest)), k = rs.series[rs.series.length - 1].check;
+  const sample = /const MSAMPLE = '([^']*)'/.exec(read('app.mjs'))[1], m = T.read(sample, rst.library, tst.library);
+  return [
+    'Library 3 (customer messages), routing night ' + rn.cycle + ' (' + rn.at.slice(0, 10) + '): ' + rn.patterns + ' proven routing patterns covering ' + new Set(rst.library.map((r) => r.then)).size + ' of 77 teams; ' + rn.promoted.length + ' kept, ' + rn.dropped.length + ' dropped, every drop with its reason. Triage night ' + tn.cycle + ': ' + tn.patterns + ' proven patterns; ' + tn.dropped.length + ' dropped.',
+    'The router on the ' + k.queries + ' measuring messages: ' + k.routed + ' routed, ' + k.right + ' to the right team, ' + k.conflicts + ' with a conflict. A keyword router on the same messages: ' + k.baseRouted + ' routed, ' + k.baseRight + ' right.',
+    'Library 3 runs on the free proposers only: no local model call and no paid tier.',
+    'Its first two nights ran under an exam order that did not shuffle and are kept as void (not counted); it started again from empty.',
+    'On the page\'s sample message the route is ' + (m.route === 'unknown' ? 'unknown' : T.say(m.route)) + '; the keyword router says ' + (m.keyword === 'unknown' ? 'nothing' : T.say(m.keyword)) + '; flags raised: ' + (m.flags.map((f) => f.flag).join(', ') || 'none') + '.',
+    'The sorting calculator uses the buyer\'s own inputs (placeholders 5000 messages a month, 1 minute each, 25 an hour) times the measured share routed and right.',
+  ].join('\n');
+}
+const figures = MSG ? await messageFigures() : FIN ? await financeFigures() : [
   'Night ' + night.cycle + ' (' + night.at.slice(0, 10) + '): ' + night.patterns + ' proven patterns; ' + night.promoted.length + ' kept, ' + night.dropped.length + ' dropped.',
   'Kept: ' + night.promoted.map((p) => p.rule + ' (held-out ' + p.held.right + '/' + p.held.cover + ', final ' + p.final.right + '/' + p.final.cover + ')').join('; ') + '.',
   'Coverage on the 60 measuring contracts: ' + (last.coverage * 100).toFixed(1) + '% of questions answered; right ' + (last.precision * 100).toFixed(1) + '% when it answers.',
@@ -46,7 +63,13 @@ const figures = FIN ? await financeFigures() : [
   'The local 7B on night 0: ' + (night.why7b || 'used') + '. The paid tier: off; 0 calls.',
   'The calculator (defaults from the CUAD paper: $500/hour, 5 minutes a page, 18.2 pages a contract, 100 contracts a month) shows about 2 expert hours a month saved today.',
 ].join('\n');
-const PERSONAS = FIN ? [
+const PERSONAS = MSG ? [
+  ['a head of customer service at a retail bank', 'whether it would route your queue tomorrow, what "unknown" and a conflict mean for the team, whether the numbers are believable'],
+  ['an operations director', 'what it saves, what it costs to run, how it is rolled out, what is confusing'],
+  ['a head of risk and compliance', 'whether a missed "wants a human" or "lost or stolen" message is a risk, what is evidenced, what an auditor would ask'],
+  ['the owner of a 15-person online shop with a shared inbox', 'whether you could use it tomorrow on your own messages, what you would have to do, what is confusing'],
+  ['a head of IT security', 'where messages go, what runs where, what can leak'],
+] : FIN ? [
   ['a finance director at a mid-size restaurant group', 'the money: what it saves, whether the numbers and the check are believable, what happens with a wrong amount'],
   ['an accounts-payable and bookkeeping lead', 'whether it would cut keying tomorrow, what "unknown" and "flagged" mean for the team, what is confusing'],
   ['a financial controller who signs off the books', 'whether an auditor could rely on an answer and on the check, what is evidenced, what is not'],
@@ -78,5 +101,6 @@ for (const [who, focus] of PERSONAS) {
   out.push('## ' + who, '', a.trim(), '');
   console.log('walked: ' + who);
 }
-writeFileSync(fileURLToPath(new URL(FIN ? 'data/walk-7b-finance.md' : 'data/walk-7b.md', ROOT)), out.join('\n') + '\n');
-console.log('wrote ' + (FIN ? 'data/walk-7b-finance.md' : 'data/walk-7b.md'));
+const OUT = MSG ? 'data/walk-7b-messages.md' : FIN ? 'data/walk-7b-finance.md' : 'data/walk-7b.md';
+writeFileSync(fileURLToPath(new URL(OUT, ROOT)), out.join('\n') + '\n');
+console.log('wrote ' + OUT);
