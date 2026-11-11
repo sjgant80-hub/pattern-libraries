@@ -331,3 +331,54 @@ those same queries by at least 0.10, over at least 3 queries; the same on the fi
   records live in their own folders, and the morning block carries its line.
 
 Library 3 is reported **landed** only under seal 1's definition. Until then it is **running** or **not landed**.
+
+---
+
+# SEAL 4 · the exam order for row-numbered ids, written before any night under it (2026-11-11)
+
+Seals 1, 2 and 3 above are unchanged, byte for byte. This seal changes ONE sealed procedure, after results were read,
+so it says what was found, what changes, what does not, and which way it moves the bars. Simon approved it in chat.
+
+## What was found
+
+Every library puts its documents in one fixed order by **FNV-1a of salt + id** (seal 1), then cuts the meter, the seed
+and the exam batches from that order. For ids that are **consecutive row numbers** (`train-000`…, `b77-train-00000`…,
+`nlu-banking-f0-000`…), that order does not shuffle: neighbouring rows stay in long runs. It was found on library 3's
+routing night 0, where `visa ⇒ visa-or-mastercard` passed both exams (16/16, 15/15) yet answered none of the 1,000
+measuring queries, because the meter held **no** query of that intent. Measured on the ids alone:
+
+- **Library 3, routing** (Banking77 is stored grouped by intent): the meter holds 47 of the 77 intents, and every exam
+  batch only 46 to 52, with up to 82 queries of one intent where about 13 are expected; the meter draws on 81 of the file's
+  50-row blocks where a shuffle gives about 256.
+- **Library 2, receipts**: the 100 measuring receipts come from 8 of CORD's 20 blocks of 50 rows (a shuffle: about 20);
+  night 0's held-out batch from 4 (about 17).
+- **Library 3, triage**: its two labels were spread evenly over the slices, but its ids are row numbers too.
+- **Library 1, contracts**: unaffected. Its ids are contract titles; its meter draws on 20 of 21 blocks of 25 (a shuffle:
+  about 19).
+
+## What changes
+
+For **libraries 2 and 3** (finance, routing, triage) the fixed order is **SHA-256 of salt + id** (UTF-8 bytes; the
+lowercase hex compared as text; equal hashes, which do not occur, broken by the id's code-point order), using the
+vendored SHA-256 (`vendor/mint/vendor/fall-kit/light/sha256.mjs`, already pinned). It was chosen for one property, tested
+on the ids alone with no pattern proposed or gated: under it every routing slice holds all 77 intents, and the receipt
+meter draws on 20 of 20 blocks. Salts, sizes, slices, bars, gates, baselines and claims are all unchanged.
+
+## What happens to the nights already run
+
+The six nights made under the old order are **void**: each library's night 0 (finance 2026-11-10T21:40:54Z: 0 kept, 55
+dropped; routing and triage 2026-11-10T23:16:32Z: 12 kept and 0 kept) and its night 1, which the scheduled 03:00 night
+ran at 2026-11-11T03:14:04Z, before this seal was written (finance: 2 kept, with three local-7B calls; routing: 8 more
+kept; triage: 0). They are kept and published as they were written, under each library's `void/` folder, re-derived in
+CI under the old order to prove they are unchanged, and **not counted** toward any claim. The patterns they kept
+(finance 2, routing 20) do not carry over. Libraries 2 and 3 start again from an empty library with a fresh night 0
+under the new order, on the same tiers as the void night 0s (the free tiers only), so the two can be compared; library
+2's local-7B proposals resume with the next scheduled night. Library 1's night 1 (the same 03:14 run) is unaffected
+and counts.
+
+## Which way this moves the bars
+
+It moves no bar. It makes each meter and each exam a fair sample of its data, which can make the results better or
+worse; the order was fixed by its mixing alone, before any night under it was run or read. The void nights stay on the
+record, including library 3's T2 readings on its void nights (night 0: 23 of 30 routed queries right, 76.7%; night 1:
+71 of 82, 86.6%; against a bar of 80%).
