@@ -1,5 +1,6 @@
 // si-didy · patlib.mjs — THE PATTERN LIBRARY'S LAW (2026-11-06; Simon's spec "Kar grows it itself, every night, on a 7B").
-// A rule reads "WHEN token [AND token] THEN label". It enters the library ONLY through gate(): it must beat the baseline on
+// A rule reads "WHEN token [AND token [AND token]] THEN label" (the third token: amendment 1, 2026-11-12, sealed in the
+// backup record before the code). It enters the library ONLY through gate(): it must beat the baseline on
 // a held-out slice AND on a final-exam slice nobody proposed from, stay inside its competence, score the same twice,
 // carry its provenance, and not repeat a rule already there. The 7B only proposes; this file decides. Pure and total:
 // garbage in never throws. Sealed before any code: ~/.si-didy/backups/2026-11-06-pattern-library (53cfed8).
@@ -58,7 +59,8 @@ export function majority(cases) {
 const TOKEN = /^[a-z0-9]{3,}$/;
 export function validRule(r) {
   if (!isObj(r) || !Array.isArray(r.when) || !str(r.then)) return false;
-  if (r.when.length < 1 || r.when.length > 2) return false;
+  // one to three tokens (amendment 1, 2026-11-12: the three-token shape; every bar unchanged)
+  if (r.when.length < 1 || r.when.length > 3) return false;
   if (!r.when.every((t) => TOKEN.test(str(t)))) return false;
   return new Set(r.when).size === r.when.length;
 }
@@ -118,16 +120,16 @@ export function answer(library, c) {
   return r ? { answer: r.then, rule: ruleKey(r), receipt: str(r.receipt) } : { answer: 'unknown', rule: null, receipt: null };
 }
 
-/** parseProposals(text, labels) → rules from lines "WHEN a [AND b] THEN label"; only labels the feed knows. */
+/** parseProposals(text, labels) → rules from lines "WHEN a [AND b [AND c]] THEN label"; only labels the feed knows. */
 export function parseProposals(text, labels) {
   const known = new Set(arr(labels));
   const out = [];
   for (const line of str(text).split(/\r?\n/)) {
-    const m = /\bWHEN\s+([a-z0-9]+)(?:\s+AND\s+([a-z0-9]+))?\s+THEN\s+([a-z0-9-]+)/i.exec(line);
+    const m = /\bWHEN\s+([a-z0-9]+)(?:\s+AND\s+([a-z0-9]+))?(?:\s+AND\s+([a-z0-9]+))?\s+THEN\s+([a-z0-9-]+)/i.exec(line);
     if (!m) continue;
-    const then = m[3].toLowerCase();
+    const then = m[4].toLowerCase();
     if (!known.has(then)) continue;
-    const r = { when: m[2] ? [m[1].toLowerCase(), m[2].toLowerCase()] : [m[1].toLowerCase()], then };
+    const r = { when: [m[1], m[2], m[3]].filter((w) => w !== undefined).map((w) => w.toLowerCase()), then };
     if (validRule(r)) out.push(r);
   }
   return out;

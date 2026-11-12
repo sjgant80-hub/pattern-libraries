@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 
 const PINS = {
-  'vendor/patlib/patlib.mjs': 'b04c5e35a3612f353906ed84a6f0f4e316f30d645735779e191f9f9cebbfe73b',
+  'vendor/patlib/patlib.mjs': '7acc284155b47b83859ea70cb6b5d8b77e2077351dc14ab8aa59292a227e2b19', // amendment 1 (seal 6): the three-word shape
   'vendor/mint/src/baseline.mjs': 'a4b4504cd4d53d4fc46c58e268a0b367485560de6376b6dfc0f3c81ee4f515eb',
   'vendor/mint/src/experiment.mjs': 'e75a63da05b4aa36fffa6b4af9354190ee8bad052c82675556b2aaf936301496',
   'vendor/mint/src/journal.mjs': '6077dbc8b605143334f6ad028ab9bdbca9d5a75120310d4c7861a3807dfe4992',

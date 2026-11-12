@@ -277,6 +277,38 @@ test('K6: the router, the conflicts and pick give the same answers through a cat
   assert.equal(T.pick(rules, T.ROUTES[0], [null], cat), null);
 });
 
+// SEAL 6, S6.3: the law's amendment 1 allows three words; the catalogue must stay exact on libraries that hold them
+test('S6.3: with three-word patterns the catalogue finds exactly what the linear scan finds, and the law answers the same', () => {
+  const r = rng(20261113);
+  let checked = 0; let threes = 0;
+  for (let lib = 0; lib < 60; lib++) {
+    const rules = [];
+    for (let i = 0, n = 1 + Math.floor(r() * 120); i < n; i++) {
+      const k = 1 + Math.floor(r() * 3);
+      const ws = [];
+      while (ws.length < k) { const w = VOCAB[Math.floor(r() * VOCAB.length)]; if (!ws.includes(w)) ws.push(w); }
+      if (k === 3) threes++;
+      rules.push(r() < 0.06 ? { when: ['x'], then: 'bad' } : R(ws, LABELS[Math.floor(r() * LABELS.length)]));
+    }
+    const cat = catalogue(rules);
+    for (let q = 0; q < 50; q++) {
+      const tokens = randomTokens(r);
+      assert.deepEqual(firing(cat, tokens), linear(rules, tokens));
+      assert.deepEqual(answer(cat, { tokens }), P.answer(rules, { tokens }));
+      checked++;
+    }
+  }
+  assert.equal(checked, 3000);
+  assert.ok(threes > 500, 'three-word patterns were in the libraries: ' + threes);
+  // a three-word pattern has an address and is filed under exactly one of its words; four words are still not a pattern
+  const three = R(['card', 'payment', 'pending'], LABELS[0]);
+  assert.equal(addressOf(three, '300', LABELS), '300.001.card+payment+pending');
+  const cat = catalogue([three, R(['card', 'payment', 'pending', 'still'], LABELS[0])]);
+  assert.equal(Object.values(cat.filed).flat().length, 1);
+  assert.deepEqual(firing(cat, ['pending', 'card', 'payment', 'now']), [0]);
+  assert.deepEqual(firing(cat, ['card', 'payment']), [], 'all three words are needed');
+});
+
 test('total: no function throws on garbage', () => {
   const circular = {}; circular.self = circular;
   const toxic = { get when() { throw new Error('t'); }, get tokens() { throw new Error('t'); }, get rules() { throw new Error('t'); }, toString() { throw new Error('t'); } };

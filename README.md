@@ -37,7 +37,8 @@ A pattern is one or two words near a candidate: `WHEN governed THEN governing-la
    writes goes through the same mutation gate.
 4. **Two gates**: Kar's pattern law (`vendor/patlib`, reused byte for byte) on candidates in contracts the proposers never
    saw, then a field gate on whole contracts against a cheap method (the first date, the first jurisdiction, ctrl-F for
-   the clause's word). Both again on a second batch nobody has looked at.
+   the clause's word). Both again on a second batch nobody has looked at. Since the law's amendment 1 (2026-11-12,
+   seal 6) a pattern may hold up to three words, under exactly the same bars; the proposers here still propose one or two.
 5. **A fresh exam every night**: 60 contracts only measure, 150 seed the training set, and 15 batches of 20 are each an
    exam exactly once.
 6. Winners are kept with a receipt; losers are dropped with the reason; how each winner was built goes into the
