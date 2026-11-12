@@ -382,3 +382,80 @@ It moves no bar. It makes each meter and each exam a fair sample of its data, wh
 worse; the order was fixed by its mixing alone, before any night under it was run or read. The void nights stay on the
 record, including library 3's T2 readings on its void nights (night 0: 23 of 30 routed queries right, 76.7%; night 1:
 71 of 82, 86.6%; against a bar of 80%).
+
+---
+
+# SEAL 5 · the catalogue: finding the right pattern fast as the library grows, written before its code (2026-11-12)
+
+Seals 1 to 4 above are unchanged, byte for byte. This seal adds one organ and changes no bar, gate, slice or claim of
+libraries 1 to 3.
+
+## What it is, and whose idea it is
+
+Today the router reads the whole library for every message: it asks every kept pattern, in library order, whether it
+fires. That is right at 22 patterns and too slow at tens of thousands. **The catalogue** gives every pattern an address
+and files it so that, for a job, only the patterns that could fire on it are read, and then the law decides exactly as
+before. The design, a Dewey-style address for every item and cross-reference layers between items, is Gary W. Floyd's:
+Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC, "NEXUS — Distributed Synthetic
+Intelligence," 2026 (its library scanner routes every item by a Dewey address; its graph linker links items across nine
+cross-reference layers). The build here, for WHEN/THEN patterns, is Kar's.
+
+## How it works (fixed before the code)
+
+- **The law still decides.** The catalogue only chooses which patterns to ask. Every pattern it returns has been asked
+  with the vendored law's own `fires()`, so it can never return a pattern the linear scan would not.
+- **Filing.** Every valid pattern is filed under exactly ONE of its own words: the word that occurs in the fewest
+  training messages of its library (ties broken by the word's code-point order); with no counts given, the word shared
+  by the fewest patterns. A pattern fires only when all its words are in the job, so its filing word is in the job, so
+  looking up the job's words finds every pattern that can fire. The patterns found are put back in library order.
+- **The address.** `<library>.<class>.<words>`: the library's number (contracts 100, receipts 200, routing 300, triage
+  400, Kar's own estate map 000), the label's place in that library's fixed list of labels (three digits), and the
+  pattern's words in code-point order joined by `+`. The law refuses a duplicate pattern, so an address names one
+  pattern; it never depends on library order, so adding patterns never changes an existing pattern's address.
+- **Five cross-reference layers**, from the only features a WHEN/THEN pattern has: (1) **words**, a pattern to each of its
+  words; (2) **class**, patterns that answer the same label; (3) **shadow**, pattern A shadows a later pattern B when
+  A's words are a subset of B's: whenever B fires A fires too and A comes first, so B can never be the answer;
+  (4) **fires together**, two patterns that fired on the same training message; (5) **provenance**, patterns kept on
+  the same night by the same recipe. Gary's other four layers (vectors, a knowledge graph, time, an ethics layer) have
+  no counterpart in a two-word rule and are not built.
+
+## Data for the measurement
+
+Banking77 (PolyAI, CC BY 4.0, the pinned commit of seal 3). The **training messages** (`banking_data/train.csv`) only
+grow libraries; the **test messages** (`banking_data/test.csv`, 3,080) are the jobs, and are never used to grow. A
+message's words are the router's own: the law's tokens of its text, the first 40.
+
+- **The real library:** library 3's routing library as committed (its kept patterns, in order).
+- **Grown libraries:** every one-word and two-word pattern seen in the training messages, each answering the intent it
+  most often goes with there (ties: the intent's place in the fixed list), ordered by how many training messages it
+  occurs in (most first; ties by the pattern's address). The library of size N is the first N. They are not gated or
+  verified: they stand in for the SHAPE of a large library, because finding patterns does not depend on whether they
+  are good. Sizes: 22 (the real library's size), 100, 1,000, 10,000, and every candidate the training messages give
+  (about 74,000; there are not 100,000).
+
+## Claims for the catalogue
+
+- **K1 · Exact (the +1).** On every test message, for the real library and every grown size: the patterns the catalogue
+  says fire are exactly the patterns the linear scan says fire, in the same order. So the router's answer, its pattern,
+  its conflicts and its right/wrong, and the law's `answer()`, are identical. Also on every message of library 3's
+  routing meter (1,000) through the router itself. Pass: zero differences anywhere. One difference fails it.
+- **K2 · Sub-linear.** Patterns asked per message, at each size: median, 95th percentile and largest, against N (the
+  linear scan asks all N). Pass: at the largest size, the median asks at most 1% of N. Wall time per message for both
+  ways is reported (median of 5 runs, the machine named), not claimed.
+- **K3 · Addresses.** Every address is unique within its library; the same library gives the same addresses on any
+  machine; and every prefix of a library (as it grew, pattern by pattern) gives its patterns the same addresses as the
+  whole library does. Tested on the real library and every grown size.
+- **K4 · Shadows.** A pattern the shadow layer marks shadowed is never the first to fire on any message of K1. Reported:
+  which patterns of the committed libraries are shadowed.
+- **K5 · Fires-together (measured, no target).** Of the test messages where two patterns of different labels fire (the
+  router's conflicts), the share whose first two patterns were already linked as "fired together" on the training
+  messages.
+- **K6 · Wired in place.** The router (`route`, `routeOn`) and the extractor's `pick` take a catalogue and use it; every
+  committed night of every library still re-derives byte for byte.
+- **K7 · Gated.** The catalogue's kernel and every kernel it changes pass witness v0.6 with every mutant run and nothing
+  baselined; its functions never throw on garbage (fuzz).
+- **K8 · Re-derived in the tab.** The page downloads the two Banking77 files from PolyAI's repository at the pinned commit
+  (about 1.1 MB), refuses them unless their SHA-256 is pinned below, and re-runs K1 and K2 in the visitor's browser.
+  This repository still commits no message.
+  - `banking_data/train.csv` b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b
+  - `banking_data/test.csv` d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d
