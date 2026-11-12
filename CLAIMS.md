@@ -460,7 +460,9 @@ message's words are the router's own: the law's tokens of its text, the first 40
   - `banking_data/train.csv` b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b
   - `banking_data/test.csv` d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d
 
-## SEAL 6 · the law's three-word shape (2026-11-12, before the law is re-vendored)
+---
+
+# SEAL 6 · the law's three-word shape (2026-11-12, before the law is re-vendored)
 
 Simon, 2026-11-12: "yes give the law a three-word shape". The law (`si-didy/patlib.mjs`) is amended in its own record
 first (amendment 1, sealed 8770d67 in the law's backup before its code; code 485c3d1): a rule may hold one, two or

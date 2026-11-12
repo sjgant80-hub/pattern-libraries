@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto';
 
 const ROOT = new URL('../', import.meta.url);
 // the whole of CLAIMS.md as sealed: seals 1 to 5
-const SEALED_WHOLE = '122daaf19c23425f5e96655f86245b3b09ea28afadef8e6d65c4317eb2ae9b3a';
+const SEALED_WHOLE = '382c175b98e6b8020f2368552d09987e29f03d805ec4869aa05e7ea4c075b1aa';
 const read = (p) => readFileSync(new URL(p, ROOT), 'utf8');
 const html = read('index.html'), app = read('app.mjs');
 // the words a reader sees: no style, no script, no tags (so an SVG coordinate like x="810" is not a typed number)
@@ -25,6 +25,9 @@ test('SEAL 1 is the claims as sealed, unchanged; SEAL 2 and SEAL 3 follow it, un
   // seal 5 (20ea3b4) was appended after the first 30,768 bytes
   assert.equal(sha(buf.subarray(0, 30768)), 'e9ae2f594d04bcdf92dbbff9f04991a96c83bb630e2f1367b11b1ce517cfc651');
   assert.match(buf.subarray(30768, 30900).toString('utf8'), /^\n---\n\n# SEAL 5 · the catalogue/);
+  // seal 6 (the law's three-word shape) was appended after the first 37,120 bytes
+  assert.equal(sha(buf.subarray(0, 37120)), '122daaf19c23425f5e96655f86245b3b09ea28afadef8e6d65c4317eb2ae9b3a');
+  assert.match(buf.subarray(37120, 37250).toString('utf8'), /^\n---\n\n# SEAL 6 · the law's three-word shape/);
   assert.equal(sha(buf), SEALED_WHOLE);
   assert.match(buf.subarray(10552, 10700).toString('utf8'), /^\n---\n\n# SEAL 2 · library 2, FINANCE/);
   assert.match(buf.subarray(20871, 21000).toString('utf8'), /^\n---\n\n# SEAL 3 · library 3, TRIAGE AND ROUTING/);
