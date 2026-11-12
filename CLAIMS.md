@@ -459,3 +459,24 @@ message's words are the router's own: the law's tokens of its text, the first 40
   This repository still commits no message.
   - `banking_data/train.csv` b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b
   - `banking_data/test.csv` d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d
+
+## SEAL 6 · the law's three-word shape (2026-11-12, before the law is re-vendored)
+
+Simon, 2026-11-12: "yes give the law a three-word shape". The law (`si-didy/patlib.mjs`) is amended in its own record
+first (amendment 1, sealed 8770d67 in the law's backup before its code; code 485c3d1): a rule may hold one, two or
+three words, and the 7B's lines may read "WHEN a AND b AND c THEN label". Every bar is unchanged: held cover ≥ 5,
+precision ≥ 0.8, margin ≥ 0.2; final cover ≥ 3, precision ≥ 0.8, margin ≥ 0.2; competence; near-duplicates; scoring
+twice must agree. The refusal wording is unchanged too, so past records keep their text. Why: measured beforehand on
+Banking77 under these same bars, three-word patterns added right answers at the same precision. A one-excluded-word
+shape was tested too and is not adopted: it cost precision.
+
+- **S6.1** · `vendor/patlib/patlib.mjs` is re-vendored byte for byte from `si-didy/patlib.mjs` at amendment 1 and
+  pinned by its new hash.
+- **S6.2** · Every committed night of every library re-derives byte for byte under the amended law (`tools/rederive.mjs`
+  in CI), and every claim already decided in this file stands as decided.
+- **S6.3** · The catalogue (seal 5) stays exact with three-word patterns: through the catalogue, a library that holds
+  them answers exactly as the law answers.
+- **S6.4** · Every kernel's gate re-runs clean with the amended law.
+
+Not in this seal: growing three-word patterns into any library here. Every proposer in this repository still
+proposes one or two words; using the new shape in a library is its own decision and its own seal.
