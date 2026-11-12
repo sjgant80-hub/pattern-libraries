@@ -40,11 +40,18 @@ function cliPath() {
 }
 function readdirSafe(d) { try { return readdirSync(d); } catch { return []; } }
 
+/** Kar's durable sign-in (a `claude setup-token` token Simon saved), else the env token, else null. Read fresh each
+ *  call; never printed, never written. The cockpit's own rule (si-didy/kar-cockpit.mjs oauthToken). */
+function karToken() {
+  if (TEST) return null;
+  try { const t = readFileSync(join(HOME, '.si-didy', 'kar-oauth.token'), 'utf8').trim(); if (t) return t; } catch { /* none */ }
+  return typeof process.env.CLAUDE_CODE_OAUTH_TOKEN === 'string' && process.env.CLAUDE_CODE_OAUTH_TOKEN ? process.env.CLAUDE_CODE_OAUTH_TOKEN : null;
+}
+
 /** a sign-in is on disk: Kar's durable token file, the env token, or the CLI's own credentials (never printed) */
 function signedIn() {
   if (TEST) return process.env.PL_OAUTH_TEST_SIGNED_IN === '1';
-  try { if (readFileSync(join(HOME, '.si-didy', 'kar-oauth.token'), 'utf8').trim()) return true; } catch { /* none */ }
-  if (typeof process.env.CLAUDE_CODE_OAUTH_TOKEN === 'string' && process.env.CLAUDE_CODE_OAUTH_TOKEN) return true;
+  if (karToken()) return true;
   const c = rd(join(HOME, '.claude', '.credentials.json'), null);
   return !!(c && c.claudeAiOauth && typeof c.claudeAiOauth.accessToken === 'string' && c.claudeAiOauth.accessToken.length > 0);
 }
@@ -82,7 +89,9 @@ async function main() {
     else {
       const room = process.platform === 'win32' ? 'C:\\tmp\\kar-oauth' : '/tmp/kar-oauth';
       mkdirSync(room, { recursive: true });
-      const run = spawnSync(cli.file, [...cli.pre, ...a], { input: req.prompt, cwd: room, env: O.env(process.env, p.cfg.maxTokens), encoding: 'utf8', timeout: 300000, windowsHide: true, maxBuffer: 1 << 24 });
+      // the token file counts as a sign-in above, so it must reach the CLI here (as the cockpit's claudeEnv does):
+      // before 2026-11-11 it did not, and the CLI fell back to an expired on-disk login
+      const run = spawnSync(cli.file, [...cli.pre, ...a], { input: req.prompt, cwd: room, env: O.env(process.env, p.cfg.maxTokens, karToken()), encoding: 'utf8', timeout: 300000, windowsHide: true, maxBuffer: 1 << 24 });
       r = O.reply(run.stdout);
       if (!r.ok) why = r.why || ('the CLI exited ' + run.status + ': ' + String(run.stderr || run.error || '').slice(0, 160));
     }

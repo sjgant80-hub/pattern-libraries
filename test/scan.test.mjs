@@ -30,7 +30,7 @@ test('P5: the credit step is a separate process through the one wire', () => {
 test('the wire runs one CLI, with the environment cleaned and the ceiling as its budget', () => {
   const w = read('tools/oauth-ask.mjs');
   assert.equal(w.match(/spawnSync\(/g).length, 1);
-  assert.match(w, /env: O\.env\(process\.env, p\.cfg\.maxTokens\)/);
+  assert.match(w, /env: O\.env\(process\.env, p\.cfg\.maxTokens, karToken\(\)\)/);
   assert.match(w, /W\.plan\(entries,/);
   assert.match(w, /W\.settle\(res,/);
   for (const bad of ['fetch(', 'node:http', 'console.log(process.env']) assert.ok(!w.includes(bad));

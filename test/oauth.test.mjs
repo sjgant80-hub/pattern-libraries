@@ -56,6 +56,16 @@ test('env: every ANTHROPIC_* and CLAUDE* variable removed except the two the CLI
   assert.deepEqual(O.env({}, 2.5), {});
 });
 
+test('env: Kar\'s durable sign-in token reaches the CLI, wins over the environment\'s, and nothing else counts as one', () => {
+  // the 2026-11-11 fault: the token file counted as a sign-in but never reached the CLI, which then used an expired login
+  assert.deepEqual(O.env({ PATH: 'p' }, 0, 'tok'), { PATH: 'p', CLAUDE_CODE_OAUTH_TOKEN: 'tok' });
+  assert.deepEqual(O.env({ CLAUDE_CODE_OAUTH_TOKEN: 'old' }, 0, 'new'), { CLAUDE_CODE_OAUTH_TOKEN: 'new' });
+  assert.deepEqual(O.env({ CLAUDE_CODE_OAUTH_TOKEN: 'old' }, 0), { CLAUDE_CODE_OAUTH_TOKEN: 'old' });
+  assert.deepEqual(O.env({}, 0, '  padded\n'), { CLAUDE_CODE_OAUTH_TOKEN: 'padded' });
+  for (const t of [undefined, null, '', '   ', 5, {}, ['x']]) assert.deepEqual(O.env({ PATH: 'p' }, 0, t), { PATH: 'p' }, String(t));
+  assert.deepEqual(O.env({ ANTHROPIC_API_KEY: 'k' }, 7, 'tok'), { CLAUDE_CODE_MAX_OUTPUT_TOKENS: '7', CLAUDE_CODE_OAUTH_TOKEN: 'tok' });
+});
+
 const RESULT = (over) => JSON.stringify({ type: 'result', subtype: 'success', is_error: false, result: 'WHEN laws THEN governing-law', usage: { input_tokens: 900, output_tokens: 40, cache_creation_input_tokens: 10, cache_read_input_tokens: 5 }, modelUsage: { 'claude-opus-5-5': {} }, ...over });
 
 test('reply: the CLI\'s one JSON result read; errors and other shapes refused', () => {

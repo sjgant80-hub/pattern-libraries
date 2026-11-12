@@ -46,15 +46,17 @@ export function args(cfg, ceilingCents, job) {
     '--max-budget-usd', (ceilingCents / 100).toFixed(2)];
 }
 
-/** env(base, maxTokens) → the child's environment: every ANTHROPIC_* and CLAUDE* variable removed (an API key would
- *  bill the API instead of the subscription), except the two the CLI needs; the output limit set */
-export function env(base, maxTokens) {
+/** env(base, maxTokens, token) → the child's environment: every ANTHROPIC_* and CLAUDE* variable removed (an API key
+ *  would bill the API instead of the subscription), except the two the CLI needs; the output limit set; and Kar's
+ *  durable sign-in token, when the caller holds one, as the CLI's OAuth token (it wins over the environment's) */
+export function env(base, maxTokens, token) {
   const out = {};
   for (const [k, v] of Object.entries(isObj(base) ? base : {})) {
     if (/^(ANTHROPIC_|CLAUDE)/i.test(k) && !KEEP_ENV.includes(k)) continue;
     if (typeof v === 'string') out[k] = v;
   }
   if (Number.isInteger(maxTokens) && maxTokens > 0) out.CLAUDE_CODE_MAX_OUTPUT_TOKENS = String(maxTokens);
+  if (typeof token === 'string' && token.trim()) out.CLAUDE_CODE_OAUTH_TOKEN = token.trim();
   return out;
 }
 

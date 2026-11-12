@@ -40,8 +40,8 @@
   {
    "name": "oauth",
    "file": "src/oauth.mjs",
-   "total": 30,
-   "killed": 30,
+   "total": 32,
+   "killed": 32,
    "ignored": 0,
    "clean": true,
    "capped": false
