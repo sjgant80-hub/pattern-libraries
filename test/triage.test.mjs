@@ -130,3 +130,22 @@ test('garbage in never throws', () => {
   }
   assert.ok(true);
 });
+
+test('SEAL 5: route, pick and routeOn through a catalogue give the same answers; a catalogue of another library is ignored', async () => {
+  const C = (await import('../src/catalogue.mjs')).default;
+  const lib = [R(['card', 'arrive'], 'card-arrival', 'r1'), R(['card'], 'activate-my-card', 'r2'), R(['pin'], 'pin-blocked', 'r3'), { when: ['no'], then: 'x' }, R(['card'], 'not-a-route')];
+  const cat = C.catalogue(lib);
+  const ids = ['a', 'b', 'c', 'd'];
+  const U = { a: Q('a', 'my card did not arrive', 'card_arrival'), b: Q('b', 'pin blocked card', 'pin_blocked'), c: Q('c', 'hello there', 'card_arrival'), d: Q('d', 'pin please', 'pin_blocked') };
+  for (const id of ids) assert.deepEqual(T.route(lib, U[id], cat), T.route(lib, U[id]), id);
+  assert.deepEqual(T.route(lib, U.a, cat), { route: 'card-arrival', rule: lib[0], also: ['activate-my-card'], right: true });
+  assert.equal(T.route(lib, U.c, cat), null);
+  assert.deepEqual(T.pick(lib, 'pin-blocked', U.b['pin-blocked'], cat), { unit: U.b['pin-blocked'][0], rule: lib[2] });
+  assert.deepEqual(T.pick(lib, 'activate-my-card', U.a['activate-my-card'], cat), { unit: U.a['activate-my-card'][0], rule: lib[1] });
+  assert.equal(T.pick(lib, 'pin-blocked', U.a['pin-blocked'], cat), null, 'pin is not in this message');
+  assert.equal(T.pick(lib, 'card-arrival', [null, 7], cat), null);
+  assert.deepEqual(T.routeOn(lib, U, ids), { queries: 4, routed: 3, right: 2, conflicts: 2, baseRouted: 1, baseRight: 1 });
+  const other = [R(['pin'], 'card-arrival')];
+  assert.equal(T.route(other, U.b, cat).rule, other[0], 'a catalogue built for another library is not used');
+  assert.equal(T.pick(other, 'card-arrival', U.b['card-arrival'], cat).rule, other[0]);
+});

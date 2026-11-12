@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self' https://raw.githubusercontent.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>The catalogue · Pattern Libraries</title>
+<meta name="description" content="How Kar's pattern router finds the right pattern in a library of tens of thousands without asking every one: every pattern gets an address and a filing word, and the library's own law still decides. Measured exact on every held-out message, re-run in your browser.">
+<style>
+:root { --bg: #fbfaf7; --fg: #1d1d1b; --muted: #5d5c57; --line: #dedbd2; --card: #ffffff; --accent: #1f5f8b; --accent-bg: #e6f0f7; --good: #1d6b3a; --good-bg: #e3f2e7; --bad: #9b2c2c; --bad-bg: #f8e5e5; --wait: #7a5a00; --wait-bg: #f7efd9; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+@media (prefers-color-scheme: dark) { :root { --bg: #151514; --fg: #ecebe6; --muted: #a9a79f; --line: #3a3934; --card: #1e1e1c; --accent: #7db7e0; --accent-bg: #1b2c39; --good: #7fcf98; --good-bg: #1b2e22; --bad: #f0a0a0; --bad-bg: #3a2020; --wait: #e6c46a; --wait-bg: #352c14; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 0 16px 64px; }
+h1 { font-size: 1.9rem; margin: 28px 0 4px; } h2 { font-size: 1.35rem; margin: 2.2em 0 .5em; padding-top: .6em; border-top: 1px solid var(--line); } h3 { font-size: 1.05rem; margin: 1.3em 0 .3em; }
+p, li { max-width: 74ch; } a { color: var(--accent); }
+.lede { font-size: 1.12rem; color: var(--muted); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 4px 6px; font-size: .92rem; margin: 14px 0; }
+nav.toc a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 8px; border-radius: 6px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 14px 0; }
+textarea { width: 100%; min-height: 70px; font: inherit; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+input { font: inherit; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+input[type=number] { width: 8em; }
+select { font: inherit; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; min-height: 40px; }
+button { font: inherit; border: 1px solid var(--accent); background: var(--accent); color: var(--bg); border-radius: 8px; padding: 8px 14px; cursor: pointer; min-height: 40px; }
+button.ghost { background: transparent; color: var(--accent); }
+button:disabled { opacity: .55; cursor: default; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--wait); outline-offset: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; } th, td { border-bottom: 1px solid var(--line); padding: 6px; text-align: left; vertical-align: top; }
+td.n, th.n { text-align: right; white-space: nowrap; }
+.tbl { overflow-x: auto; }
+code, pre { font-family: var(--mono); font-size: .88em; background: var(--accent-bg); border-radius: 4px; }
+code { padding: 1px 5px; overflow-wrap: anywhere; }
+pre { padding: 10px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.muted { color: var(--muted); } .small { font-size: .88rem; }
+.chip { display: inline-block; border-radius: 999px; padding: 1px 9px; font-size: .85rem; font-weight: 650; }
+.held { background: var(--good-bg); color: var(--good); } .failed { background: var(--bad-bg); color: var(--bad); } .pending { background: var(--wait-bg); color: var(--wait); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+dl dt { font-weight: 650; margin-top: .8em; } dl dd { margin: .15em 0 0 0; color: var(--muted); }
+svg { max-width: 100%; height: auto; } svg text { fill: var(--fg); font: 13px system-ui, sans-serif; } svg .box { fill: var(--card); stroke: var(--line); } svg .ln { stroke: var(--accent); stroke-width: 2; fill: none; } svg .lin { stroke: var(--bad); stroke-width: 2; fill: none; stroke-dasharray: 5 4; } svg .ax { stroke: var(--line); }
+progress { width: 100%; height: 14px; }
+details { margin: .5em 0; } summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+<header id="what">
+<p class="small"><a href="../">← Pattern Libraries</a></p>
+<h1>The catalogue</h1>
+<p class="lede">Kar's pattern libraries answer a job with a verified pattern before any AI model is asked. Until now the router asked every pattern in the library, one by one, for every message: fine for a small library, too slow at tens of thousands. The catalogue gives every pattern an address and files it under one of its own words, so for each message only the patterns that could fire are asked. The library's own law still decides every match, so the answer cannot change. It is checked against the old way on every held-out message, and you can re-run that check in this tab.</p>
+<p class="row" id="chips"></p>
+<nav class="toc" aria-label="On this page">
+<a href="#try">Try it</a><a href="#start">Start here</a><a href="#how">How it works</a><a href="#address">The address</a><a href="#layers">The layers</a><a href="#measured">Measured</a><a href="#rerun">Re-run it here</a><a href="#blueprint">Blueprint</a><a href="#business">For your business</a><a href="#cost">Cost case</a><a href="#security">Security</a><a href="#risks">Risks</a><a href="#paper">The explainer</a><a href="#words">Words</a><a href="#faq">FAQ</a>
+</nav>
+</header>
+
+<section id="try" aria-labelledby="try-h">
+<h2 id="try-h" style="border:0">Try it</h2>
+<p>Type a message a bank customer might send. The router reads it through the catalogue and, beside it, the old way (every pattern asked). They must agree.</p>
+<div class="card">
+<label for="msg"><b>A customer's message</b></label>
+<textarea id="msg">My new card still hasn't arrived and I need to know the exchange rates for my trip</textarea>
+<div class="row" style="margin-top:8px">
+<label for="lib">Library</label><select id="lib"><option value="real">the real routing library</option></select>
+<button id="go" type="button">Route it</button><button id="ex" type="button" class="ghost">Use the example</button>
+</div>
+<p class="small muted" id="libnote"></p>
+</div>
+<div id="out" aria-live="polite"></div>
+</section>
+
+<section id="start" aria-labelledby="start-h">
+<h2 id="start-h">Start here</h2>
+<ol>
+<li><b>Press Route it.</b> You see the message's words, the few patterns the catalogue looked up, the one that fired first (the team the message goes to) and any others that also fired (a conflict). The old way's answer is shown beside it.</li>
+<li><b>Read "asked".</b> That is how many patterns were asked about this message. The old way asks every pattern in the library.</li>
+<li><b>Read <a href="#measured">Measured</a>.</b> On every message the libraries never learned from, at every library size, the catalogue and the old way are compared message by message.</li>
+<li><b>Press Re-run it here</b> (below) to download the public data and repeat the whole check in your browser. Then pick the largest library in Try it and route your own message through tens of thousands of patterns.</li>
+</ol>
+</section>
+
+<section id="how" aria-labelledby="how-h">
+<h2 id="how-h">How it works</h2>
+<svg viewBox="0 0 900 170" role="img" aria-labelledby="flow-t">
+<title id="flow-t">A message's words look up the filing slots; only the patterns filed there are asked; the law decides; the first in library order answers</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<g style="color:var(--accent)">
+<rect class="box" x="6" y="26" width="160" height="92" rx="9"/><text x="86" y="54" text-anchor="middle" font-weight="700">1 · Words</text><text x="86" y="76" text-anchor="middle">the message's words,</text><text x="86" y="96" text-anchor="middle">as the router reads them</text>
+<rect class="box" x="186" y="26" width="160" height="92" rx="9"/><text x="266" y="54" text-anchor="middle" font-weight="700">2 · Look up</text><text x="266" y="76" text-anchor="middle">each word's filing slot</text><text x="266" y="96" text-anchor="middle">(one slot per word)</text>
+<rect class="box" x="366" y="26" width="160" height="92" rx="9"/><text x="446" y="54" text-anchor="middle" font-weight="700">3 · Ask</text><text x="446" y="76" text-anchor="middle">only those patterns,</text><text x="446" y="96" text-anchor="middle">with the law's fires()</text>
+<rect class="box" x="546" y="26" width="160" height="92" rx="9"/><text x="626" y="54" text-anchor="middle" font-weight="700">4 · Order</text><text x="626" y="76" text-anchor="middle">put back in library order</text><text x="626" y="96" text-anchor="middle">(the old way's order)</text>
+<rect class="box" x="726" y="26" width="168" height="92" rx="9"/><text x="810" y="54" text-anchor="middle" font-weight="700">5 · Answer</text><text x="810" y="76" text-anchor="middle">the first one routes it;</text><text x="810" y="96" text-anchor="middle">the rest are conflicts</text>
+<line class="ln" x1="166" y1="72" x2="184" y2="72" marker-end="url(#arr)"/><line class="ln" x1="346" y1="72" x2="364" y2="72" marker-end="url(#arr)"/><line class="ln" x1="526" y1="72" x2="544" y2="72" marker-end="url(#arr)"/><line class="ln" x1="706" y1="72" x2="724" y2="72" marker-end="url(#arr)"/>
+<text x="446" y="148" text-anchor="middle">a pattern fires only when all its words are in the message, so its filing word is too: none can be missed</text>
+</g>
+</svg>
+<h3>Traced from a real run</h3>
+<p>Computed when the page loads: the example message above, through the real routing library, step by step.</p>
+<ol id="trace"><li class="muted">Running…</li></ol>
+<h3>Why it can never give a different answer</h3>
+<p>Every pattern is filed under exactly one of its own words. A pattern fires only when all of its words are in the message, so whenever it fires, its filing word is in the message, and looking up the message's words finds it. The catalogue can find patterns that do not fire (one word present, the other missing). It hands every one to the library's law, which decides with the same <code>fires()</code> the old way uses. The patterns that fire are put back in library order. So the first one, the conflicts and the answer are the old way's, exactly. The tests and the measurement check this rather than assume it.</p>
+</section>
+
+<section id="address" aria-labelledby="address-h">
+<h2 id="address-h">The address</h2>
+<p>Every pattern gets an address like a library book's: <code>&lt;library&gt;.&lt;class&gt;.&lt;words&gt;</code>. The library number (contracts 100, receipts 200, routing 300, triage 400, Kar's own estate map 000), the label's place in that library's fixed list of labels (three digits: for routing, the 77 teams), and the pattern's words in alphabetical order. The law refuses a duplicate pattern, so an address names one pattern. It never depends on where a pattern sits in the library, so as the library grows night by night, no existing pattern's address changes.</p>
+<div class="tbl"><table id="addr"><thead><tr><th>Address</th><th>Pattern</th><th>Team</th><th>Filed under</th><th>Shadowed by</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section id="layers" aria-labelledby="layers-h">
+<h2 id="layers-h">The layers</h2>
+<p>The idea of cross-reference layers between items comes from Gary W. Floyd's NEXUS, whose graph linker links every item across nine layers. A WHEN/THEN pattern has five features to link on, so the catalogue has five layers:</p>
+<dl>
+<dt>1 · Words</dt><dd>Each pattern linked to its words, and filed under one of them. This is the layer that finds patterns.</dd>
+<dt>2 · Class</dt><dd>Patterns that send messages to the same team (the address's middle number).</dd>
+<dt>3 · Shadow</dt><dd>Pattern A shadows a later pattern B when A's words are a subset of B's: whenever B fires, A fires too and comes first, so B can never be the answer. A shadowed pattern of the same team is dead weight; of another team, it can only ever be a conflict.</dd>
+<dt>4 · Fired together</dt><dd>Two patterns of different teams that fired first and second on the same training message: the conflicts the router has already met.</dd>
+<dt>5 · Provenance</dt><dd>Patterns kept on the same night by the same recipe.</dd>
+</dl>
+<p class="small muted">Gary's other four layers (vectors, a knowledge graph, time, and an ethics layer) have nothing to link on in a two-word rule, so they are not built.</p>
+<div class="grid2" id="layercards"></div>
+</section>
+
+<section id="measured" aria-labelledby="m-h">
+<h2 id="m-h">Measured</h2>
+<p>The claims were sealed before the code (<a href="../CLAIMS.md">CLAIMS.md</a>, seal 5). Data: Banking77 (PolyAI, CC BY 4.0). Libraries were grown only from the training messages; the test messages are the jobs. The real routing library is the one the nightly loop keeps. The grown libraries are every one- and two-word pattern the training messages contain, each sending to the team it most often goes with: not verified patterns, but the shape of a big library, because finding patterns does not depend on whether they are good.</p>
+<div class="row" id="claimchips"></div>
+<div class="tbl"><table id="mtable"><thead><tr><th class="n">Patterns</th><th class="n">Asked per message (median · 95th · largest)</th><th class="n">Share of the library asked</th><th class="n">Messages that differ</th><th class="n">ms per message: old way</th><th class="n">ms: catalogue</th></tr></thead><tbody></tbody></table></div>
+<svg id="chart" viewBox="0 0 640 260" role="img" aria-labelledby="chart-t"><title id="chart-t">Patterns asked per message against library size: the old way asks all of them; the catalogue asks a few</title></svg>
+<p class="small muted" id="mnote"></p>
+<h3>On the real library</h3>
+<p id="realsay"></p>
+<h3>Conflicts already met (K5)</h3>
+<p id="k5say"></p>
+</section>
+
+<section id="rerun" aria-labelledby="rerun-h">
+<h2 id="rerun-h">Re-run it here</h2>
+<p>This downloads Banking77's two files from PolyAI's repository at the pinned commit (about 1.1 MB, straight from GitHub to your browser), refuses them unless their SHA-256 fingerprints are the pinned ones, grows the same libraries, and repeats the comparison on every test message at every size. Nothing is sent anywhere. Timings are your machine's. It takes a few minutes, most of them spent timing the old way on the largest library, which is the point: that is what the catalogue saves.</p>
+<div class="row"><button id="rerunbtn" type="button">Re-run it here</button><span class="small muted" id="rerunstate"></span></div>
+<progress id="prog" max="100" value="0" hidden></progress>
+<div id="rerunout" aria-live="polite"></div>
+</section>
+
+<section id="blueprint" aria-labelledby="bp-h">
+<h2 id="bp-h">Blueprint</h2>
+<div class="tbl"><table id="bptable"><thead><tr><th>Part</th><th>What it does</th><th class="n">Mutation gate</th></tr></thead><tbody></tbody></table></div>
+<p class="small muted">A mutation gate changes the code on purpose (flips a comparison, swaps <code>&amp;&amp;</code> for <code>||</code>) and reruns the tests; a change the tests do not notice means a line nobody really checked. Every count above re-runs on GitHub on every push, and CI also re-derives every committed night of every library byte for byte with the router reading through the catalogue.</p>
+</section>
+
+<section id="business" aria-labelledby="biz-h">
+<h2 id="biz-h">For your business</h2>
+<p>A pattern library is how an automation stops paying for AI on work it has already learnt: each verified pattern answers its kind of job instantly, for nothing, with a reason, before any model is asked. The more patterns it holds, the more jobs it takes off the model. The catalogue is what lets the library keep growing without the router slowing down, so the free share can keep rising.</p>
+<div class="grid2">
+<div class="card"><b>CTO</b><p class="small">Routing cost stays flat as the library grows from dozens to tens of thousands of patterns, and the answers are provably the same as before, so it drops in with no re-validation of the library.</p></div>
+<div class="card"><b>CFO</b><p class="small">Every job the library answers is a model call not paid for. A router that stays fast keeps that share growing. The cost case below turns the measured speed into server time at your volume.</p></div>
+<div class="card"><b>COO</b><p class="small">Messages are routed in a fraction of a millisecond each, so routing never becomes the queue, and every routing decision names the pattern and its address.</p></div>
+<div class="card"><b>CISO and risk</b><p class="small">No model decides a route; the catalogue is a few hundred lines of plain code; the shadow layer shows which patterns can never answer, so a library can be audited before it is trusted.</p></div>
+</div>
+</section>
+
+<section id="cost" aria-labelledby="cost-h">
+<h2 id="cost-h">Cost case</h2>
+<p>Server time saved by routing through the catalogue instead of asking every pattern, at the largest measured library, using this page's measured times. Your volume and your server cost are the inputs.</p>
+<div class="card">
+<div class="grid2">
+<label>Messages routed per day<br><input id="c-msgs" type="number" min="0" step="1000" value="100000"></label>
+<label>What one hour of a server core costs you (your currency)<br><input id="c-core" type="number" min="0" step="0.01" value="0.05"></label>
+</div>
+<div id="cost-out" aria-live="polite" style="margin-top:10px"></div>
+</div>
+<p class="small muted">Measured times are single-core times on the machine named under Measured; yours will differ, and Re-run it here measures your own. The saving is routing time only: what a pattern saves by answering instead of a model is far larger, and depends on your model and its price.</p>
+</section>
+
+<section id="security" aria-labelledby="sec-h">
+<h2 id="sec-h">Security, compliance and data protection</h2>
+<dl>
+<dt>Where does a message go?</dt><dd>Nowhere. Routing runs in the page or on your own server; no model or outside service sees the message. This page's policy lets it connect only to its own site and to GitHub's file server, and only to fetch the public Banking77 files when you press Re-run.</dd>
+<dt>Can the catalogue change an answer?</dt><dd>No. It only chooses which patterns the law asks; the law's own function decides each one, and the results are put back in the library's own order. This is tested on random libraries and measured on every held-out message at every size.</dd>
+<dt>What if the library changes and the catalogue is stale?</dt><dd>The router checks that the catalogue was built for exactly the library in hand (the same list, the same length); if not, it asks every pattern, the old way, so a stale catalogue costs speed, never correctness.</dd>
+<dt>Supply chain?</dt><dd>No packages: the catalogue is one plain JavaScript file in this repository, mutation-gated on every push.</dd>
+</dl>
+</section>
+
+<section id="risks" aria-labelledby="risks-h">
+<h2 id="risks-h">Risks, answered straight</h2>
+<dl>
+<dt>The grown libraries are not real patterns.</dt><dd>True, and said so above. They measure finding, not answering. The real library is small today (its size is in Measured), and its answers are checked the same way.</dd>
+<dt>Messages with many common words ask more patterns.</dt><dd>Yes: the 95th percentile and the largest count are shown next to the median for that reason.</dd>
+<dt>Timings depend on the machine.</dt><dd>The table names the machine and takes the median of several runs; Re-run it here gives yours. The count of patterns asked does not depend on the machine.</dd>
+</dl>
+</section>
+
+<section id="paper" aria-labelledby="paper-h">
+<h2 id="paper-h">The explainer</h2>
+<p><b>The problem.</b> A pattern library answers jobs with small verified rules: "a message with <i>card</i> and <i>arrive</i> goes to the card-arrival team". The router asks each rule in turn whether it fires. Each rule is cheap to ask, but the number of rules is the point of a library: the library is meant to grow every night. A router that asks every rule slows down in step with the library, and at tens of thousands of rules the router, not the model, becomes the cost.</p>
+<p><b>The idea.</b> A library's catalogue lets you find a book without walking every shelf. Gary W. Floyd's NEXUS routes every item by a Dewey-style address and links items across cross-reference layers. Here, every pattern gets an address from its library, its label and its words, and is filed under the one of its words that is rarest in the training messages. A message's words are looked up, and only the patterns filed under them are asked.</p>
+<p><b>Why the answer cannot change.</b> A pattern fires only if all its words are in the message, so its filing word is in the message, so it is found. Everything found is decided by the library's own law, and put back in library order. The catalogue never adds an answer the law would not give, and never misses one.</p>
+<p><b>How it was checked.</b> The claims were committed before the code. On every held-out message, at every library size up to every pattern the training messages contain, the catalogue and the old way were compared message by message: the patterns that fire, the law's answer and the router's whole result. The nightly loop's own records were re-derived byte for byte with the router reading through the catalogue. The kernel and every kernel it touches passed a mutation gate with nothing waved through.</p>
+</section>
+
+<section id="words" aria-labelledby="words-h">
+<h2 id="words-h">Words on this page</h2>
+<dl>
+<dt>Pattern</dt><dd>A rule of the form WHEN word [AND word] THEN team, kept only after it beat a cheap baseline on messages it never saw.</dd>
+<dt>Fires</dt><dd>A pattern fires on a message when every one of its words is in the message.</dd>
+<dt>The old way (the linear scan)</dt><dd>Asking every pattern, in library order, whether it fires.</dd>
+<dt>Filing word</dt><dd>The one word of a pattern it is filed under: the one that occurs in the fewest training messages.</dd>
+<dt>Asked</dt><dd>How many patterns the router asked about one message.</dd>
+<dt>Conflict</dt><dd>A message on which patterns of two different teams fire. The first in library order wins; the other is named.</dd>
+<dt>Shadowed</dt><dd>A pattern that can never be the first to fire, because an earlier pattern with a subset of its words always fires with it.</dd>
+<dt>Held-out</dt><dd>Messages kept away from the library while it grew, used only to check it.</dd>
+<dt>Mutation gate</dt><dd>A check on the tests: the code is changed on purpose, and the tests must notice every change.</dd>
+</dl>
+</section>
+
+<section id="faq" aria-labelledby="faq-h">
+<h2 id="faq-h">FAQ</h2>
+<details><summary>Does the catalogue make the library more accurate?</summary><p>No. It makes it faster and changes nothing it answers. Accuracy is the night's job: the gates that decide which patterns are kept.</p></details>
+<details><summary>Why file each pattern under only one word?</summary><p>Filing under every word would find each pattern several times and make the lists longer. One word is enough to never miss a pattern, and the rarest word keeps the lists shortest for real messages.</p></details>
+<details><summary>Why is the largest library not a round hundred thousand?</summary><p>Because the training messages do not contain that many different one- and two-word patterns. The largest library is all of them; its size is in the table. The seal said so before the measurement.</p></details>
+<details><summary>Is this used by the nightly loop?</summary><p>Yes. The routing check that the nightly loop runs on its measuring messages, and the contract library's measuring step, both read through the catalogue now. Every committed night was re-derived byte for byte after the change.</p></details>
+</section>
+
+<footer>
+<p>The catalogue, built by Kar for AI Native Solutions, in the <a href="https://github.com/sjgant80-hub/pattern-libraries">pattern-libraries</a> repository (code MIT). Its design, a Dewey-style address for every item and cross-reference layers between items, is from Gary W. Floyd, Lumiea Systems Research Division — ThunderStruck Service LLC, "NEXUS — Distributed Synthetic Intelligence," 2026. Message data: Banking77, Casanueva, Temčinas, Gerz, Henderson and Vulić, 2020, by PolyAI, CC BY 4.0; this repository commits no message.</p>
+<p>Powered by the Konomi architecture, created by Thomas Frumkin.</p>
+<p class="small" id="ver"></p>
+</footer>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>

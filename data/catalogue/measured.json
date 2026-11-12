@@ -1,0 +1,188 @@
+{
+ "at": "2026-11-12T18:46:03.537Z",
+ "kind": "pattern-libraries.catalogue",
+ "seal": "SEAL 5 (20ea3b4)",
+ "data": {
+  "source": "Banking77 and NLU++, PolyAI (Casanueva et al., 2020; Casanueva et al., 2022), CC BY 4.0",
+  "commit": "57ec275d8078af65b7731c2a98be812d844a6d6b",
+  "manifest": "d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5",
+  "train": 10003,
+  "test": 3080
+ },
+ "machine": {
+  "cpu": "12th Gen Intel(R) Core(TM) i7-1255U",
+  "cores": 12,
+  "platform": "win32 x64",
+  "node": "v25.7.0",
+  "runs": 5
+ },
+ "real": {
+  "name": "the real routing library",
+  "n": 20,
+  "differences": 0,
+  "routerDifferences": 0,
+  "meterDifferences": 0,
+  "meter": 1000,
+  "shadowed": [
+   {
+    "pattern": "300.014.pin+unblock",
+    "by": "300.014.unblock"
+   },
+   {
+    "pattern": "300.075.apple+pay",
+    "by": "300.075.apple"
+   }
+  ],
+  "addresses": [
+   "300.003.rates",
+   "300.009.auto",
+   "300.014.unblock",
+   "300.014.pin+unblock",
+   "300.015.contactless",
+   "300.027.deposited",
+   "300.033.visa",
+   "300.038.direct",
+   "300.038.debit",
+   "300.039.passcode",
+   "300.042.phone",
+   "300.048.delete",
+   "300.050.duplicate",
+   "300.051.source",
+   "300.055.beneficiary",
+   "300.066.disposable+virtual",
+   "300.075.apple",
+   "300.075.google",
+   "300.075.apple+pay",
+   "300.077.countries"
+  ]
+ },
+ "candidates": 74086,
+ "sizes": [
+  {
+   "n": 20,
+   "valid": 20,
+   "buildMs": 0.054600000000050386,
+   "differences": 0,
+   "answerDifferences": 0,
+   "firstShadowed": 0,
+   "conflicts": 1399,
+   "conflictsLinked": 1394,
+   "asked": {
+    "median": 1,
+    "p95": 4,
+    "max": 7,
+    "mean": 1.5483766233766234
+   },
+   "askedShareOfN": 0.05,
+   "addressesUnique": true,
+   "addressesStable": true,
+   "shadowed": 0,
+   "msPerMessage": {
+    "linear": 0.0022455519480519778,
+    "catalogue": 0.0005253246753246922
+   }
+  },
+  {
+   "n": 100,
+   "valid": 100,
+   "buildMs": 0.0986000000000331,
+   "differences": 0,
+   "answerDifferences": 0,
+   "firstShadowed": 0,
+   "conflicts": 2453,
+   "conflictsLinked": 2356,
+   "asked": {
+    "median": 4,
+    "p95": 9,
+    "max": 23,
+    "mean": 4.206818181818182
+   },
+   "askedShareOfN": 0.04,
+   "addressesUnique": true,
+   "addressesStable": true,
+   "shadowed": 18,
+   "msPerMessage": {
+    "linear": 0.010832337662337632,
+    "catalogue": 0.0007946753246753874
+   }
+  },
+  {
+   "n": 1000,
+   "valid": 1000,
+   "buildMs": 0.9381000000000768,
+   "differences": 0,
+   "answerDifferences": 0,
+   "firstShadowed": 0,
+   "conflicts": 2908,
+   "conflictsLinked": 2679,
+   "asked": {
+    "median": 18,
+    "p95": 56,
+    "max": 157,
+    "mean": 21.81168831168831
+   },
+   "askedShareOfN": 0.018,
+   "addressesUnique": true,
+   "addressesStable": true,
+   "shadowed": 659,
+   "msPerMessage": {
+    "linear": 0.1554579870129871,
+    "catalogue": 0.007534253246753256
+   }
+  },
+  {
+   "n": 10000,
+   "valid": 10000,
+   "buildMs": 26.823199999999815,
+   "differences": 0,
+   "answerDifferences": 0,
+   "firstShadowed": 0,
+   "conflicts": 2998,
+   "conflictsLinked": 2710,
+   "asked": {
+    "median": 72,
+    "p95": 276,
+    "max": 862,
+    "mean": 97.18636363636364
+   },
+   "askedShareOfN": 0.0072,
+   "addressesUnique": true,
+   "addressesStable": true,
+   "shadowed": 9142,
+   "msPerMessage": {
+    "linear": 5.818404805194809,
+    "catalogue": 0.038935454545453586
+   }
+  },
+  {
+   "n": 74086,
+   "valid": 74086,
+   "buildMs": 173.02009999999427,
+   "differences": 0,
+   "answerDifferences": 0,
+   "firstShadowed": 0,
+   "conflicts": 3011,
+   "conflictsLinked": 2711,
+   "asked": {
+    "median": 175,
+    "p95": 740,
+    "max": 2100,
+    "mean": 245.49805194805194
+   },
+   "askedShareOfN": 0.0023621196987285045,
+   "addressesUnique": true,
+   "addressesStable": true,
+   "shadowed": 71856,
+   "msPerMessage": {
+    "linear": 35.1379272077922,
+    "catalogue": 0.10629545454545908
+   }
+  }
+ ],
+ "claims": {
+  "K1": "HELD",
+  "K2": "HELD",
+  "K3": "HELD",
+  "K4": "HELD"
+ }
+}

@@ -259,3 +259,17 @@ test('pick and read: the first unit a kept rule fires on, or unknown; other task
   assert.ok(cl.answer.startsWith('Distributor shall not compete'));
   assert.equal(E.read(null, rules).filter((x) => x.answer !== 'unknown').length, 0);
 });
+
+test('SEAL 5: pick through a catalogue gives the same unit and rule; a catalogue of another library is ignored', async () => {
+  const C = (await import('../src/catalogue.mjs')).default;
+  const u1 = { tokens: ['governed', 'laws'] }, u2 = { tokens: ['effective', 'date'] }, u3 = { tokens: ['governed', 'delaware'] };
+  const lib = [{ when: ['delaware'], then: 'governing-law' }, { when: ['governed'], then: 'governing-law' }, { when: ['effective'], then: 'effective-date' }];
+  const cat = C.catalogue(lib);
+  for (const task of ['governing-law', 'effective-date', 'party']) assert.deepEqual(E.pick(lib, task, [u2, u1, u3], cat), E.pick(lib, task, [u2, u1, u3]), task);
+  assert.deepEqual(E.pick(lib, 'governing-law', [u2, u1, u3], cat), { unit: u1, rule: lib[1] });
+  assert.deepEqual(E.pick(lib, 'governing-law', [u3], cat), { unit: u3, rule: lib[0] }, 'library order decides on one unit');
+  assert.equal(E.pick(lib, 'party', [u1, u2], cat), null);
+  assert.equal(E.pick(lib, 'governing-law', [null, 'x'], cat), null);
+  const other = [{ when: ['date'], then: 'effective-date' }];
+  assert.deepEqual(E.pick(other, 'effective-date', [u2], cat), { unit: u2, rule: other[0] });
+});

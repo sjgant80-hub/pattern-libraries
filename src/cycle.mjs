@@ -22,6 +22,7 @@ import P from '../vendor/patlib/patlib.mjs';
 import { agreement, outcome } from '../vendor/mint/src/baseline.mjs';
 import { sha256, hex } from '../vendor/mint/vendor/fall-kit/light/sha256.mjs';
 import E from './extract.mjs';
+import C from './catalogue.mjs';
 
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const arr = (x) => (Array.isArray(x) ? x : []);
@@ -156,13 +157,15 @@ export function cycleFor(D) {
   function examine(library, tasks, units, ids) {
     const per = {};
     const tot = { cases: 0, answered: 0, right: 0, baseRight: 0, withGold: 0 };
+    // the library is read through its catalogue, built once for the whole meter (SEAL 5, K6); same answers
+    const cat = C.catalogue(library);
     for (const task of arr(tasks)) {
       const t = { cases: 0, answered: 0, right: 0, baseRight: 0, withGold: 0 }, m = D.many(task) === true;
       for (const id of arr(ids)) {
         const u = isObj(units) && isObj(units[id]) ? arr(units[id][task]) : [];
         t.cases++;
         if (u.some(ok)) t.withGold++;
-        const p = D.pick(library, task, u);
+        const p = D.pick(library, task, u, cat);
         if (!p) continue;
         t.answered++;
         if (m ? exact(p.units, u) : ok(p.unit)) t.right++;

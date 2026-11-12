@@ -14,6 +14,7 @@
 //   routeOn(rules, units, ids)  T5's six counts on some queries: routed, right, conflicts; the keyword router's routed, right
 //   read(text, routeRules, flagRules)  a stranger's message: its route (or unknown), the conflicts, the flags raised
 import P from '../vendor/patlib/patlib.mjs';
+import C from './catalogue.mjs';
 import { asCase, isCaseFor } from './extract.mjs';
 
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
@@ -97,8 +98,17 @@ export function baseline(task, units) {
   return arr(units).find((u) => isObj(u) && u.kw === true) || null;
 }
 
-/** pick(rules, task, units) → { unit, rule }: the first unit a kept rule for the task fires on, or null */
-export function pick(rules, task, units) {
+/** pick(rules, task, units, cat) → { unit, rule }: the first unit a kept rule for the task fires on, or null; with a
+ *  catalogue built for these rules (SEAL 5), only the patterns it finds are asked, with the same answer */
+export function pick(rules, task, units, cat) {
+  if (C.usable(cat, rules)) {
+    for (const u of arr(units)) {
+      if (!isObj(u)) continue;
+      const i = C.firing(cat, u.tokens).find((k) => rules[k].then === task);
+      if (i !== undefined) return { unit: u, rule: rules[i] };
+    }
+    return null;
+  }
   const mine = arr(rules).filter((r) => P.validRule(r) && r.then === task);
   for (const u of arr(units)) {
     if (!isObj(u)) continue;
@@ -110,10 +120,13 @@ export function pick(rules, task, units) {
 
 const unitOf = (units, task) => (isObj(units) ? arr(units[task]).find(isObj) || null : null);
 
-/** route(rules, units) → { route, rule, also } for the first kept route pattern (library order) that fires, or null */
-export function route(rules, units) {
+/** route(rules, units, cat) → { route, rule, also } for the first kept route pattern (library order) that fires, or null.
+ *  With a catalogue built for these rules (SEAL 5), only the patterns it finds for the units' words are asked, in the
+ *  same library order, so the answer, the pattern and the conflicts are the same. */
+export function route(rules, units, cat) {
   const fired = [];
-  for (const r of arr(rules)) {
+  const ask = C.usable(cat, rules) ? C.asked(cat, C.unitTokens(units)).map((i) => rules[i]) : arr(rules);
+  for (const r of ask) {
     if (!P.validRule(r) || !ROUTES.includes(r.then)) continue;
     const u = unitOf(units, r.then);
     if (u && P.fires(r, u)) fired.push(r);
@@ -132,10 +145,12 @@ export function keywordRoute(units) {
 /** routeOn(rules, units, ids) → T5's counts on some queries */
 export function routeOn(rules, units, ids) {
   const t = { queries: 0, routed: 0, right: 0, conflicts: 0, baseRouted: 0, baseRight: 0 };
+  // the router reads through a catalogue of the library, built once for all the queries (SEAL 5, K6)
+  const cat = C.catalogue(rules);
   for (const id of arr(ids)) {
     const u = isObj(units) ? units[id] : null;
     t.queries++;
-    const a = route(rules, u), k = keywordRoute(u);
+    const a = route(rules, u, cat), k = keywordRoute(u);
     if (a) { t.routed++; if (a.right) t.right++; if (a.also.length) t.conflicts++; }
     if (k) { t.baseRouted++; if (k.right) t.baseRight++; }
   }

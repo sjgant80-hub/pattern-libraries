@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import T from '../src/triage.mjs';
+import { csv, banking77 } from '../src/csv.mjs';
 
 export const SOURCE = Object.freeze({
   name: 'Banking77 and NLU++', by: 'PolyAI (Casanueva et al., 2020; Casanueva et al., 2022)', licence: 'CC BY 4.0',
@@ -16,21 +17,8 @@ export const FILES = Object.freeze(['LICENSE', 'banking_data/train.csv', 'bankin
   ...['banking', 'hotels'].flatMap((d) => Array.from({ length: 20 }, (_, i) => 'nlupp/data/' + d + '/fold' + i + '.json'))]);
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 
-/** csv(text) → rows of fields (quoted fields may hold commas, quotes and newlines) */
-export function csv(s) {
-  const rows = [];
-  let row = [], f = '', q = false;
-  for (let i = 0; i < s.length; i++) {
-    const c = s[i];
-    if (q) { if (c === '"') { if (s[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
-    else if (c === '"') q = true;
-    else if (c === ',') { row.push(f); f = ''; }
-    else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; }
-    else if (c !== '\r') f += c;
-  }
-  if (f || row.length) { row.push(f); rows.push(row); }
-  return rows;
-}
+// csv() lives in src/csv.mjs (moved unchanged, so the browser reads the same rows); re-exported here
+export { csv };
 
 /** load(dir) → { routes, triage } after checking every file against the pinned manifest */
 export function load(dir) {
@@ -38,11 +26,7 @@ export function load(dir) {
   const manifest = sha(FILES.map((f) => f + ' ' + sha(bufs[f])).sort().join('\n') + '\n');
   if (manifest !== SOURCE.manifest) throw new Error(dir + ' does not hold the pinned PolyAI files (manifest ' + manifest.slice(0, 12) + '…)');
   if (JSON.stringify(JSON.parse(bufs['banking_data/categories.json'].toString('utf8'))) !== JSON.stringify(T.INTENTS)) throw new Error('categories.json is not the kernel\'s list of intents');
-  const routes = [];
-  for (const split of ['train', 'test']) {
-    const rows = csv(bufs['banking_data/' + split + '.csv'].toString('utf8'));
-    rows.slice(1).forEach((r, i) => { if (r.length === 2) routes.push({ id: 'b77-' + split + '-' + String(i).padStart(5, '0'), text: r[0], intent: r[1] }); });
-  }
+  const routes = banking77(bufs['banking_data/train.csv'].toString('utf8'), bufs['banking_data/test.csv'].toString('utf8'));
   const triage = [];
   for (const d of ['banking', 'hotels']) for (let k = 0; k < 20; k++) {
     JSON.parse(bufs['nlupp/data/' + d + '/fold' + k + '.json'].toString('utf8')).forEach((e, i) => triage.push({ id: 'nlu-' + d + '-f' + k + '-' + String(i).padStart(3, '0'), text: String(e.text || ''), intents: Array.isArray(e.intents) ? e.intents : [] }));

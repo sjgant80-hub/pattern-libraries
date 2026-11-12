@@ -4,8 +4,8 @@
   {
    "name": "extract",
    "file": "src/extract.mjs",
-   "total": 99,
-   "killed": 99,
+   "total": 101,
+   "killed": 101,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -67,8 +67,26 @@
   {
    "name": "triage",
    "file": "src/triage.mjs",
-   "total": 31,
-   "killed": 31,
+   "total": 33,
+   "killed": 33,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "catalogue",
+   "file": "src/catalogue.mjs",
+   "total": 55,
+   "killed": 55,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "csv",
+   "file": "src/csv.mjs",
+   "total": 11,
+   "killed": 11,
    "ignored": 0,
    "clean": true,
    "capped": false

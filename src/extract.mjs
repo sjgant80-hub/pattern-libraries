@@ -13,6 +13,7 @@
 //   pick(rules, task, u)  the library's answer: the first unit in document order on which a kept rule fires, else null
 //   read(text, rules)     a stranger's own document read by the library: every task answered or left unknown
 import P from '../vendor/patlib/patlib.mjs';
+import C from './catalogue.mjs';
 
 const isObj = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const str = (x) => (typeof x === 'string' ? x : '');
@@ -243,8 +244,19 @@ export function baseline(task, units) {
   return list.find(isObj) || null;
 }
 
-/** pick(rules, task, units) → the first unit in document order on which a kept rule for the task fires, and the rule */
-export function pick(rules, task, units) {
+/**
+ * pick(rules, task, units, cat) → the first unit in document order on which a kept rule for the task fires, and the rule.
+ * With a catalogue built for these rules (SEAL 5), only the patterns it finds for each unit are asked; same answer.
+ */
+export function pick(rules, task, units, cat) {
+  if (C.usable(cat, rules)) {
+    for (const u of arr(units)) {
+      if (!isObj(u)) continue;
+      const i = C.firing(cat, u.tokens).find((k) => rules[k].then === task);
+      if (i !== undefined) return { unit: u, rule: rules[i] };
+    }
+    return null;
+  }
   const mine = arr(rules).filter((r) => P.validRule(r) && r.then === task);
   if (!mine.length) return null;
   for (const u of arr(units)) {
