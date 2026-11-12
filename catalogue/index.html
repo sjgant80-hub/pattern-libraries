@@ -100,7 +100,7 @@ footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); f
 <p>Computed when the page loads: the example message above, through the real routing library, step by step.</p>
 <ol id="trace"><li class="muted">Running…</li></ol>
 <h3>Why it can never give a different answer</h3>
-<p>Every pattern is filed under exactly one of its own words. A pattern fires only when all of its words are in the message, so whenever it fires, its filing word is in the message, and looking up the message's words finds it. The catalogue can find patterns that do not fire (one word present, the other missing). It hands every one to the library's law, which decides with the same <code>fires()</code> the old way uses. The patterns that fire are put back in library order. So the first one, the conflicts and the answer are the old way's, exactly. The tests and the measurement check this rather than assume it.</p>
+<p>Every pattern is filed under exactly one of its own words. A pattern fires only when all of its words are in the message, so whenever it fires, its filing word is in the message, and looking up the message's words finds it. The catalogue can find patterns that do not fire: "card + arrive", filed under "arrive", is found for "my parcel will arrive late", but "card" is missing. Such a pattern costs one check and nothing else, because the catalogue hands every one to the library's law, which decides with the same <code>fires()</code> the old way uses. The patterns that fire are put back in library order. So the first one, the conflicts and the answer are the old way's, exactly. The tests and the measurement check this rather than assume it.</p>
 </section>
 
 <section id="address" aria-labelledby="address-h">
@@ -125,9 +125,9 @@ footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); f
 
 <section id="measured" aria-labelledby="m-h">
 <h2 id="m-h">Measured</h2>
-<p>The claims were sealed before the code (<a href="../CLAIMS.md">CLAIMS.md</a>, seal 5). Data: Banking77 (PolyAI, CC BY 4.0). Libraries were grown only from the training messages; the test messages are the jobs. The real routing library is the one the nightly loop keeps. The grown libraries are every one- and two-word pattern the training messages contain, each sending to the team it most often goes with: not verified patterns, but the shape of a big library, because finding patterns does not depend on whether they are good.</p>
+<p>The claims were sealed before the code (<a href="../CLAIMS.md">CLAIMS.md</a>, seal 5). Data: Banking77 (PolyAI, CC BY 4.0). Libraries were grown only from the training messages; the test messages are the jobs. The real routing library is the one the nightly loop keeps (library 3 on the <a href="../#library3">main page</a>: every pattern in it passed the loop's held-out and final-exam gates, and its record is <a href="../data/route/state.json">data/route/state.json</a>). The grown libraries are every one- and two-word pattern the training messages contain, each sending to the team it most often goes with: not verified patterns, but the shape of a big library, because finding patterns does not depend on whether they are good.</p>
 <div class="row" id="claimchips"></div>
-<div class="tbl"><table id="mtable"><thead><tr><th class="n">Patterns</th><th class="n">Asked per message (median · 95th · largest)</th><th class="n">Share of the library asked</th><th class="n">Messages that differ</th><th class="n">ms per message: old way</th><th class="n">ms: catalogue</th></tr></thead><tbody></tbody></table></div>
+<div class="tbl"><table id="mtable"><thead><tr><th class="n">Patterns</th><th class="n">Asked per message (median · 95th · largest)</th><th class="n">Share of the library asked</th><th class="n">Messages that differ</th><th class="n">ms per message: old way</th><th class="n">ms: catalogue</th><th class="n">ms to build the catalogue</th></tr></thead><tbody></tbody></table></div>
 <svg id="chart" viewBox="0 0 640 260" role="img" aria-labelledby="chart-t"><title id="chart-t">Patterns asked per message against library size: the old way asks all of them; the catalogue asks a few</title></svg>
 <p class="small muted" id="mnote"></p>
 <h3>On the real library</h3>
@@ -152,12 +152,12 @@ footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); f
 
 <section id="business" aria-labelledby="biz-h">
 <h2 id="biz-h">For your business</h2>
-<p>A pattern library is how an automation stops paying for AI on work it has already learnt: each verified pattern answers its kind of job instantly, for nothing, with a reason, before any model is asked. The more patterns it holds, the more jobs it takes off the model. The catalogue is what lets the library keep growing without the router slowing down, so the free share can keep rising.</p>
+<p>A pattern library is how an automation stops paying for AI on work it has already learnt: each verified pattern answers its kind of job instantly, for nothing, with a reason, before any model is asked. The more patterns it holds, the more jobs it takes off the model. The catalogue is what lets the library keep growing without the router slowing down, so the free share (the share of jobs answered by a pattern, at no model cost, instead of by a model) can keep rising.</p>
 <div class="grid2">
 <div class="card"><b>CTO</b><p class="small">Routing cost stays flat as the library grows from dozens to tens of thousands of patterns, and the answers are provably the same as before, so it drops in with no re-validation of the library.</p></div>
 <div class="card"><b>CFO</b><p class="small">Every job the library answers is a model call not paid for. A router that stays fast keeps that share growing. The cost case below turns the measured speed into server time at your volume.</p></div>
 <div class="card"><b>COO</b><p class="small">Messages are routed in a fraction of a millisecond each, so routing never becomes the queue, and every routing decision names the pattern and its address.</p></div>
-<div class="card"><b>CISO and risk</b><p class="small">No model decides a route; the catalogue is a few hundred lines of plain code; the shadow layer shows which patterns can never answer, so a library can be audited before it is trusted.</p></div>
+<div class="card"><b>CISO and risk</b><p class="small">No model decides a route; the catalogue is a few hundred lines of plain code; the shadow layer shows which patterns can never answer (the address table above names each one and the pattern that shadows it), so a reviewer can remove dead weight and audit a library before it is trusted.</p></div>
 </div>
 </section>
 
@@ -179,6 +179,7 @@ footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); f
 <dl>
 <dt>Where does a message go?</dt><dd>Nowhere. Routing runs in the page or on your own server; no model or outside service sees the message. This page's policy lets it connect only to its own site and to GitHub's file server, and only to fetch the public Banking77 files when you press Re-run.</dd>
 <dt>Can the catalogue change an answer?</dt><dd>No. It only chooses which patterns the law asks; the law's own function decides each one, and the results are put back in the library's own order. This is tested on random libraries and measured on every held-out message at every size.</dd>
+<dt>When is the catalogue built?</dt><dd>From the library in memory, whenever a router starts work on a library: the nightly check builds one for its measuring run. Building it is a single pass over the patterns; the time it takes at each size is the last column of the table in Measured.</dd>
 <dt>What if the library changes and the catalogue is stale?</dt><dd>The router checks that the catalogue was built for exactly the library in hand (the same list, the same length); if not, it asks every pattern, the old way, so a stale catalogue costs speed, never correctness.</dd>
 <dt>Supply chain?</dt><dd>No packages: the catalogue is one plain JavaScript file in this repository, mutation-gated on every push.</dd>
 </dl>
@@ -188,6 +189,8 @@ footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); f
 <h2 id="risks-h">Risks, answered straight</h2>
 <dl>
 <dt>The grown libraries are not real patterns.</dt><dd>True, and said so above. They measure finding, not answering. The real library is small today (its size is in Measured), and its answers are checked the same way.</dd>
+<dt>For a small library it saves nothing.</dt><dd>True. With a few dozen patterns both ways take hundredths of a millisecond, and in Try it the old way can even come out a little faster. The catalogue pays as the library grows: see how the two columns of times part in Measured.</dd>
+<dt>Is the money the point?</dt><dd>Not at modest volumes: the cost case below is small until messages run into the millions a day. The point is that routing time stops growing with the library, so the library can grow without the router becoming the queue, and each message waits a fraction of a millisecond, not tens of milliseconds.</dd>
 <dt>Messages with many common words ask more patterns.</dt><dd>Yes: the 95th percentile and the largest count are shown next to the median for that reason.</dd>
 <dt>Timings depend on the machine.</dt><dd>The table names the machine and takes the median of several runs; Re-run it here gives yours. The count of patterns asked does not depend on the machine.</dd>
 </dl>
@@ -198,7 +201,7 @@ footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); f
 <p><b>The problem.</b> A pattern library answers jobs with small verified rules: "a message with <i>card</i> and <i>arrive</i> goes to the card-arrival team". The router asks each rule in turn whether it fires. Each rule is cheap to ask, but the number of rules is the point of a library: the library is meant to grow every night. A router that asks every rule slows down in step with the library, and at tens of thousands of rules the router, not the model, becomes the cost.</p>
 <p><b>The idea.</b> A library's catalogue lets you find a book without walking every shelf. Gary W. Floyd's NEXUS routes every item by a Dewey-style address and links items across cross-reference layers. Here, every pattern gets an address from its library, its label and its words, and is filed under the one of its words that is rarest in the training messages. A message's words are looked up, and only the patterns filed under them are asked.</p>
 <p><b>Why the answer cannot change.</b> A pattern fires only if all its words are in the message, so its filing word is in the message, so it is found. Everything found is decided by the library's own law, and put back in library order. The catalogue never adds an answer the law would not give, and never misses one.</p>
-<p><b>How it was checked.</b> The claims were committed before the code. On every held-out message, at every library size up to every pattern the training messages contain, the catalogue and the old way were compared message by message: the patterns that fire, the law's answer and the router's whole result. The nightly loop's own records were re-derived byte for byte with the router reading through the catalogue. The kernel and every kernel it touches passed a mutation gate with nothing waved through.</p>
+<p><b>How it was checked.</b> The claims were committed before the code. On every held-out message, at every library size up to every pattern the training messages contain, the catalogue and the old way were compared message by message: the list of patterns that fire (position for position), the law's answer and the router's whole result (team, pattern, conflicts, right or wrong), each compared for exact equality. The code that does it is <a href="https://github.com/sjgant80-hub/pattern-libraries/blob/main/tools/catalogue-measure.mjs">tools/catalogue-measure.mjs</a>; GitHub's runner repeats it on every push and refuses any count that comes out different. The nightly loop's own records were re-derived byte for byte with the router reading through the catalogue. The kernel and every kernel it touches passed a mutation gate with nothing waved through.</p>
 </section>
 
 <section id="words" aria-labelledby="words-h">
