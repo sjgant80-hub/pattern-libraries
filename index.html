@@ -346,6 +346,36 @@ details summary { cursor: pointer; color: var(--accent); }
     <p class="muted" id="tri-calc-why"></p>
   </div>
   <div class="card" id="tri-vs"></div>
+  <h3 id="req-biz">A shared inbox across departments (library 4)</h3>
+  <p>A general inbox gets requests for every team, and some that belong to no team at all. Today a person reads each one to find its owner. Library 4 takes that first pass across 150 teams in ten departments: it sends a request on only when a proven pattern says where it goes, names any other team that also matched, and is learning to say "not ours" as a proven answer of its own. Everything else stays with the person who sorts the inbox today.</p>
+  <p class="card" id="req-today"></p>
+  <div class="grid">
+    <div class="card"><strong>Head of service</strong><p>Every request it sends on carries the rule that sent it. A request that matches two teams is shown as a conflict, never quietly guessed. How often it routes, and how often right, is measured every night on requests it never learned from.</p></div>
+    <div class="card"><strong>Operations</strong><p>The first pass costs nothing per request and never varies. A request it cannot place is handled exactly as today. You decide which teams you trust it for, one pattern at a time.</p></div>
+    <div class="card"><strong>Finance</strong><p>The saving below counts only the requests it routes right; a wrong route still costs a person the time to move it, and the calculator charges for that.</p></div>
+    <div class="card"><strong>Technology and security</strong><p>Runs in the browser or on one machine, offline. No request leaves it and no model reads it.</p></div>
+  </div>
+  <div class="card">
+    <div class="grid" id="req-calc-in"></div>
+    <p class="big" id="req-calc-out">—</p>
+    <p class="muted" id="req-calc-why"></p>
+  </div>
+  <div class="card" id="req-vs"></div>
+  <h3 id="deal-biz">Deal-point review of merger agreements (library 5)</h3>
+  <p>Deal teams and their lawyers answer the same questions about every merger agreement: what is paid and in what form, how the material adverse effect clause is drawn, what the target may do before closing. Library 5 gives a first answer to a question only when a proven pattern fires on the excerpt, shows the words it relied on, and leaves every other question to the lawyer. It is a first pass a lawyer checks, not legal advice.</p>
+  <p class="card" id="deal-today"></p>
+  <div class="grid">
+    <div class="card"><strong>General counsel</strong><p>Each answer names the rule behind it and the exam it passed; nothing is answered on a guess. Agreement with the lawyers is measured every night on agreements it never learned from.</p></div>
+    <div class="card"><strong>Deal team</strong><p>The questions it can answer today are listed by name. They grow night by night, while the data lasts.</p></div>
+    <div class="card"><strong>Finance</strong><p>The time below counts only answers that agree with the lawyers. A lawyer still reads every question it leaves, and checks the ones it answers.</p></div>
+    <div class="card"><strong>Technology and security</strong><p>The agreement never leaves your machine, and no model reads it. The record of every night is public and re-runs byte for byte.</p></div>
+  </div>
+  <div class="card">
+    <div class="grid" id="deal-calc-in"></div>
+    <p class="big" id="deal-calc-out">—</p>
+    <p class="muted" id="deal-calc-why"></p>
+  </div>
+  <div class="card" id="deal-vs"></div>
   <h3 id="fin-biz">Receipts and bookkeeping (library 2)</h3>
   <p>Keying receipts is a person typing amounts that are already printed. Library 2 takes that first pass, line items, subtotal, tax, service, discount, total, cash and change, and then checks its own answers by arithmetic, so a receipt that does not add up is flagged for a person before anyone relies on it. Like library 1, it answers only what it has proven.</p>
   <p class="card" id="fin-today"></p>

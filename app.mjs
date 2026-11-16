@@ -299,8 +299,8 @@ async function main() {
     ];
     $('l3-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
   }
-  await library4();
-  await library5();
+  await library4(prices);
+  await library5(prices);
 
   // the fresh exam bar
   const S = Y.SCHEDULE, used = dEnded ? Infinity : night ? 2 * (night.cycle + 1) : 0;
@@ -426,9 +426,23 @@ async function main() {
 
 // P4 read from a library's nights: coverage never falls, and rises on every night whose pattern count grew. It is a claim
 // over every real night, so while it holds it is HOLDING, never a final HELD
+// the brochure's time calculator for one library: the buyer's figures, and only the share it answers right
+function calcFor(prefix, noun, verb, measured) {
+  const ins = [['receipts', noun + ' a month', 5000, 'an example: put in yours'], ['minutes', 'Minutes to ' + verb + ' one by hand', 1, 'an example: put in yours'], ['rate', 'Cost of an hour of that work', 25, 'an example: put in yours']];
+  $(prefix + '-calc-in').innerHTML = ins.map(([id, label, v, src]) => '<label class="inp" for="' + prefix + '-' + id + '">' + esc(label) + '<input id="' + prefix + '-' + id + '" type="number" min="0" step="any" value="' + v + '"><span class="muted">' + esc(src) + '</span></label>').join('');
+  const run = () => {
+    const i = Object.fromEntries(ins.map(([id]) => [id, Number($(prefix + '-' + id).value)]));
+    const r = V.keying(i, measured);
+    $(prefix + '-calc-out').textContent = r.ok ? r.hours.toLocaleString('en-GB') + ' hours a month given back, worth ' + r.cost.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' in your currency' : 'Check the inputs';
+    $(prefix + '-calc-why').textContent = r.ok ? 'Measured: it answers ' + pct(measured.coverage) + ' of the measuring ' + noun.toLowerCase() + ' and is right ' + pct(measured.precision) + ' of the time when it does, so it stands in for ' + pct(r.share) + ' of the work. A wrong answer still costs a person the time to fix it. This grows as the coverage grows.' : r.why;
+  };
+  for (const [id] of ins) $(prefix + '-' + id).addEventListener('input', run);
+  run();
+}
+
 // library 4 (seal 8): CLINC150, 150 routes in ten domains and the out-of-scope flag; every number from its records
 const CSAMPLE = 'please stop my account, I think someone has been using it';
-async function library4() {
+async function library4(prices) {
   const [sum, st] = await Promise.all([json('data/clinc/summary.json'), json('data/clinc/state.json')]);
   const { r: n4, ended } = await realNight('clinc', sum);
   const lib = st && Array.isArray(st.library) ? st.library : [];
@@ -483,13 +497,20 @@ async function library4() {
     ['N5', 'It runs in the same night as libraries 1 to 3, after them, on the free proposers only, within the same 25-minute clock.', '<span class="chip">wired 16 November 2026</span>'],
   ];
   $('l4-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
+  // the brochure: what it routes today, from the library itself; time on the buyer's figures; a frontier model's price
+  const teams4 = [...new Set(lib.map((r) => r.then).filter((t) => t !== L4.OOS))], deps = [...new Set(teams4.map(dep))];
+  $('req-today').innerHTML = '<strong>Today</strong> ' + esc(lib.length ? 'it routes requests to ' + teams4.length + ' of the 150 teams, in ' + deps.length + ' of the 10 departments, from ' + lib.length + ' proven pattern' + (lib.length === 1 ? '' : 's') + (k ? '; on the measuring requests it routes ' + pct(k.routed / k.queries) + ' of them, ' + pct(k.routed ? k.right / k.routed : null) + ' to the right team' : '') + '. ' + (lib.some((r) => r.then === L4.OOS) ? 'It says "not ours" with a proven pattern.' : 'It does not yet say "not ours": no out-of-scope pattern has passed both exams.') + ' Everything else is sorted by hand, as today.' : 'no night has run yet, so it routes nothing.') + (deps.length ? ' <span class="muted">Departments it routes for now: ' + esc(deps.join(', ')) + '.</span>' : '');
+  calcFor('req', 'Requests', 'read and route', { coverage: k && k.queries ? k.routed / k.queries : 0, precision: k && k.routed ? k.right / k.routed : null });
+  const ch4 = sum && sum.corpus ? sum.corpus.avgChars : null;
+  const o4 = V.modelCost(prices, 'claude-opus-5-5', ch4, 50), s4 = V.modelCost(prices, 'claude-sonnet-5-5', ch4, 50);
+  $('req-vs').innerHTML = '<p><strong>Against a frontier model.</strong> An average request in the public set is ' + (ch4 ? esc(ch4.toLocaleString('en-GB')) : '?') + ' characters. At the published API prices (read ' + esc(prices ? prices.read : '?') + '), sending the request alone and getting a short answer costs about <strong>' + (o4 === null ? '?' : '$' + o4.toFixed(5)) + '</strong> on Claude Opus 5.5 or <strong>' + (s4 === null ? '?' : '$' + s4.toFixed(5)) + '</strong> on Claude Sonnet 5.5, before the list of 150 teams a model would also need. A proven pattern costs nothing per request, offline, and names the rule it used.</p>';
 }
 
 // library 5 (seal 9): MAUD, 144 deal-point questions over 152 merger agreements; every number from its records
 const DSAMPLE = { q: 'accuracy-of-fundamental-target-r-ws-types-of-r-ws--opinion-of-financial-advisor', text: 'The representations and warranties in Sections 3.1 (Organization), 3.3 (Authority), 3.22 (Opinion of Financial Advisor) and 3.24 (Brokers) shall be true and correct in all respects as of the Closing.' };
 // a deal-point pattern in plain words: the excerpt's words it looks for (the task id is not for a reader)
 const dexplain = (rule) => { const { words } = ruleWords(rule); return 'the excerpt holds the word' + (words.length > 1 ? 's ' : ' ') + words.map((x) => '<code>' + esc(x) + '</code>').join(' and '); };
-async function library5() {
+async function library5(prices) {
   const [sum, st] = await Promise.all([json('data/maud/summary.json'), json('data/maud/state.json')]);
   const { r: n5, ended } = await realNight('maud', sum);
   const lib = st && Array.isArray(st.library) ? st.library : [];
@@ -544,6 +565,12 @@ async function library5() {
     ['N6', 'It runs in the same night as libraries 1 to 4, after them, on the free proposers only, within the same 25-minute clock.', '<span class="chip">wired 16 November 2026</span>'],
   ];
   $('l5-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
+  const qs = [...withPatterns].map(L5.sayQuestion);
+  $('deal-today').innerHTML = '<strong>Today</strong> ' + esc(lib.length ? 'it answers ' + qs.length + ' of the ' + L5.QUESTIONS.length + ' deal-point questions, from ' + lib.length + ' proven pattern' + (lib.length === 1 ? '' : 's') + (k ? '; on the measuring agreements it answered ' + pct(k.answered / k.asked) + ' of the questions asked, ' + pct(k.answered ? k.right / k.answered : null) + ' as the lawyers did' : '') + '. Every other question is a lawyer\'s read, as today.' : 'no night has run yet, so it answers nothing.') + (qs.length ? ' <span class="muted">Questions it can answer now: ' + esc(qs.join('; ')) + '.</span>' : '');
+  calcFor('deal', 'Deal-point questions', 'answer', { coverage: k && k.asked ? k.answered / k.asked : 0, precision: k && k.answered ? k.right / k.answered : null });
+  const ch5 = sum && sum.corpus && sum.corpus.answers ? Math.round(sum.corpus.chars / sum.corpus.answers) : null;
+  const o5 = V.modelCost(prices, 'claude-opus-5-5', ch5, 50), s5 = V.modelCost(prices, 'claude-sonnet-5-5', ch5, 50);
+  $('deal-vs').innerHTML = '<p><strong>Against a frontier model.</strong> An average excerpt the lawyers chose is ' + (ch5 ? esc(ch5.toLocaleString('en-GB')) : '?') + ' characters. At the published API prices (read ' + esc(prices ? prices.read : '?') + '), sending one excerpt and one question for a short answer costs about <strong>' + (o5 === null ? '?' : '$' + o5.toFixed(4)) + '</strong> on Claude Opus 5.5 or <strong>' + (s5 === null ? '?' : '$' + s5.toFixed(4)) + '</strong> on Claude Sonnet 5.5, for each of the 144 questions on each agreement. A proven pattern costs nothing, offline, and shows the words it relied on.</p>';
 }
 
 function p4row(series) {
