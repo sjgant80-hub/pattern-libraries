@@ -686,3 +686,72 @@ answered. For a name "yes: X" or "no: X", ctrl-F's words are X's: *yes* when the
 does not. That is the search a person would run on the list. Every other name is read as seal 9 says. It changes only the
 cheap baseline, for the 106 list-valued tasks, toward a fairer and harder one; no pattern was kept or published under the
 old reading.
+
+---
+
+# SEAL 10 · libraries 6 to 9: ETHICS, EMOTIONS, MATHS, SUBJECTS, written before their code (2026-11-16)
+
+Seals 1 to 9 above are unchanged, byte for byte. Simon asked to grow patterns for agents in ethics, psychology, maths,
+science and philosophy, and chose these four datasets in chat ("go with all four"). P1-P5 bind each. A claim that misses its
+bar is kept and published as failed. Nothing here is relaxed after a result is seen.
+
+## Data (each file pinned by sha256; nothing from them is committed)
+
+- **Library 6, ETHICS commonsense morality** (Hendrycks, Burns, Basart, Critch, Li, Song and Steinhardt, "Aligning AI
+  With Shared Human Values", ICLR 2021), licence **MIT** (github.com/hendrycks/ethics, LICENSE). `ethics.tar` from the URL
+  in its README, sha256 `40acbf1ac0da79a2aabef394d58889136b8d38b05be09482006de2453fb06333`; read: `cm_train.csv`
+  `286cb409…`, `cm_test.csv` `a004f51b…`, `cm_test_hard.csv` `896f8929…` (full hashes in tools/labelled.mjs). 21,759
+  scenarios labelled by people: 1 is "clearly morally wrong", 0 is not. `cm_ambig.csv` has no label and is not read.
+- **Library 7, GoEmotions** (Demszky, Movshovitz-Attias, Ko, Cowen, Nemade and Ravi, ACL 2020), licence **Apache-2.0**
+  (the google-research repository that holds it), at commit `7951440944924ac61b6e2f9a2a3c715834005c40`:
+  `train.tsv`, `dev.tsv`, `test.tsv`, `emotions.txt`. 54,263 comments, each with one or more of 27 emotions or neutral.
+- **Library 8, MATH** (Hendrycks, Burns, Kadavath, Arora, Basart, Tang, Song and Steinhardt, NeurIPS 2021), licence
+  **MIT**, from the copy its README links to (huggingface.co/datasets/qwedsacf/competition_math, revision
+  `e839825f9ec5c6cfa585c654a59610969ec13993`), parquet sha256 `2325458e…`; the derived `math.jsonl` (id, problem, level,
+  type, in file order; made by a committed tool) sha256 `a249b3c7c53f9131a77c459818a3af7a8524817359a6af0a52a06a1ef9246326`.
+  12,500 problems, each labelled with one of seven branches.
+- **Library 9, MMLU** (Hendrycks, Burns, Basart, Zou, Mazeika, Song and Steinhardt, ICLR 2021), licence **MIT**
+  (github.com/hendrycks/test), `data.tar` sha256 `bec563ba4bac1d6aaf04141cd7d1605d7a5ca833e38f994051e818489592989b`; its
+  171 `dev`, `val` and `test` CSVs, as sorted "path sha256" lines, hash to
+  `d59a00a733445df0080f4bf01e8f679dc6e1821c24048ea7c6f6e205abaa9328`. 15,842 questions in 57 subjects (the question text
+  only; the answer choices are not read).
+
+## What each reads
+
+Each is a routing library on the general router (src/router.mjs, seal 8): one route per label, a message's words the
+law's tokens of its first **80** (ethics, maths), **40** (emotions) or **60** (subjects) tokens, the answer the first kept
+pattern that fires, every conflict named, otherwise unknown. In GoEmotions a comment may carry several labels; a route
+is right when it is any of them. **The cheap baseline** is library 3's keyword router: the first label, in the order
+above, all of whose name's tokens the text holds. For ETHICS both labels' names have one token, `wrong`, so ctrl-F
+answers "wrong" exactly when the scenario says "wrong". That is a weak baseline, and it is said here.
+
+**The fresh exam** (one fixed order by SHA-256 of salt + id, seal 4; seal 7's merged tail), sizes chosen from each seed
+first as seal 7 asks. "Reachable" counts the labels whose most common word, among words right on at least 80% of the
+seed texts holding them, is expected to fire on 5 held-out texts:
+
+| Library | METER | seed | batches | nights (held-out) | reachable on the seed |
+|---|---|---|---|---|---|
+| 6 ethics | 1,000 | 4,759 | 8 × 2,000 | 4 (2,000 each) | 2 of 2 |
+| 7 emotions | 2,000 | 10,263 | 7 × 6,000 | 3 (6,000, 6,000, 12,000) | 11 of 28 |
+| 8 maths | 1,000 | 3,500 | 5 × 1,600 | 2 (1,600, 3,200) | 6 of 7 |
+| 9 subjects | 1,000 | 2,842 | 4 × 3,000 | 2 (3,000 each) | 18 of 57 |
+
+Every text is used; none is left over. **The two gates** are the law's, unchanged, then the field gate with library 3's numbers.
+
+## Claims, for each of libraries 6 to 9 apart
+
+- **G1**: each night, the library as carried in beats the keyword router on the cases it answers on that night's fresh
+  final exam, judged and signed by the baseline agreement (rate, higher, minimum improvement 0.10, z 1.96, at least 20
+  answered; fewer is INSUFFICIENT, never a pass). Night 0 cannot decide it.
+- **G2**: it abstains rather than guesses: on the METER, wherever it answers, it is right at least **80%** of the time.
+- **G3**: every night re-derives byte for byte from the pinned files and the recorded proposals (CI re-runs it).
+- **G4**: each source carries its licence and attribution on the page and in NOTICE.
+- **G5**: the router is measured whole on the METER every night: routed, right, conflicts, and the keyword router's
+  routed and right. *Bar:* every night's record holds all six counts, re-derived in CI.
+- **N7**: libraries 6 to 9 run in the same night process, after library 5, inside the one 25-minute clock, on the free
+  tiers only (no local-7B call, so no credit-tier candidate).
+
+What these patterns are, said plainly: a kept pattern agrees with the people who labelled the data, on texts it never
+saw. "Wrong" in library 6 means what the ETHICS annotators judged clearly wrong; an emotion in library 7 is what GoEmotions'
+raters read in a comment. Neither is a moral or clinical verdict. Libraries 8 and 9 say which branch or subject a text
+belongs to; they solve nothing. Each library is reported **landed** only under seal 1's definition.
