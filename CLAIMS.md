@@ -482,3 +482,59 @@ shape was tested too and is not adopted: it cost precision.
 
 Not in this seal: growing three-word patterns into any library here. Every proposer in this repository still
 proposes one or two words; using the new shape in a library is its own decision and its own seal.
+
+---
+
+# SEAL 7 · the receipt library's last night uses every unspent exam receipt (2026-11-16, before that night)
+
+Seals 1 to 6 above are unchanged, byte for byte. This seal changes ONE sealed procedure, after results were read, so
+it says what was found, what changes, what does not, and which way it moves the bars. Simon approved it in chat ("yes
+do the batch size amendment").
+
+## What was found
+
+The law's held-out bar is a count: a rule must fire on at least 5 of the night's held-out documents. With a fixed batch,
+a label word used in fewer than about one document in eight (receipts, 40 per batch) or one in four (contracts, 20 per
+batch) can never pass it in one night, however right it is. On the receipt library's six counted nights (2026-11-11 to
+2026-11-16), 79 of its 440 dropped rules (18%) were dropped because they fired on 3 or 4 held-out receipts, 1 or 2
+short of 5. Every count here is read from nights already run. No receipt in tonight's exams was looked at.
+
+Checking this also showed that the nights are nearly out of exams:
+
+- **Library 1, contracts**: 15 batches of 20. Its seven nights (cycles 0 to 6) used batches 0 to 13. Its next night
+  finds no fresh exam. Batch 14 (20 contracts) has never been an exam, but it alone cannot be both a held-out and a final.
+- **Library 2, receipts**: 15 batches of 40. Cycles 0 to 5 used batches 0 to 11. Cycle 6, tonight, is its last.
+  Under seal 2 it would gate on batches 12 and 13, and batch 14 (40 receipts) would never be used.
+- **Library 3, routing**: 9 batches of 1,000. Its night 4 already found no fresh exam. Batch 8 (1,000 queries) was never used.
+- **Library 3, triage**: 4 batches of 500, all used. Its night 2 already found no fresh exam.
+
+## What changes
+
+For the **receipt library only**, the schedule gains `tail: 'merge'`. On its last cycle (the one after which no full
+pair of batches is left), when at least three batches are left, the held-out exam is every batch left except the last,
+and the final exam is the last. For cycle 6 that means a held-out exam of batches 12 and 13 (80 receipts) and a final
+exam of batch 14 (40 receipts, never an exam before). Every earlier cycle's slices are exactly as before, so every
+committed night re-derives byte for byte. Nothing else changes: the order (seal 4's SHA-256), the meter, the seed,
+the training documents, every bar, gate, baseline and claim.
+
+Libraries 1 and 3 are not changed. Library 1's last night (cycle 6) already ran under the old rule, and no rule can give
+it or library 3 a fresh pair of exams without re-using one. A document that has been an exam is never an exam again.
+What grows them now is **fresh data** with experts' answers. Each new dataset needs its licence checked, Simon's approval
+and its own seal, written with its batch size chosen from the seed BEFORE the seal: count how often each label variant
+appears per batch on the seed, and size the batch so a variant in one document in ten or more is expected to reach the
+cover bar.
+
+## Which way this moves the bars
+
+The held-out bar stays 5 rules-fired, precision 0.8 and margin 0.2. On 80 receipts instead of 40, the 5 is a smaller
+share of the exam, so the count is **easier** to reach. That is the point of the change: it lets a rare word that is
+right be counted. Precision, margin, competence, near-duplicates, the final exam (cover 3, precision 0.8, margin 0.2 on
+40 receipts never seen) and the meter are all unchanged. A rule kept tonight has to pass a held-out exam twice as large
+and then a final exam no rule has ever seen.
+
+- **S7.1** · `slicesFor` returns cycle 6 of the receipt schedule as held-out batches 12 and 13, final batch 14. It
+  returns every other cycle of every library exactly as before, tested on the real schedules.
+- **S7.2** · Every committed night of every library, void ones included, re-derives byte for byte (`tools/rederive.mjs`
+  in CI).
+- **S7.3** · Tonight's receipt night records the sizes of its two exams. The page says which night used the merged tail.
+- **S7.4** · The kernel gate on `src/cycle.mjs` re-runs clean.
