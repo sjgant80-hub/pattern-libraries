@@ -425,7 +425,7 @@ async function main() {
 // P4 read from a library's nights: coverage never falls, and rises on every night whose pattern count grew. It is a claim
 // over every real night, so while it holds it is HOLDING, never a final HELD
 // library 4 (seal 8): CLINC150, 150 routes in ten domains and the out-of-scope flag; every number from its records
-const CSAMPLE = 'can you tell me how long it will take for my new credit card to arrive';
+const CSAMPLE = 'please stop my account, I think someone has been using it';
 async function library4() {
   const [sum, st] = await Promise.all([json('data/clinc/summary.json'), json('data/clinc/state.json')]);
   const { r: n4, ended } = await realNight('clinc', sum);
@@ -457,9 +457,9 @@ async function library4() {
     $('l4-flow').innerHTML = (ended ? '<p class="callout">' + esc('No fresh exam left: night ' + ended.cycle + ' found every batch already used as an exam once. Shown: the last night that had one.') + '</p>' : '')
       + '<p>Night ' + esc(r.cycle) + ' (' + esc(String(r.at).slice(0, 10)) + '): ' + esc((r.proposed ? r.proposed.free : 0) + ' patterns proposed by the free miners, ' + kept.length + ' kept, ' + (r.dropped || []).length + ' dropped, every drop with its reason. The library now holds ' + (r.patterns ?? lib.length) + ' patterns.') + '</p>';
     $('l4-router').innerHTML = k ? '<p><strong>On the ' + esc(k.queries.toLocaleString('en-GB')) + ' measuring requests</strong> (never used to propose or test a pattern):</p><ul>'
-      + '<li>' + esc('The router sent ' + k.routed + ' to a team, ' + k.right + ' of them the right one (' + pct(k.routed ? k.right / k.routed : null) + '), with ' + k.conflicts + ' conflict' + (k.conflicts === 1 ? '' : 's') + '. It left the other ' + (k.queries - k.routed) + ' for a person.') + '</li>'
+      + '<li>' + esc('The router sent ' + k.routed + ' to a team, ' + k.right + ' of them the right one (' + pct(k.routed ? k.right / k.routed : null) + '), with ' + k.conflicts + ' conflict' + (k.conflicts === 1 ? '' : 's') + '. It left the other ' + (k.queries - k.routed).toLocaleString('en-GB') + ' for a person.') + '</li>'
       + '<li>' + esc('The keyword router, on the same requests: sent ' + k.baseRouted + ', ' + k.baseRight + ' right (' + pct(k.baseRouted ? k.baseRight / k.baseRouted : null) + ').') + '</li>'
-      + ('oosRaised' in k ? '<li>' + esc('Out of scope: the library raised it on ' + k.oosRaised + ', ' + k.oosRight + ' of them truly out of scope' + (k.oosRaised ? ' (' + pct(k.oosRight / k.oosRaised) + ')' : '') + '. The cheap guess ("the keyword router found no team") raised it on ' + k.baseOosRaised + ', right on ' + k.baseOosRight + (k.baseOosRaised ? ' (' + pct(k.baseOosRight / k.baseOosRaised) + ')' : '') + '.') + '</li>' : '')
+      + ('oosRaised' in k ? '<li>' + esc((k.oosRaised ? 'Out of scope: the library raised it on ' + k.oosRaised + ', ' + k.oosRight + ' of them truly out of scope (' + pct(k.oosRight / k.oosRaised) + ').' : 'Out of scope: no out-of-scope pattern has passed both exams yet, so the library raised it on none.') + ' The cheap guess ("the keyword router found no team") raised it on ' + k.baseOosRaised + ', right on ' + k.baseOosRight + (k.baseOosRaised ? ' (' + pct(k.baseOosRight / k.baseOosRaised) + ')' : '') + '.') + '</li>' : '')
       + '</ul><p class="muted">"Right" means the team the dataset\'s makers labelled the request with. The router answers only where a proven pattern fires; everything else goes to a person, which is why it sends fewer than the keyword router and gets far more of them right.</p>' : '';
     $('l4-kept').querySelector('tbody').innerHTML = kept.map((p) => { const { words, task } = ruleWords(p.rule); return '<tr><td>' + words.map((w) => '<code>' + esc(w) + '</code>').join(' + ') + '</td><td>' + esc(L4.say(task)) + '</td><td>' + esc(dep(task)) + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td></tr>'; }).join('') || '<tr><td colspan="5" class="muted">nothing kept on this night</td></tr>';
     const why = {};
