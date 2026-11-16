@@ -32,7 +32,8 @@ export function measure(dir, runs = 5) {
   const trainLists = train.map(toks), testLists = test.map(toks);
   const counts = C.wordCounts(trainLists);
   const opts = { counts, lib: C.LIBRARY_CODES.route, labels: T.ROUTES };
-  const real = JSON.parse(readFileSync(new URL('../data/route/state.json', import.meta.url), 'utf8')).library;
+  // the library measured is pinned (data/catalogue/real-library.json, data/route/state.json at 0bccedc): the live state grows nightly
+  const real = JSON.parse(readFileSync(new URL('../data/catalogue/real-library.json', import.meta.url), 'utf8')).library;
 
   // the real library: K1 on every test message (positions, the law's answer, the router whole) and on the meter
   const rcat = C.catalogue(real, opts);
