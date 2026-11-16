@@ -1,0 +1,487 @@
+{
+ "cycle": 1,
+ "library": [
+  {
+   "when": [
+    "opinion"
+   ],
+   "then": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--opinion-of-financial-advisor=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 30,
+    "recipe": "mine-1"
+   },
+   "receipt": "9f1bc8e8",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 10,
+     "right": 10,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 11,
+     "right": 10,
+     "prec": 0.9090909090909091,
+     "basePrec": 0.09090909090909091
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 10,
+     "base": 6,
+     "rightRate": 1,
+     "baseRate": 0.6,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 10,
+     "base": 7,
+     "rightRate": 0.909091,
+     "baseRate": 0.636364,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "takeover"
+   ],
+   "then": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--takeover-statutes=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 30,
+    "recipe": "mine-1"
+   },
+   "receipt": "7d27a257",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 10,
+     "right": 9,
+     "prec": 0.9,
+     "basePrec": 0.1
+    },
+    "final": {
+     "cover": 10,
+     "right": 9,
+     "prec": 0.9,
+     "basePrec": 0.1
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 9,
+     "base": 6,
+     "rightRate": 0.9,
+     "baseRate": 0.6,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 9,
+     "base": 5,
+     "rightRate": 0.9,
+     "baseRate": 0.5,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "prohibited"
+   ],
+   "then": "action-prohibited-omission-required-by-the-agreement-answer=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 32,
+    "recipe": "mine-1"
+   },
+   "receipt": "ff2f585f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "solicitation",
+    "two"
+   ],
+   "then": "additional-matching-rights-period-for-modifications-cor-answer=0",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 30,
+    "recipe": "mine-2"
+   },
+   "receipt": "25976c93",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 10,
+     "right": 10,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 10,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "measures"
+   ],
+   "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 32,
+    "recipe": "mine-1"
+   },
+   "receipt": "5a8a8963",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 10,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "final": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 10,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "god"
+   ],
+   "then": "w-n-a-f-applies-to-answer--act-of-god=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 32,
+    "recipe": "mine-1"
+   },
+   "receipt": "c1c25bbc",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 9,
+     "right": 9,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 9,
+     "right": 9,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.333333,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.444444,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "contractual",
+    "god"
+   ],
+   "then": "w-n-a-f-applies-to-answer--act-of-god=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T21:20:34.754Z",
+    "feed": "maud",
+    "trainN": 32,
+    "recipe": "mine-2"
+   },
+   "receipt": "b557514d",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.428571,
+     "why": ""
+    }
+   }
+  }
+ ],
+ "records": [
+  {
+   "library": "maud",
+   "task": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--opinion-of-financial-advisor=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "opinion"
+    ],
+    "then": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--opinion-of-financial-advisor=1"
+   },
+   "receipt": "9f1bc8e8"
+  },
+  {
+   "library": "maud",
+   "task": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--takeover-statutes=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "takeover"
+    ],
+    "then": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--takeover-statutes=1"
+   },
+   "receipt": "7d27a257"
+  },
+  {
+   "library": "maud",
+   "task": "action-prohibited-omission-required-by-the-agreement-answer=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "prohibited"
+    ],
+    "then": "action-prohibited-omission-required-by-the-agreement-answer=1"
+   },
+   "receipt": "ff2f585f"
+  },
+  {
+   "library": "maud",
+   "task": "additional-matching-rights-period-for-modifications-cor-answer=0",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "solicitation",
+     "two"
+    ],
+    "then": "additional-matching-rights-period-for-modifications-cor-answer=0"
+   },
+   "receipt": "25976c93"
+  },
+  {
+   "library": "maud",
+   "task": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "measures"
+    ],
+    "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1"
+   },
+   "receipt": "5a8a8963"
+  },
+  {
+   "library": "maud",
+   "task": "w-n-a-f-applies-to-answer--act-of-god=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "god"
+    ],
+    "then": "w-n-a-f-applies-to-answer--act-of-god=1"
+   },
+   "receipt": "c1c25bbc"
+  },
+  {
+   "library": "maud",
+   "task": "w-n-a-f-applies-to-answer--act-of-god=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T21:20:34.754Z",
+   "rule": {
+    "when": [
+     "contractual",
+     "god"
+    ],
+    "then": "w-n-a-f-applies-to-answer--act-of-god=1"
+   },
+   "receipt": "b557514d"
+  }
+ ]
+}

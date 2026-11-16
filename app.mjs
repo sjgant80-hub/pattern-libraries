@@ -486,7 +486,9 @@ async function library4() {
 }
 
 // library 5 (seal 9): MAUD, 144 deal-point questions over 152 merger agreements; every number from its records
-const DSAMPLE = { q: 'type-of-consideration-answer', text: 'At the Effective Time, each share of Company Common Stock issued and outstanding shall be converted into the right to receive $42.00 in cash, without interest (the "Merger Consideration").' };
+const DSAMPLE = { q: 'accuracy-of-fundamental-target-r-ws-types-of-r-ws--opinion-of-financial-advisor', text: 'The representations and warranties in Sections 3.1 (Organization), 3.3 (Authority), 3.22 (Opinion of Financial Advisor) and 3.24 (Brokers) shall be true and correct in all respects as of the Closing.' };
+// a deal-point pattern in plain words: the excerpt's words it looks for (the task id is not for a reader)
+const dexplain = (rule) => { const { words } = ruleWords(rule); return 'the excerpt holds the word' + (words.length > 1 ? 's ' : ' ') + words.map((x) => '<code>' + esc(x) + '</code>').join(' and '); };
 async function library5() {
   const [sum, st] = await Promise.all([json('data/maud/summary.json'), json('data/maud/state.json')]);
   const { r: n5, ended } = await realNight('maud', sum);
@@ -501,7 +503,7 @@ async function library5() {
   sample();
   const readIt = () => {
     const m = L5.read(ddoc.value, sel.value, lib);
-    $('danswer').innerHTML = '<p><strong>' + esc(L5.sayQuestion(sel.value)) + ':</strong> ' + (m.answer === 'unknown' ? '<span class="unknown">unknown — no proven pattern for this question fired; a lawyer reads it</span>' : esc(L5.say(m.answer)) + ' <span class="muted">(' + texplain(m.rule) + ')</span>') + '</p>'
+    $('danswer').innerHTML = '<p><strong>' + esc(L5.sayQuestion(sel.value)) + ':</strong> ' + (m.answer === 'unknown' ? '<span class="unknown">unknown — no proven pattern for this question fired; a lawyer reads it</span>' : esc(L5.say(m.answer)) + ' <span class="muted">(' + dexplain(m.rule) + ')</span>') + '</p>'
       + (m.also.length ? '<p><strong>Also matched:</strong> ' + esc(m.also.map(L5.say).join(', ')) + ' <span class="muted">(a conflict: shown, never hidden)</span></p>' : '')
       + '<p><strong>ctrl-F for the answers\' own words would say:</strong> ' + (m.cheap === 'unknown' ? '<span class="muted">nothing</span>' : esc(L5.say(m.cheap))) + '</p>'
       + '<p class="muted">' + esc(lib.length ? 'Read in your browser with ' + lib.length + ' proven pattern' + (lib.length === 1 ? '' : 's') + ' from library 5, across ' + withPatterns.size + ' of the ' + L5.QUESTIONS.length + ' questions.' : 'Library 5 has no proven pattern yet: its first night runs at 03:00 on 17 November 2026.') + '</p>';
@@ -521,7 +523,7 @@ async function library5() {
       + '<p>Night ' + esc(r.cycle) + ' (' + esc(String(r.at).slice(0, 10)) + '): ' + esc((r.proposed ? r.proposed.free : 0) + ' patterns proposed by the free miners, ' + kept.length + ' kept, ' + (r.dropped || []).length + ' dropped, every drop with its reason. The library now holds ' + (r.patterns ?? lib.length) + ' patterns.') + '</p>';
     $('l5-reader').innerHTML = k ? '<p><strong>On the ' + esc(k.asked.toLocaleString('en-GB')) + ' questions asked of the measuring agreements</strong> (never used to propose or test a pattern):</p><ul>'
       + '<li>' + esc('The library answered ' + k.answered + ', ' + k.right + ' of them as the lawyers did (' + pct(k.answered ? k.right / k.answered : null) + '), with ' + k.conflicts + ' conflict' + (k.conflicts === 1 ? '' : 's') + '. It left the other ' + (k.asked - k.answered).toLocaleString('en-GB') + ' for a lawyer.') + '</li>'
-      + '<li>' + esc('ctrl-F for the answers\' own words, on the same questions: answered ' + k.baseAnswered + ', ' + k.baseRight + ' as the lawyers did (' + pct(k.baseAnswered ? k.baseRight / k.baseAnswered : null) + ').') + '</li>'
+      + '<li>' + esc('ctrl-F for the answers\' own words, on the same questions: answered ' + k.baseAnswered.toLocaleString('en-GB') + ', ' + k.baseRight.toLocaleString('en-GB') + ' as the lawyers did (' + pct(k.baseAnswered ? k.baseRight / k.baseAnswered : null) + ').') + '</li>'
       + '</ul><p class="muted">"As the lawyers did" means the answer MAUD\'s experts gave for that agreement. The library answers few questions so far, and only where a proven pattern fires; that is the point: an answer it gives can be trusted, and everything else is still a lawyer\'s read.</p>' : '';
     $('l5-kept').querySelector('tbody').innerHTML = kept.map((p) => { const { words, task } = ruleWords(p.rule); return '<tr><td>' + words.map((w) => '<code>' + esc(w) + '</code>').join(' + ') + '</td><td>' + esc(L5.sayQuestion(L5.questionOf(task))) + '</td><td>' + esc(L5.say(task)) + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td></tr>'; }).join('') || '<tr><td colspan="5" class="muted">nothing kept on this night</td></tr>';
     const why = {};
