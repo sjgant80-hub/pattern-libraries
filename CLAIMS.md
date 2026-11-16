@@ -678,3 +678,11 @@ No pattern was proposed or gated to choose it. MAUD has 152 agreements; after th
   only** (no local-7B call; so no credit-tier candidate; P2 holds by construction).
 
 Library 5 is reported **landed** only under seal 1's definition. Until then it is **running** or **not landed**.
+
+**Seal 9, note (2026-11-16, after a dry run and before any night of library 5 was recorded):** the cheap baseline read a
+list-valued task's name literally. "no: Approval" has the token `approval` only ("no" is a stop word), so ctrl-F answered
+*no* exactly when the excerpt names Approval, and "yes: Approval" needed the word `yes` in the excerpt, so it almost never
+answered. For a name "yes: X" or "no: X", ctrl-F's words are X's: *yes* when the excerpt holds all of them, *no* when it
+does not. That is the search a person would run on the list. Every other name is read as seal 9 says. It changes only the
+cheap baseline, for the 106 list-valued tasks, toward a fairer and harder one; no pattern was kept or published under the
+old reading.

@@ -31,8 +31,8 @@
   {
    "name": "night",
    "file": "src/night.mjs",
-   "total": 45,
-   "killed": 45,
+   "total": 46,
+   "killed": 46,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -105,6 +105,15 @@
    "file": "src/clinc.mjs",
    "total": 2,
    "killed": 2,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "maud",
+   "file": "src/maud.mjs",
+   "total": 32,
+   "killed": 32,
    "ignored": 0,
    "clean": true,
    "capped": false

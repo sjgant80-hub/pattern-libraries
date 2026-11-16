@@ -9,9 +9,10 @@
 //   library 2, receipt reading (finance): CORD v2 (NAVER CLOVA, CC BY 4.0), its derived file pinned by sha256
 //   library 3, triage and routing: Banking77 + NLU++ (PolyAI, CC BY 4.0), its files pinned by a manifest sha256
 //   library 4, routing across ten domains with out-of-scope: CLINC150 (Larson et al. 2019, CC BY 3.0), three files pinned (SEAL 8)
+//   library 5, merger agreement deal points: MAUD (The Atticus Project, CC BY 4.0), three CSVs pinned (SEAL 9)
 // All share one clock (25 minutes); libraries 1 and 2 share N1's six local-7B calls, three each (N3); library 3 runs its
-// two parts (route, triage) on the free tiers only (N4), and library 4 (clinc) the same (N5). --dry computes and prints, and writes nothing.
-// --only=<ids> (comma-separated: doc, finance, route, triage, clinc) runs only those (a build-time night 0 must not spend
+// two parts (route, triage) on the free tiers only (N4), and libraries 4 (clinc) and 5 (maud) the same (N5, N6). --dry computes and prints, and writes nothing.
+// --only=<ids> (comma-separated: doc, finance, route, triage, clinc, maud) runs only those (a build-time night 0 must not spend
 // another library's night).
 import { readFileSync, writeFileSync, appendFileSync, mkdirSync, renameSync, existsSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -37,7 +38,7 @@ const imp = (rel) => import(pathToFileURL(join(REPO, rel)).href).then((m) => m.d
 
 async function main() {
   const [Y, N, C, B, C2, F, PA, T] = await Promise.all([imp('src/cycle.mjs'), imp('src/night.mjs'), imp('tools/cuad.mjs'), imp('src/build.mjs'), imp('tools/cord.mjs'), imp('src/finance.mjs'), imp('tools/polyai.mjs'), imp('src/triage.mjs')]);
-  const [CL4, L4] = await Promise.all([imp('tools/clinc.mjs'), imp('src/clinc.mjs')]);
+  const [CL4, L4, ML5, L5] = await Promise.all([imp('tools/clinc.mjs'), imp('src/clinc.mjs'), imp('tools/maud.mjs'), imp('src/maud.mjs')]);
   const at = new Date().toISOString();
   const deadline = Date.now() + N.NIGHT.clockMinutes * 60000;   // one clock for both libraries
   let model = null, picked = false, why7b = NO7B ? 'the local 7B was not asked: ' + String(process.env.PL_NO7B_WHY || '--no-7b was given').slice(0, 200) : '';
@@ -177,6 +178,32 @@ async function main() {
         appendFileSync(join(D4, 'ledger.jsonl'), JSON.stringify({ at, kind: 'library-night', library: 'clinc', cycle: state.cycle, ok: r.ok, promoted: rec.promoted.length, dropped: rec.dropped.length, patterns: rec.patterns, meter: rec.meter && (rec.meter.after || rec.meter), check: (rec.meter && rec.meter.check) || null, exam: rec.exam ? rec.exam.receipt : null, calls7b: 0, callsCredit: 0, asks: [] }) + '\n');
       }
     } catch (e) { says.push('routing across ten domains library: ' + String((e && e.message) || e).slice(0, 200) + ', so nothing was saved'); process.exitCode = 1; }
+  }
+  // ── library 5, merger agreement deal points (MAUD): one night library, the free tiers only (N6) ──
+  const SRC5 = join(HOME, '.si-didy', 'patterns', 'sources', 'maud', 'x');
+  if (runs('maud')) {
+    let docs5 = null;
+    if (!existsSync(join(SRC5, 'data', 'MAUD_train.csv'))) says.push('merger agreement deal points library: the source is not on this machine (' + SRC5 + ')');
+    else { try { docs5 = ML5.load(SRC5); } catch (e) { says.push('merger agreement deal points library: ' + String((e && e.message) || e).slice(0, 200) + ', so nothing runs'); process.exitCode = 1; } }
+    if (docs5) try {
+      const D5 = join(ROOT, 'maud');
+      mkdirSync(join(D5, 'nights'), { recursive: true });
+      const LN = N.nightOf(N.MAUD);
+      const plan = Y.schedule(docs5.map((d) => d.id), L5.SCHEDULE);
+      const state = rd(join(D5, 'state.json'), { cycle: 0, library: [], records: [] });
+      const units = ML5.units(docs5);
+      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null });
+      const rec = { ...r.record, source: { repo: ML5.SOURCE.repo, commit: ML5.SOURCE.commit, files: ML5.SOURCE.files }, why7b: 'library 5 runs on the free tiers only (SEAL 9, N6)', dry: DRY };
+      says.push(LN.line(rec));
+      if (!DRY) {
+        save(join(D5, 'nights', 'cycle-' + state.cycle + '.json'), JSON.stringify(rec, null, 1));
+        if (r.ok) {
+          if (existsSync(join(D5, 'state.json'))) copyFileSync(join(D5, 'state.json'), join(D5, 'state.c' + state.cycle + '.json'));
+          save(join(D5, 'state.json'), JSON.stringify(r.state, null, 1));
+        }
+        appendFileSync(join(D5, 'ledger.jsonl'), JSON.stringify({ at, kind: 'library-night', library: 'maud', cycle: state.cycle, ok: r.ok, promoted: rec.promoted.length, dropped: rec.dropped.length, patterns: rec.patterns, meter: rec.meter && (rec.meter.after || rec.meter), check: (rec.meter && rec.meter.check) || null, exam: rec.exam ? rec.exam.receipt : null, calls7b: 0, callsCredit: 0, asks: [] }) + '\n');
+      }
+    } catch (e) { says.push('merger agreement deal points library: ' + String((e && e.message) || e).slice(0, 200) + ', so nothing was saved'); process.exitCode = 1; }
   }
   if (model) await unload(model);
   if (!ONLY) save(join(ROOT, 'libraries.txt'), says.join('\n') + '\n');

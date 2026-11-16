@@ -64,7 +64,7 @@ details summary { cursor: pointer; color: var(--accent); }
   <p>The readers learn every night, on this laptop: the contract reader from 510 real commercial contracts, the receipt reader from 1,000 real receipts, the message router from 16,163 real customer messages. A new pattern is kept only if it beats a cheap method on documents it has never seen, and then passes a second exam on documents nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your document never calls any model: it only applies the proven patterns.</p>
   <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
   <nav class="toc" aria-label="On this page">
-    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#message">Try it on a message</a><a href="#library4">Requests across ten departments</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#library3">Messages: routing and triage</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
+    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#message">Try it on a message</a><a href="#library4">Requests across ten departments</a><a href="#library5">Merger agreement deal points</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#library3">Messages: routing and triage</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
     <a href="#builds">How each pattern was built</a><a href="#wall">The credit wall</a><a href="#blueprint">Blueprint</a><a href="#libraries">The libraries</a><a href="#business">For your business</a><a href="#paper">White paper</a><a href="catalogue/">The catalogue: finding the right pattern fast as a library grows</a>
   </nav>
 </header>
@@ -183,6 +183,25 @@ details summary { cursor: pointer; color: var(--accent); }
   <div id="l4-drops" class="card"></div>
   <h3>Library 4's sealed claims, decided from the records</h3>
   <div class="table-wrap"><table id="l4-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section id="library5" aria-labelledby="library5-h">
+  <h2 id="library5-h">Merger agreement deal points (library 5)</h2>
+  <p>Library 1's contracts ran out of fresh exams (<a href="CLAIMS.md">CLAIMS.md</a>, seal 7), so library 5 reads contracts again on new data: <strong>MAUD</strong>, the Merger Agreement Understanding Dataset by The Atticus Project, the same group that made library 1's data. Lawyers read 152 public merger agreements for the American Bar Association's 2021 deal points study and answered the study's questions about each: what the buyer pays with (cash, stock or both), how the "material adverse effect" clause is drawn, what the target may do while the deal is pending, and so on. Each answer comes with the excerpt it was read from. Library 5 learns, question by question, which words in an excerpt mean which answer, and it answers only when a proven pattern fires (seal 9). Like libraries 3 and 4 it runs on the free proposers only, and every number below is read from its nights' own records.</p>
+  <h3>Try it on an excerpt</h3>
+  <p>Pick a question, paste the clause from a merger agreement that answers it, and press <em>Answer this question</em>. The excerpt in the box is an invented example. It is read by code in your browser; nothing is sent anywhere.</p>
+  <p><label for="dq">Question</label><br><select id="dq" style="max-width:100%"></select></p>
+  <textarea id="ddoc" aria-label="An excerpt from a merger agreement" style="min-height:90px"></textarea>
+  <p><button id="dread">Answer this question</button> <button id="dsample" class="ghost">Bring back the example</button></p>
+  <div class="card" id="danswer" aria-live="polite"></div>
+  <h3>Last night</h3>
+  <div class="card" id="l5-flow"><p class="muted">Loading the night's record…</p></div>
+  <div class="card" id="l5-reader"></div>
+  <div class="table-wrap"><table id="l5-kept"><thead><tr><th>Pattern</th><th>Question</th><th>Answer</th><th>Held-out: right / fired</th><th>Final: right / fired</th></tr></thead><tbody></tbody></table></div>
+  <h3>Why the other proposals were thrown out</h3>
+  <div id="l5-drops" class="card"></div>
+  <h3>Library 5's sealed claims, decided from the records</h3>
+  <div class="table-wrap"><table id="l5-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section id="how" aria-labelledby="how-h">
@@ -362,11 +381,12 @@ details summary { cursor: pointer; color: var(--accent); }
   <details><summary>The data and its licence</summary><p>CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Hendrycks, Burns, Chen, Ball; NeurIPS 2021), licensed CC BY 4.0. 510 contracts from SEC EDGAR, marked up by trained reviewers. The patterns and records here are derived from it and shared under the same terms.</p>
   <p>CORD v2, the Consolidated Receipt Dataset for Post-OCR Parsing, by NAVER CLOVA (Park, Shin, Lee, Lee, Surh, Seo and Lee; Document Intelligence Workshop at NeurIPS 2019), licensed CC BY 4.0. 1,000 Indonesian receipts with every kept word labelled; store and payment details were removed by its makers before publishing. Only the text and labels are read, never the images. The patterns and records here are derived from it and shared under the same terms. Re-run library 2: <code>python -I tools/cord_fetch.py cord.jsonl</code>, then <code>node tools/rederive.mjs CUADv1.json --cord cord.jsonl</code>.</p>
   <p>Banking77 (Casanueva, Temčinas, Gerz, Henderson and Vulić, 2020) and NLU++ (Casanueva, Vulić, Spithourakis and Budzianowski, 2022), by PolyAI, licensed CC BY 4.0, from github.com/PolyAI-LDN/task-specific-datasets at one pinned commit. 13,083 and 3,080 customer messages with their makers' labels. The patterns and records here are derived from them and shared under the same terms. Re-run library 3: <code>node tools/polyai_fetch.mjs polyai</code>, then <code>node tools/rederive.mjs CUADv1.json --polyai polyai</code>.</p>
-  <p>CLINC150 (Stefan Larson, Anish Mahendran, Joseph J. Peper, Christopher Clarke, Andrew Lee, Parker Hill, Jonathan K. Kummerfeld, Kevin Leach, Michael A. Laurenzano, Lingjia Tang and Jason Mars, "An Evaluation Dataset for Intent Classification and Out-of-Scope Prediction", EMNLP-IJCNLP 2019), licensed CC BY 3.0, from github.com/clinc/oos-eval at one pinned commit, each of its three files checked by its hash. The patterns and records in library 4 are derived from it and shared under the same terms. Re-run library 4: <code>node tools/clinc_fetch.mjs clinc150</code>, then <code>node tools/rederive.mjs CUADv1.json --clinc clinc150</code>.</p></details>
+  <p>CLINC150 (Stefan Larson, Anish Mahendran, Joseph J. Peper, Christopher Clarke, Andrew Lee, Parker Hill, Jonathan K. Kummerfeld, Kevin Leach, Michael A. Laurenzano, Lingjia Tang and Jason Mars, "An Evaluation Dataset for Intent Classification and Out-of-Scope Prediction", EMNLP-IJCNLP 2019), licensed CC BY 3.0, from github.com/clinc/oos-eval at one pinned commit, each of its three files checked by its hash. The patterns and records in library 4 are derived from it and shared under the same terms. Re-run library 4: <code>node tools/clinc_fetch.mjs clinc150</code>, then <code>node tools/rederive.mjs CUADv1.json --clinc clinc150</code>.</p>
+  <p>MAUD, the Merger Agreement Understanding Dataset (Steven H. Wang, Antoine Scardigli, Leonard Tang, Wei Chen, Dimitry Levkin, Anya Chen, Spencer Ball, Thomas Woodside, Oliver Zhang and Dan Hendrycks, 2023, arXiv 2301.00876), curated by The Atticus Project and used in the ABA's 2021 Public Target Deal Points Study, licensed CC BY 4.0, from github.com/TheAtticusProject/maud at one pinned commit, its data.zip and three files checked by their hashes. Only the experts' answers on real excerpts are read. The patterns and records in library 5 are derived from it and shared under the same terms. Re-run library 5: fetch data.zip at the commit, unzip its three CSVs, then <code>node tools/rederive.mjs CUADv1.json --maud &lt;that folder&gt;</code>.</p></details>
 </section>
 
 <footer>
-  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · message data Banking77 and NLU++ by PolyAI, CC BY 4.0 · request data CLINC150 by Larson et al. (Clinc), CC BY 3.0 ·<a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
+  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · message data Banking77 and NLU++ by PolyAI, CC BY 4.0 · request data CLINC150 by Larson et al. (Clinc), CC BY 3.0 · merger agreement data MAUD by The Atticus Project, CC BY 4.0 ·<a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
   <p>Powered by the Konomi architecture, created by Thomas Frumkin.</p>
 </footer>
 </main>

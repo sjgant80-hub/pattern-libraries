@@ -30,15 +30,21 @@ jobs:
         run: node tools/polyai_fetch.mjs /tmp/polyai --check d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5
       - name: the pinned CLINC150 files (commit 828f809, CC BY 3.0), each checked by its sha256 (seal 8)
         run: node tools/clinc_fetch.mjs /tmp/clinc150
-      - name: every committed night of every library re-derives byte for byte from the public data (X3, F3, T3, L3), with R0 re-run and the void nights replayed under their old order (seal 4)
-        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl --polyai /tmp/polyai --clinc /tmp/clinc150
+      - name: the pinned MAUD file (The Atticus Project, commit 4640316, CC BY 4.0), checked by hash, its three CSVs unzipped (seal 9)
+        run: |
+          mkdir -p /tmp/maud
+          curl -sSL -o /tmp/maud/data.zip https://raw.githubusercontent.com/TheAtticusProject/maud/4640316078dcd370debb877f350c39a28b181ffe/data.zip
+          echo "75af5a33d038e9254864f043da38072490ffe11e8488d58d0a2dd39c8f554519  /tmp/maud/data.zip" | sha256sum -c -
+          unzip -q -o /tmp/maud/data.zip data/MAUD_train.csv data/MAUD_dev.csv data/MAUD_test.csv -d /tmp/maud
+      - name: every committed night of every library re-derives byte for byte from the public data (X3, F3, T3, L3, M3), with R0 re-run and the void nights replayed under their old order (seal 4)
+        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl --polyai /tmp/polyai --clinc /tmp/clinc150 --maud /tmp/maud
       - name: the catalogue (seal 5) - K1 exact, K2 patterns asked, K3 addresses, K4 shadows, K5 conflicts all re-derive from the pinned Banking77 (timings are not compared)
         run: node tools/catalogue-measure.mjs /tmp/polyai --runs 1 --check
       # Pinned. An unpinned gate is a gate somebody else can change.
       - name: witness - every mutant of every kernel must die, and the committed counts must re-derive
         run: |
           git clone --depth 1 --branch v0.6 https://github.com/sjgant80-hub/witness.git /tmp/witness
-          for n in extract cycle build night oauth value finance triage catalogue csv router clinc; do
+          for n in extract cycle build night oauth value finance triage catalogue csv router clinc maud; do
             node /tmp/witness/witness.mjs mutate "src/$n.mjs" --timeout 60000 --cap 2000 --test node --test "test/$n.test.mjs" > "/tmp/w-$n.json" || true
             node tools/witness-check.mjs "$n" "/tmp/w-$n.json"
           done

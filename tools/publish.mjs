@@ -11,6 +11,7 @@ import C from './cuad.mjs';
 import C2 from './cord.mjs';
 import PA from './polyai.mjs';
 import CL from './clinc.mjs';
+import ML from './maud.mjs';
 
 const HOME = userInfo().homedir;
 const FROM = join(HOME, '.si-didy', 'patterns', 'libraries');
@@ -20,6 +21,7 @@ const src = args[0] && !args[0].startsWith('--') ? args[0] : null;
 const ci = args.indexOf('--cord'), cord = ci >= 0 ? args[ci + 1] : null;
 const pi = args.indexOf('--polyai'), poly = pi >= 0 ? args[pi + 1] : null;
 const li = args.indexOf('--clinc'), clinc = li >= 0 ? args[li + 1] : null;
+const mi = args.indexOf('--maud'), maud = mi >= 0 ? args[mi + 1] : null;
 if (!src) { console.error('usage: publish.mjs <CUADv1.json> [--cord <cord-v2-ground-truth.jsonl>] [--polyai <dir>]'); process.exit(2); }
 
 let creditCalls = 0;
@@ -78,5 +80,13 @@ if (clinc && existsSync(join(FROM, 'clinc', 'state.json'))) {
   const sum = { latest: 'nights/cycle-' + last.cycle + '.json', series: recs4.map((r) => ({ ...point(r), check: r.meter.check || null })), corpus: corpus(CL.load(clinc)) };
   writeFileSync(join(DATA, 'clinc', 'summary.json'), JSON.stringify(sum, null, 1) + '\n');
   console.log('clinc: published ' + recs4.length + ' night(s); latest ' + sum.latest);
+}
+// library 5, merger agreement deal points (seal 9), once it has a night
+if (maud && existsSync(join(FROM, 'maud', 'state.json'))) {
+  const recs5 = copy('maud'), last = recs5[recs5.length - 1];
+  const ag = ML.load(maud), chars = ag.reduce((n, d) => n + d.rows.reduce((m, r) => m + r.text.length, 0), 0);
+  const sum = { latest: 'nights/cycle-' + last.cycle + '.json', series: recs5.map((r) => ({ ...point(r), check: r.meter.check || null })), corpus: { docs: ag.length, answers: ag.reduce((n, d) => n + d.rows.length, 0), chars } };
+  writeFileSync(join(DATA, 'maud', 'summary.json'), JSON.stringify(sum, null, 1) + '\n');
+  console.log('maud: published ' + recs5.length + ' night(s); latest ' + sum.latest);
 }
 if (!existsSync(join(DATA, 'doc', 'summary.json'))) process.exit(1);

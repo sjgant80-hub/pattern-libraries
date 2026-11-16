@@ -6,6 +6,7 @@
 // order, to prove they are kept as they were written; they count toward nothing.
 //   node tools/rederive.mjs <CUADv1.json> [--dir data/doc/nights] [--cord <cord-v2-ground-truth.jsonl>] [--fdir data/finance/nights]
 //     [--polyai <dir>] [--clinc <dir> [--cdir data/clinc/nights]]   (library 4, seal 8: replayed once it has a committed night)
+//     [--maud <dir with data/MAUD_*.csv> [--mdir data/maud/nights]]   (library 5, seal 9: the same)
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,15 +21,18 @@ import T from '../src/triage.mjs';
 import PA from './polyai.mjs';
 import CL from './clinc.mjs';
 import L4 from '../src/clinc.mjs';
+import ML from './maud.mjs';
+import L5 from '../src/maud.mjs';
 import P from '../vendor/patlib/patlib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai', '--clinc', '--cdir'].includes(args[i - 1]));
+const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai', '--clinc', '--cdir', '--maud', '--mdir'].includes(args[i - 1]));
 const DIR = opt('--dir') || fileURLToPath(new URL('../data/doc/nights', import.meta.url));
 const CORD = opt('--cord'), FDIR = opt('--fdir') || fileURLToPath(new URL('../data/finance/nights', import.meta.url));
 const POLY = opt('--polyai');
 const CLINC = opt('--clinc'), CDIR = opt('--cdir') || fileURLToPath(new URL('../data/clinc/nights', import.meta.url));
+const MAUD = opt('--maud'), MDIR = opt('--mdir') || fileURLToPath(new URL('../data/maud/nights', import.meta.url));
 if (!src) { console.error('usage: rederive.mjs <CUADv1.json> [--dir <nights>] [--cord <cord-v2-ground-truth.jsonl>] [--fdir <nights>] [--polyai <dir>]'); process.exit(2); }
 const RUNNER = ['source', 'why7b', 'dry', 'r0'];
 const strip = (r) => { const o = { ...r }; for (const k of RUNNER) delete o[k]; return o; };
@@ -104,6 +108,13 @@ if (CLINC) {
   if (!nightsIn(CDIR).length) console.log('clinc: no committed night yet (' + CDIR + ')');
   else bad += await replay({ id: 'clinc', dir: CDIR, units: CL.units(q), plan: Y.schedule(q.map((d) => d.id), L4.SCHEDULE), run: N.nightOf(N.CLINC), Q: N.CLINC.Y,
     typeOf: L4.DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) });
+}
+if (MAUD) {
+  const q = ML.load(MAUD);   // refuses files that are not the pinned ones
+  const ok = (rec) => rec.source && rec.source.commit === ML.SOURCE.commit && JSON.stringify(rec.source.files) === JSON.stringify(ML.SOURCE.files);
+  if (!nightsIn(MDIR).length) console.log('maud: no committed night yet (' + MDIR + ')');
+  else bad += await replay({ id: 'maud', dir: MDIR, units: ML.units(q), plan: Y.schedule(q.map((d) => d.id), L5.SCHEDULE), run: N.nightOf(N.MAUD), Q: N.MAUD.Y,
+    typeOf: L5.DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) });
 }
 console.log(bad ? bad + ' night(s) did NOT re-derive' : 'every committed night re-derived byte for byte');
 process.exit(bad ? 1 : 0);

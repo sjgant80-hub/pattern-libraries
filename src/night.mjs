@@ -19,6 +19,7 @@ import E from './extract.mjs';
 import F from './finance.mjs';
 import T from './triage.mjs';
 import L4 from './clinc.mjs';
+import L5 from './maud.mjs';
 import Y from './cycle.mjs';
 import B from './build.mjs';
 
@@ -48,6 +49,11 @@ export const TRIAGE = Object.freeze({ NIGHT: TRIAGE_NIGHT, D: T.TRIAGE_DOMAIN, Y
 export const CLINC_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: 'clinc', feed: 'clinc150', prompt: 'prompt-v1', free: 2 });
 export const CLINC = Object.freeze({ NIGHT: CLINC_NIGHT, D: L4.DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(L4.DOMAIN) }), name: 'routing across ten domains', batches: 9,
   check: (lib, units, ids) => L4.routeOn(lib, units, ids) });
+// library 5 (SEAL 9): MAUD's 356 deal-point tasks over 152 merger agreements, the free tiers only (N6); the reader measured
+// whole on its meter (M5)
+export const MAUD_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: 'maud', feed: 'maud', prompt: 'prompt-v1', free: 2 });
+export const MAUD = Object.freeze({ NIGHT: MAUD_NIGHT, D: L5.DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(L5.DOMAIN) }), name: 'merger agreement deal points', batches: 4,
+  check: (lib, units, ids) => L5.readOn(lib, units, ids) });
 
 const countBy = (list, key) => { const o = {}; for (const x of list) { const k = key(x); o[k] = (o[k] || 0) + 1; } return o; };
 
@@ -169,6 +175,7 @@ export function nightOf(L) {
       + (isObj(k) && 'reconciled' in k ? ' · the check: ' + k.reconciled + ' reconciled, ' + k.flagged + ' flagged, ' + k.unchecked + ' unchecked' : '')
       + (isObj(k) && 'routed' in k ? ' · the router: ' + k.routed + ' of ' + k.queries + ' routed, ' + k.right + ' right, ' + k.conflicts + ' with a conflict (the keyword router: ' + k.baseRouted + ' routed, ' + k.baseRight + ' right)' : '')
       + (isObj(k) && 'oosRaised' in k ? ' · out of scope: ' + k.oosRaised + ' raised, ' + k.oosRight + ' right (the cheap baseline: ' + k.baseOosRaised + ' raised, ' + k.baseOosRight + ' right)' : '')
+      + (isObj(k) && 'asked' in k ? ' · the reader: ' + k.answered + ' of ' + k.asked + ' questions answered, ' + k.right + ' right, ' + k.conflicts + ' with a conflict (ctrl-F: ' + k.baseAnswered + ' answered, ' + k.baseRight + ' right)' : '')
       + ' · final exam: ' + (x && x.ok ? x.decision + ' (' + x.right + '/' + x.answered + ' vs the cheap baseline ' + x.baseRight + ')' : 'nothing carried in to examine')
       + ' · 7B ' + arr(rec.replies).length + ' calls · credit tier candidates: ' + (arr(rec.asks).map((a) => a.task).join(', ') || 'none');
   }
@@ -189,4 +196,4 @@ export function replayAsk(record) {
 // library 1, bound: the names every caller already uses
 export const { freeProposals, night, line } = nightOf(DOC);
 
-export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, nightOf, freeProposals, night, replayAsk, line };
+export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, nightOf, freeProposals, night, replayAsk, line };

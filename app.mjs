@@ -8,6 +8,7 @@ import O from './src/oauth.mjs';
 import F from './src/finance.mjs';
 import T from './src/triage.mjs';
 import L4 from './src/clinc.mjs';
+import L5 from './src/maud.mjs';
 import P from './vendor/patlib/patlib.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -299,6 +300,7 @@ async function main() {
     $('l3-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
   }
   await library4();
+  await library5();
 
   // the fresh exam bar
   const S = Y.SCHEDULE, used = dEnded ? Infinity : night ? 2 * (night.cycle + 1) : 0;
@@ -481,6 +483,65 @@ async function library4() {
     ['N5', 'It runs in the same night as libraries 1 to 3, after them, on the free proposers only, within the same 25-minute clock.', '<span class="chip">wired 16 November 2026</span>'],
   ];
   $('l4-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
+}
+
+// library 5 (seal 9): MAUD, 144 deal-point questions over 152 merger agreements; every number from its records
+const DSAMPLE = { q: 'type-of-consideration-answer', text: 'At the Effective Time, each share of Company Common Stock issued and outstanding shall be converted into the right to receive $42.00 in cash, without interest (the "Merger Consideration").' };
+async function library5() {
+  const [sum, st] = await Promise.all([json('data/maud/summary.json'), json('data/maud/state.json')]);
+  const { r: n5, ended } = await realNight('maud', sum);
+  const lib = st && Array.isArray(st.library) ? st.library : [];
+  const series = sum && Array.isArray(sum.series) ? sum.series : [], last = series[series.length - 1] || null;
+  const k = last && last.check ? last.check : null;
+  // the reader: one question at a time
+  const sel = $('dq'), ddoc = $('ddoc');
+  const withPatterns = new Set(lib.map((r) => L5.questionOf(r.then)).filter(Boolean));
+  sel.innerHTML = L5.QUESTIONS.map((q) => '<option value="' + esc(q.id) + '">' + esc(L5.sayQuestion(q.id) + (withPatterns.has(q.id) ? '  (has proven patterns)' : '')) + '</option>').join('');
+  const sample = () => { sel.value = DSAMPLE.q; ddoc.value = DSAMPLE.text; };
+  sample();
+  const readIt = () => {
+    const m = L5.read(ddoc.value, sel.value, lib);
+    $('danswer').innerHTML = '<p><strong>' + esc(L5.sayQuestion(sel.value)) + ':</strong> ' + (m.answer === 'unknown' ? '<span class="unknown">unknown — no proven pattern for this question fired; a lawyer reads it</span>' : esc(L5.say(m.answer)) + ' <span class="muted">(' + texplain(m.rule) + ')</span>') + '</p>'
+      + (m.also.length ? '<p><strong>Also matched:</strong> ' + esc(m.also.map(L5.say).join(', ')) + ' <span class="muted">(a conflict: shown, never hidden)</span></p>' : '')
+      + '<p><strong>ctrl-F for the answers\' own words would say:</strong> ' + (m.cheap === 'unknown' ? '<span class="muted">nothing</span>' : esc(L5.say(m.cheap))) + '</p>'
+      + '<p class="muted">' + esc(lib.length ? 'Read in your browser with ' + lib.length + ' proven pattern' + (lib.length === 1 ? '' : 's') + ' from library 5, across ' + withPatterns.size + ' of the ' + L5.QUESTIONS.length + ' questions.' : 'Library 5 has no proven pattern yet: its first night runs at 03:00 on 17 November 2026.') + '</p>';
+  };
+  $('dread').addEventListener('click', readIt);
+  $('dsample').addEventListener('click', () => { sample(); readIt(); });
+  sel.addEventListener('change', readIt);
+  readIt();
+  if (!n5) {
+    $('l5-flow').innerHTML = '<p>' + esc('No night has run yet. Library 5 was sealed and built on 16 November 2026; its record appears here once its first night is published.') + '</p>';
+    $('l5-reader').innerHTML = '';
+    $('l5-kept').querySelector('tbody').innerHTML = '<tr><td colspan="5" class="muted">nothing kept yet</td></tr>';
+    $('l5-drops').innerHTML = '<p class="muted">no night yet</p>';
+  } else {
+    const r = n5, kept = r.promoted || [];
+    $('l5-flow').innerHTML = (ended ? '<p class="callout">' + esc('No fresh exam left: night ' + ended.cycle + ' found every batch of agreements already used as an exam once. MAUD has 152 agreements, so library 5 grows again only on fresh data. Shown: the last night that had an exam.') + '</p>' : '')
+      + '<p>Night ' + esc(r.cycle) + ' (' + esc(String(r.at).slice(0, 10)) + '): ' + esc((r.proposed ? r.proposed.free : 0) + ' patterns proposed by the free miners, ' + kept.length + ' kept, ' + (r.dropped || []).length + ' dropped, every drop with its reason. The library now holds ' + (r.patterns ?? lib.length) + ' patterns.') + '</p>';
+    $('l5-reader').innerHTML = k ? '<p><strong>On the ' + esc(k.asked.toLocaleString('en-GB')) + ' questions asked of the measuring agreements</strong> (never used to propose or test a pattern):</p><ul>'
+      + '<li>' + esc('The library answered ' + k.answered + ', ' + k.right + ' of them as the lawyers did (' + pct(k.answered ? k.right / k.answered : null) + '), with ' + k.conflicts + ' conflict' + (k.conflicts === 1 ? '' : 's') + '. It left the other ' + (k.asked - k.answered).toLocaleString('en-GB') + ' for a lawyer.') + '</li>'
+      + '<li>' + esc('ctrl-F for the answers\' own words, on the same questions: answered ' + k.baseAnswered + ', ' + k.baseRight + ' as the lawyers did (' + pct(k.baseAnswered ? k.baseRight / k.baseAnswered : null) + ').') + '</li>'
+      + '</ul><p class="muted">"As the lawyers did" means the answer MAUD\'s experts gave for that agreement. The library answers few questions so far, and only where a proven pattern fires; that is the point: an answer it gives can be trusted, and everything else is still a lawyer\'s read.</p>' : '';
+    $('l5-kept').querySelector('tbody').innerHTML = kept.map((p) => { const { words, task } = ruleWords(p.rule); return '<tr><td>' + words.map((w) => '<code>' + esc(w) + '</code>').join(' + ') + '</td><td>' + esc(L5.sayQuestion(L5.questionOf(task))) + '</td><td>' + esc(L5.say(task)) + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td></tr>'; }).join('') || '<tr><td colspan="5" class="muted">nothing kept on this night</td></tr>';
+    const why = {};
+    for (const d of r.dropped || []) { const w = String(d.why).replace(/-?\d[\d.]*/g, '#').replace(/ of [a-z0-9+=>-]+$/, ''); why[w] = (why[w] || 0) + 1; }
+    const ranked = Object.entries(why).sort((a, b) => b[1] - a[1]);
+    $('l5-drops').innerHTML = ranked.length ? '<div class="table-wrap"><table><thead><tr><th>Reason (numbers removed)</th><th>Proposals</th></tr></thead><tbody>' + ranked.map(([w, c]) => '<tr><td>' + esc(w) + '</td><td>' + c + '</td></tr>').join('') + '</tbody></table></div>' : '<p class="muted">nothing dropped</p>';
+  }
+  const x = n5 && n5.exam && n5.exam.receipt;
+  const m1 = !x || !x.ok ? null : x.decision === 'PROMOTE' ? true : x.decision === 'INSUFFICIENT' ? null : false;
+  const m2 = k && k.answered ? k.right / k.answered >= L5.METER_BAR : null;
+  const m5 = k ? ['asked', 'answered', 'right', 'conflicts', 'baseAnswered', 'baseRight'].every((f) => Number.isInteger(k[f])) : null;
+  const rows = [
+    ['M1', 'Each night\'s library beats ctrl-F on that night\'s fresh final exam (signed).', chip(m1, 'HELD', 'FAILED', !n5 ? 'NO NIGHT YET' : x && x.answered === 0 ? 'NOTHING TO EXAMINE YET' : 'INSUFFICIENT') + (x && x.why ? ' ' + esc(x.why) : '')],
+    ['M2', 'Where it answers on the measuring agreements, it is right at least ' + (L5.METER_BAR * 100) + '% of the time.', chip(m2, 'HELD', 'FAILED', !n5 ? 'NO NIGHT YET' : 'NOTHING ANSWERED YET') + (k && k.answered ? ' ' + esc(pct(k.right / k.answered)) : '')],
+    ['M3', 'Every night re-derives byte for byte from the public agreements.', '<span class="chip">re-derived in CI</span>'],
+    ['M4', 'The source carries its licence and credit.', chip(true, 'HELD', 'FAILED') + ' MAUD, The Atticus Project, CC BY 4.0'],
+    ['M5', 'The reader is measured whole every night against ctrl-F (six counts).', chip(m5, 'HELD', 'FAILED', 'NO NIGHT YET')],
+    ['N6', 'It runs in the same night as libraries 1 to 4, after them, on the free proposers only, within the same 25-minute clock.', '<span class="chip">wired 16 November 2026</span>'],
+  ];
+  $('l5-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
 }
 
 function p4row(series) {
