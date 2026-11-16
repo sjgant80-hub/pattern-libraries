@@ -7,6 +7,7 @@ import V from './src/value.mjs';
 import O from './src/oauth.mjs';
 import F from './src/finance.mjs';
 import T from './src/triage.mjs';
+import L4 from './src/clinc.mjs';
 import P from './vendor/patlib/patlib.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -297,6 +298,7 @@ async function main() {
     ];
     $('l3-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
   }
+  await library4();
 
   // the fresh exam bar
   const S = Y.SCHEDULE, used = dEnded ? Infinity : night ? 2 * (night.cycle + 1) : 0;
@@ -422,6 +424,65 @@ async function main() {
 
 // P4 read from a library's nights: coverage never falls, and rises on every night whose pattern count grew. It is a claim
 // over every real night, so while it holds it is HOLDING, never a final HELD
+// library 4 (seal 8): CLINC150, 150 routes in ten domains and the out-of-scope flag; every number from its records
+const CSAMPLE = 'can you tell me how long it will take for my new credit card to arrive';
+async function library4() {
+  const [sum, st] = await Promise.all([json('data/clinc/summary.json'), json('data/clinc/state.json')]);
+  const { r: n4, ended } = await realNight('clinc', sum);
+  const lib = st && Array.isArray(st.library) ? st.library : [];
+  const series = sum && Array.isArray(sum.series) ? sum.series : [], last = series[series.length - 1] || null;
+  const k = last && last.check ? last.check : null;
+  const dep = (task) => { const d = L4.domainOf(task); return d ? d.replace(/_/g, ' ') : ''; };
+  // the reader
+  const cdoc = $('cdoc');
+  cdoc.value = CSAMPLE;
+  const readIt = () => {
+    const m = L4.read(cdoc.value, lib);
+    $('canswer').innerHTML = '<p><strong>Route:</strong> ' + (m.route === 'unknown' ? '<span class="unknown">unknown — no proven routing pattern fired; it goes to a person</span>' : esc(L4.say(m.route)) + ' <span class="muted">(' + esc(dep(m.route)) + ' · ' + texplain(m.rule) + ')</span>') + '</p>'
+      + (m.also.length ? '<p><strong>Also matched:</strong> ' + esc(m.also.map(L4.say).join(', ')) + ' <span class="muted">(a conflict: shown, never hidden)</span></p>' : '')
+      + '<p><strong>Out of scope:</strong> ' + (m.outOfScope ? '<span class="chip bad">NOT OURS</span> ' + texplain(m.outOfScope.rule) : '<span class="muted">not raised by a proven pattern</span>') + '</p>'
+      + '<p><strong>The keyword router would say:</strong> ' + (m.keyword === 'unknown' ? '<span class="muted">nothing, so its cheap guess is "out of scope"</span>' : esc(L4.say(m.keyword))) + '</p>'
+      + '<p class="muted">' + esc(lib.length ? 'Read in your browser with ' + lib.length + ' proven pattern' + (lib.length === 1 ? '' : 's') + ' from library 4.' : 'Library 4 has no proven pattern yet: its first night runs at 03:00 on 17 November 2026, so every request is unknown until then.') + '</p>';
+  };
+  $('cread').addEventListener('click', readIt);
+  $('csample').addEventListener('click', () => { cdoc.value = CSAMPLE; readIt(); });
+  readIt();
+  if (!n4) {
+    $('l4-flow').innerHTML = '<p>' + esc('No night has run yet. Library 4 was sealed and built on 16 November 2026; its first night runs inside the 03:00 night on 17 November, and its record appears here once it is published.') + '</p>';
+    $('l4-router').innerHTML = '';
+    $('l4-kept').querySelector('tbody').innerHTML = '<tr><td colspan="5" class="muted">nothing kept yet</td></tr>';
+    $('l4-drops').innerHTML = '<p class="muted">no night yet</p>';
+  } else {
+    const r = n4, kept = r.promoted || [];
+    $('l4-flow').innerHTML = (ended ? '<p class="callout">' + esc('No fresh exam left: night ' + ended.cycle + ' found every batch already used as an exam once. Shown: the last night that had one.') + '</p>' : '')
+      + '<p>Night ' + esc(r.cycle) + ' (' + esc(String(r.at).slice(0, 10)) + '): ' + esc((r.proposed ? r.proposed.free : 0) + ' patterns proposed by the free miners, ' + kept.length + ' kept, ' + (r.dropped || []).length + ' dropped, every drop with its reason. The library now holds ' + (r.patterns ?? lib.length) + ' patterns.') + '</p>';
+    $('l4-router').innerHTML = k ? '<p><strong>On the ' + esc(k.queries.toLocaleString('en-GB')) + ' measuring requests</strong> (never used to propose or test a pattern):</p><ul>'
+      + '<li>' + esc('The router sent ' + k.routed + ' to a team, ' + k.right + ' of them the right one (' + pct(k.routed ? k.right / k.routed : null) + '), with ' + k.conflicts + ' conflict' + (k.conflicts === 1 ? '' : 's') + '. It left the other ' + (k.queries - k.routed) + ' for a person.') + '</li>'
+      + '<li>' + esc('The keyword router, on the same requests: sent ' + k.baseRouted + ', ' + k.baseRight + ' right (' + pct(k.baseRouted ? k.baseRight / k.baseRouted : null) + ').') + '</li>'
+      + ('oosRaised' in k ? '<li>' + esc('Out of scope: the library raised it on ' + k.oosRaised + ', ' + k.oosRight + ' of them truly out of scope' + (k.oosRaised ? ' (' + pct(k.oosRight / k.oosRaised) + ')' : '') + '. The cheap guess ("the keyword router found no team") raised it on ' + k.baseOosRaised + ', right on ' + k.baseOosRight + (k.baseOosRaised ? ' (' + pct(k.baseOosRight / k.baseOosRaised) + ')' : '') + '.') + '</li>' : '')
+      + '</ul><p class="muted">"Right" means the team the dataset\'s makers labelled the request with. The router answers only where a proven pattern fires; everything else goes to a person, which is why it sends fewer than the keyword router and gets far more of them right.</p>' : '';
+    $('l4-kept').querySelector('tbody').innerHTML = kept.map((p) => { const { words, task } = ruleWords(p.rule); return '<tr><td>' + words.map((w) => '<code>' + esc(w) + '</code>').join(' + ') + '</td><td>' + esc(L4.say(task)) + '</td><td>' + esc(dep(task)) + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td></tr>'; }).join('') || '<tr><td colspan="5" class="muted">nothing kept on this night</td></tr>';
+    const why = {};
+    for (const d of r.dropped || []) { const w = String(d.why).replace(/-?\d[\d.]*/g, '#').replace(/ of [a-z0-9+=>-]+$/, ''); why[w] = (why[w] || 0) + 1; }
+    const ranked = Object.entries(why).sort((a, b) => b[1] - a[1]);
+    $('l4-drops').innerHTML = ranked.length ? '<div class="table-wrap"><table><thead><tr><th>Reason (numbers removed)</th><th>Proposals</th></tr></thead><tbody>' + ranked.map(([w, c]) => '<tr><td>' + esc(w) + '</td><td>' + c + '</td></tr>').join('') + '</tbody></table></div>' : '<p class="muted">nothing dropped</p>';
+  }
+  // the sealed claims
+  const x = n4 && n4.exam && n4.exam.receipt;
+  const l1 = !x || !x.ok ? null : x.decision === 'PROMOTE' ? true : x.decision === 'INSUFFICIENT' ? null : false;
+  const l2r = k && k.routed ? k.right / k.routed >= L4.METER_BAR : null, l2o = k && k.oosRaised ? k.oosRight / k.oosRaised >= L4.METER_BAR : null;
+  const l5 = k ? ['queries', 'routed', 'right', 'conflicts', 'baseRouted', 'baseRight', 'oosRaised', 'oosRight', 'baseOosRaised', 'baseOosRight'].every((f) => Number.isInteger(k[f])) : null;
+  const rows = [
+    ['L1', 'Each night\'s library beats the cheap method on that night\'s fresh final exam (signed).', chip(l1, 'HELD', 'FAILED', !n4 ? 'NO NIGHT YET' : x && x.answered === 0 ? 'NOTHING TO EXAMINE YET' : 'INSUFFICIENT') + (x && x.why ? ' ' + esc(x.why) : '')],
+    ['L2', 'Where it answers on the measuring requests, it is right at least ' + (L4.METER_BAR * 100) + '% of the time: when it routes, and when it says out of scope.', 'routing ' + chip(l2r, 'HELD', 'FAILED', !n4 ? 'NO NIGHT YET' : 'NOTHING ROUTED YET') + (k && k.routed ? ' ' + esc(pct(k.right / k.routed)) : '') + ' · out of scope ' + chip(l2o, 'HELD', 'FAILED', !n4 ? 'NO NIGHT YET' : 'NOTHING RAISED YET') + (k && k.oosRaised ? ' ' + esc(pct(k.oosRight / k.oosRaised)) : '')],
+    ['L3', 'Every night re-derives byte for byte from the public requests.', '<span class="chip">re-derived in CI</span>'],
+    ['L4', 'The source carries its licence and credit.', chip(true, 'HELD', 'FAILED') + ' CLINC150, Larson et al. 2019, CC BY 3.0'],
+    ['L5', 'The router and the out-of-scope flag are measured whole every night against their cheap methods (ten counts).', chip(l5, 'HELD', 'FAILED', 'NO NIGHT YET')],
+    ['N5', 'It runs in the same night as libraries 1 to 3, after them, on the free proposers only, within the same 25-minute clock.', '<span class="chip">wired 16 November 2026</span>'],
+  ];
+  $('l4-claims').querySelector('tbody').innerHTML = rows.map((r) => '<tr><td><strong>' + r[0] + '</strong></td><td>' + esc(r[1]) + '</td><td>' + r[2] + '</td></tr>').join('');
+}
+
 function p4row(series) {
   const s = Array.isArray(series) ? series : [];
   if (s.length < 2) return chip(null, '', '', 'PENDING') + ' ' + esc(s.length + ' night(s) measured; decided on the nights after the first');

@@ -31,8 +31,8 @@
   {
    "name": "night",
    "file": "src/night.mjs",
-   "total": 44,
-   "killed": 44,
+   "total": 45,
+   "killed": 45,
    "ignored": 0,
    "clean": true,
    "capped": false
@@ -87,6 +87,24 @@
    "file": "src/csv.mjs",
    "total": 11,
    "killed": 11,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "router",
+   "file": "src/router.mjs",
+   "total": 46,
+   "killed": 46,
+   "ignored": 0,
+   "clean": true,
+   "capped": false
+  },
+  {
+   "name": "clinc",
+   "file": "src/clinc.mjs",
+   "total": 2,
+   "killed": 2,
    "ignored": 0,
    "clean": true,
    "capped": false

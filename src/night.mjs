@@ -18,6 +18,7 @@ import P from '../vendor/patlib/patlib.mjs';
 import E from './extract.mjs';
 import F from './finance.mjs';
 import T from './triage.mjs';
+import L4 from './clinc.mjs';
 import Y from './cycle.mjs';
 import B from './build.mjs';
 
@@ -42,6 +43,11 @@ export const TRIAGE_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredi
 export const ROUTE = Object.freeze({ NIGHT: ROUTE_NIGHT, D: T.ROUTE_DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(T.ROUTE_DOMAIN) }), name: 'routing', batches: 9,
   check: (lib, units, ids) => T.routeOn(lib, units, ids) });
 export const TRIAGE = Object.freeze({ NIGHT: TRIAGE_NIGHT, D: T.TRIAGE_DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(T.TRIAGE_DOMAIN) }), name: 'triage', batches: 4 });
+// library 4 (SEAL 8): CLINC150's 150 routes and its out-of-scope flag, one night library, the free tiers only (N5); the
+// router and the flag measured whole on its meter (L5)
+export const CLINC_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: 'clinc', feed: 'clinc150', prompt: 'prompt-v1', free: 2 });
+export const CLINC = Object.freeze({ NIGHT: CLINC_NIGHT, D: L4.DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(L4.DOMAIN) }), name: 'routing across ten domains', batches: 9,
+  check: (lib, units, ids) => L4.routeOn(lib, units, ids) });
 
 const countBy = (list, key) => { const o = {}; for (const x of list) { const k = key(x); o[k] = (o[k] || 0) + 1; } return o; };
 
@@ -162,6 +168,7 @@ export function nightOf(L) {
       + ' · coverage on the meter ' + pct(m.before && m.before.coverage) + ' → ' + pct(m.after && m.after.coverage) + ', right ' + pct(m.after && m.after.precision) + ' when it answers'
       + (isObj(k) && 'reconciled' in k ? ' · the check: ' + k.reconciled + ' reconciled, ' + k.flagged + ' flagged, ' + k.unchecked + ' unchecked' : '')
       + (isObj(k) && 'routed' in k ? ' · the router: ' + k.routed + ' of ' + k.queries + ' routed, ' + k.right + ' right, ' + k.conflicts + ' with a conflict (the keyword router: ' + k.baseRouted + ' routed, ' + k.baseRight + ' right)' : '')
+      + (isObj(k) && 'oosRaised' in k ? ' · out of scope: ' + k.oosRaised + ' raised, ' + k.oosRight + ' right (the cheap baseline: ' + k.baseOosRaised + ' raised, ' + k.baseOosRight + ' right)' : '')
       + ' · final exam: ' + (x && x.ok ? x.decision + ' (' + x.right + '/' + x.answered + ' vs the cheap baseline ' + x.baseRight + ')' : 'nothing carried in to examine')
       + ' · 7B ' + arr(rec.replies).length + ' calls · credit tier candidates: ' + (arr(rec.asks).map((a) => a.task).join(', ') || 'none');
   }
@@ -182,4 +189,4 @@ export function replayAsk(record) {
 // library 1, bound: the names every caller already uses
 export const { freeProposals, night, line } = nightOf(DOC);
 
-export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, nightOf, freeProposals, night, replayAsk, line };
+export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, nightOf, freeProposals, night, replayAsk, line };

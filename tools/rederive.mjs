@@ -5,6 +5,7 @@
 // all 1,000 receipts. Each library's void/ nights (seal 4: made under the FNV-1a order) are replayed too, under that old
 // order, to prove they are kept as they were written; they count toward nothing.
 //   node tools/rederive.mjs <CUADv1.json> [--dir data/doc/nights] [--cord <cord-v2-ground-truth.jsonl>] [--fdir data/finance/nights]
+//     [--polyai <dir>] [--clinc <dir> [--cdir data/clinc/nights]]   (library 4, seal 8: replayed once it has a committed night)
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -17,14 +18,17 @@ import E from '../src/extract.mjs';
 import F from '../src/finance.mjs';
 import T from '../src/triage.mjs';
 import PA from './polyai.mjs';
+import CL from './clinc.mjs';
+import L4 from '../src/clinc.mjs';
 import P from '../vendor/patlib/patlib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai'].includes(args[i - 1]));
+const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai', '--clinc', '--cdir'].includes(args[i - 1]));
 const DIR = opt('--dir') || fileURLToPath(new URL('../data/doc/nights', import.meta.url));
 const CORD = opt('--cord'), FDIR = opt('--fdir') || fileURLToPath(new URL('../data/finance/nights', import.meta.url));
 const POLY = opt('--polyai');
+const CLINC = opt('--clinc'), CDIR = opt('--cdir') || fileURLToPath(new URL('../data/clinc/nights', import.meta.url));
 if (!src) { console.error('usage: rederive.mjs <CUADv1.json> [--dir <nights>] [--cord <cord-v2-ground-truth.jsonl>] [--fdir <nights>] [--polyai <dir>]'); process.exit(2); }
 const RUNNER = ['source', 'why7b', 'dry', 'r0'];
 const strip = (r) => { const o = { ...r }; for (const k of RUNNER) delete o[k]; return o; };
@@ -93,6 +97,13 @@ if (POLY) {
     run: N.nightOf(N.ROUTE), Q: N.ROUTE.Y, typeOf: T.ROUTE_DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) }, Y.schedule(q.routes.map((d) => d.id), { ...T.ROUTE_SCHEDULE, hash: 'fnv' }));
   bad += await voidToo({ id: 'triage', dir: fileURLToPath(new URL('../data/triage/nights', import.meta.url)), units: PA.triageUnits(q.triage), plan: Y.schedule(q.triage.map((d) => d.id), T.TRIAGE_SCHEDULE),
     run: N.nightOf(N.TRIAGE), Q: N.TRIAGE.Y, typeOf: T.TRIAGE_DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) }, Y.schedule(q.triage.map((d) => d.id), { ...T.TRIAGE_SCHEDULE, hash: 'fnv' }));
+}
+if (CLINC) {
+  const q = CL.load(CLINC);   // refuses files that are not the pinned ones
+  const ok = (rec) => rec.source && rec.source.commit === CL.SOURCE.commit && JSON.stringify(rec.source.files) === JSON.stringify(CL.SOURCE.files);
+  if (!nightsIn(CDIR).length) console.log('clinc: no committed night yet (' + CDIR + ')');
+  else bad += await replay({ id: 'clinc', dir: CDIR, units: CL.units(q), plan: Y.schedule(q.map((d) => d.id), L4.SCHEDULE), run: N.nightOf(N.CLINC), Q: N.CLINC.Y,
+    typeOf: L4.DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) });
 }
 console.log(bad ? bad + ' night(s) did NOT re-derive' : 'every committed night re-derived byte for byte');
 process.exit(bad ? 1 : 0);

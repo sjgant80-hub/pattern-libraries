@@ -606,3 +606,9 @@ nights). No pattern was proposed or gated to choose it.
   and the morning block carries its line.
 
 Library 4 is reported **landed** only under seal 1's definition. Until then it is **running** or **not landed**.
+
+**Seal 8, note (2026-11-16, after a dry run and before any night of library 4 was recorded):** two intent names, `w2`
+and `no`, have no tokens under the law's tokeniser, so "the query holds every token of the route's own name" was true of
+every query, and the keyword router sent every query to one of them. A route whose name has no tokens is never chosen by
+the keyword router. This changes only the cheap baseline's reading of an empty name, in the direction that makes the
+baseline route fewer queries and leaves more for out-of-scope; no pattern was kept or published under the old reading.

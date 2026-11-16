@@ -7,8 +7,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
 const ROOT = new URL('../', import.meta.url);
-// the whole of CLAIMS.md as sealed: seals 1 to 7
-const SEALED_WHOLE = '76110f01944233d784e374e69f070484fa8dd9379f4f11bd693a9fb549673ee2';
+// the whole of CLAIMS.md as sealed: seals 1 to 8, and seal 8's note
+const SEALED_WHOLE = '92523bf2c67cd6290e309a1f71d14e245c53e61449b01b8eceffda8bdc5b37a7';
 const read = (p) => readFileSync(new URL(p, ROOT), 'utf8');
 const html = read('index.html'), app = read('app.mjs');
 // the words a reader sees: no style, no script, no tags (so an SVG coordinate like x="810" is not a typed number)
@@ -31,6 +31,10 @@ test('SEAL 1 is the claims as sealed, unchanged; SEAL 2 and SEAL 3 follow it, un
   // seal 7 (the receipt library's merged last night, 3a5496c) was appended after the first 38,756 bytes
   assert.equal(sha(buf.subarray(0, 38756)), '382c175b98e6b8020f2368552d09987e29f03d805ec4869aa05e7ea4c075b1aa');
   assert.match(buf.subarray(38756, 38900).toString('utf8'), /^\n---\n\n# SEAL 7 · the receipt library's last night/);
+  // seal 8 (library 4, CLINC150, 4067bff) was appended after the first 42,834 bytes, then its note before any night
+  assert.equal(sha(buf.subarray(0, 42834)), '76110f01944233d784e374e69f070484fa8dd9379f4f11bd693a9fb549673ee2');
+  assert.match(buf.subarray(42834, 42990).toString('utf8'), /^\n---\n\n# SEAL 8 · library 4, ROUTING ACROSS TEN DOMAINS/);
+  assert.match(buf.toString('utf8'), /\*\*Seal 8, note \(2026-11-16, after a dry run and before any night of library 4 was recorded\):\*\*/);
   assert.equal(sha(buf), SEALED_WHOLE);
   assert.match(buf.subarray(10552, 10700).toString('utf8'), /^\n---\n\n# SEAL 2 · library 2, FINANCE/);
   assert.match(buf.subarray(20871, 21000).toString('utf8'), /^\n---\n\n# SEAL 3 · library 3, TRIAGE AND ROUTING/);

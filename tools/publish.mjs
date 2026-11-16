@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import C from './cuad.mjs';
 import C2 from './cord.mjs';
 import PA from './polyai.mjs';
+import CL from './clinc.mjs';
 
 const HOME = userInfo().homedir;
 const FROM = join(HOME, '.si-didy', 'patterns', 'libraries');
@@ -18,6 +19,7 @@ const args = process.argv.slice(2);
 const src = args[0] && !args[0].startsWith('--') ? args[0] : null;
 const ci = args.indexOf('--cord'), cord = ci >= 0 ? args[ci + 1] : null;
 const pi = args.indexOf('--polyai'), poly = pi >= 0 ? args[pi + 1] : null;
+const li = args.indexOf('--clinc'), clinc = li >= 0 ? args[li + 1] : null;
 if (!src) { console.error('usage: publish.mjs <CUADv1.json> [--cord <cord-v2-ground-truth.jsonl>] [--polyai <dir>]'); process.exit(2); }
 
 let creditCalls = 0;
@@ -69,5 +71,12 @@ if (poly) {
     writeFileSync(join(DATA, id, 'summary.json'), JSON.stringify(sum, null, 1) + '\n');
     console.log(id + ': published ' + recs3.length + ' night(s); latest ' + sum.latest + '; ' + sum.void.length + ' void');
   }
+}
+// library 4, routing across ten domains with out-of-scope (seal 8), once it has a night
+if (clinc && existsSync(join(FROM, 'clinc', 'state.json'))) {
+  const recs4 = copy('clinc'), last = recs4[recs4.length - 1];
+  const sum = { latest: 'nights/cycle-' + last.cycle + '.json', series: recs4.map((r) => ({ ...point(r), check: r.meter.check || null })), corpus: corpus(CL.load(clinc)) };
+  writeFileSync(join(DATA, 'clinc', 'summary.json'), JSON.stringify(sum, null, 1) + '\n');
+  console.log('clinc: published ' + recs4.length + ' night(s); latest ' + sum.latest);
 }
 if (!existsSync(join(DATA, 'doc', 'summary.json'))) process.exit(1);

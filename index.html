@@ -64,7 +64,7 @@ details summary { cursor: pointer; color: var(--accent); }
   <p>The readers learn every night, on this laptop: the contract reader from 510 real commercial contracts, the receipt reader from 1,000 real receipts, the message router from 16,163 real customer messages. A new pattern is kept only if it beats a cheap method on documents it has never seen, and then passes a second exam on documents nobody has looked at. Every other proposed pattern is thrown away, and the reason is written down. Reading your document never calls any model: it only applies the proven patterns.</p>
   <div class="chips" id="chips"><span class="chip wait">reading the records…</span></div>
   <nav class="toc" aria-label="On this page">
-    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#message">Try it on a message</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#library3">Messages: routing and triage</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
+    <a href="#try">Try it</a><a href="#receipt">Try it on a receipt</a><a href="#message">Try it on a message</a><a href="#library4">Requests across ten departments</a><a href="#start">Start here</a><a href="#night">Last night, step by step</a><a href="#finance">Receipts: last night and the check</a><a href="#library3">Messages: routing and triage</a><a href="#how">How it works</a><a href="#exam">The fresh exam</a>
     <a href="#builds">How each pattern was built</a><a href="#wall">The credit wall</a><a href="#blueprint">Blueprint</a><a href="#libraries">The libraries</a><a href="#business">For your business</a><a href="#paper">White paper</a><a href="catalogue/">The catalogue: finding the right pattern fast as a library grows</a>
   </nav>
 </header>
@@ -165,6 +165,24 @@ details summary { cursor: pointer; color: var(--accent); }
   <div class="table-wrap"><table id="l3-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
   <h3>Nights kept but not counted (seal 4)</h3>
   <div class="card" id="l3-void"></div>
+</section>
+
+<section id="library4" aria-labelledby="library4-h">
+  <h2 id="library4-h">Requests across ten departments, with "not ours" (library 4)</h2>
+  <p>Library 3's routing ran out of fresh exams (<a href="CLAIMS.md">CLAIMS.md</a>, seal 7), so library 4 grows routing again on new data: <strong>CLINC150</strong>, requests to a general assistant spread over ten domains (banking, credit cards, kitchen and dining, home, auto and commute, travel, utility, work, small talk, and questions about the assistant itself), each labelled with one of 150 intents by its makers. It also holds requests that fit <strong>none</strong> of the 150. That is the question a real inbox asks most: is this ours at all? Library 4 learns a separate <strong>out-of-scope</strong> flag for those, so "not ours, give it to a person" is a proven answer and not a guess. Like library 3 it runs on the free proposers only, and every number below is read from its nights' own records (seal 8).</p>
+  <h3>Try it on a request</h3>
+  <p>The request in the box is an invented example. Replace it with your own and press <em>Route this request</em>. It is read by code in your browser; nothing is sent anywhere.</p>
+  <textarea id="cdoc" aria-label="A request to route" style="min-height:70px"></textarea>
+  <p><button id="cread">Route this request</button> <button id="csample" class="ghost">Bring back the example</button></p>
+  <div class="card" id="canswer" aria-live="polite"></div>
+  <h3>Last night</h3>
+  <div class="card" id="l4-flow"><p class="muted">Loading the night's record…</p></div>
+  <div class="card" id="l4-router"></div>
+  <div class="table-wrap"><table id="l4-kept"><thead><tr><th>Pattern</th><th>Team</th><th>Department</th><th>Held-out: right / fired</th><th>Final: right / fired</th></tr></thead><tbody></tbody></table></div>
+  <h3>Why the other proposals were thrown out</h3>
+  <div id="l4-drops" class="card"></div>
+  <h3>Library 4's sealed claims, decided from the records</h3>
+  <div class="table-wrap"><table id="l4-claims"><thead><tr><th>Claim</th><th>What it says</th><th>Verdict, from the records</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section id="how" aria-labelledby="how-h">
@@ -343,11 +361,12 @@ details summary { cursor: pointer; color: var(--accent); }
   <p><strong>Re-run it.</strong> The repository holds the code, the night records and a tool that re-derives every night byte for byte from the public contracts: <code>node tools/rederive.mjs CUADv1.json</code>. GitHub's own computers do this on every change.</p>
   <details><summary>The data and its licence</summary><p>CUAD v1, the Contract Understanding Atticus Dataset, by The Atticus Project (Hendrycks, Burns, Chen, Ball; NeurIPS 2021), licensed CC BY 4.0. 510 contracts from SEC EDGAR, marked up by trained reviewers. The patterns and records here are derived from it and shared under the same terms.</p>
   <p>CORD v2, the Consolidated Receipt Dataset for Post-OCR Parsing, by NAVER CLOVA (Park, Shin, Lee, Lee, Surh, Seo and Lee; Document Intelligence Workshop at NeurIPS 2019), licensed CC BY 4.0. 1,000 Indonesian receipts with every kept word labelled; store and payment details were removed by its makers before publishing. Only the text and labels are read, never the images. The patterns and records here are derived from it and shared under the same terms. Re-run library 2: <code>python -I tools/cord_fetch.py cord.jsonl</code>, then <code>node tools/rederive.mjs CUADv1.json --cord cord.jsonl</code>.</p>
-  <p>Banking77 (Casanueva, Temčinas, Gerz, Henderson and Vulić, 2020) and NLU++ (Casanueva, Vulić, Spithourakis and Budzianowski, 2022), by PolyAI, licensed CC BY 4.0, from github.com/PolyAI-LDN/task-specific-datasets at one pinned commit. 13,083 and 3,080 customer messages with their makers' labels. The patterns and records here are derived from them and shared under the same terms. Re-run library 3: <code>node tools/polyai_fetch.mjs polyai</code>, then <code>node tools/rederive.mjs CUADv1.json --polyai polyai</code>.</p></details>
+  <p>Banking77 (Casanueva, Temčinas, Gerz, Henderson and Vulić, 2020) and NLU++ (Casanueva, Vulić, Spithourakis and Budzianowski, 2022), by PolyAI, licensed CC BY 4.0, from github.com/PolyAI-LDN/task-specific-datasets at one pinned commit. 13,083 and 3,080 customer messages with their makers' labels. The patterns and records here are derived from them and shared under the same terms. Re-run library 3: <code>node tools/polyai_fetch.mjs polyai</code>, then <code>node tools/rederive.mjs CUADv1.json --polyai polyai</code>.</p>
+  <p>CLINC150 (Stefan Larson, Anish Mahendran, Joseph J. Peper, Christopher Clarke, Andrew Lee, Parker Hill, Jonathan K. Kummerfeld, Kevin Leach, Michael A. Laurenzano, Lingjia Tang and Jason Mars, "An Evaluation Dataset for Intent Classification and Out-of-Scope Prediction", EMNLP-IJCNLP 2019), licensed CC BY 3.0, from github.com/clinc/oos-eval at one pinned commit, each of its three files checked by its hash. The patterns and records in library 4 are derived from it and shared under the same terms. Re-run library 4: <code>node tools/clinc_fetch.mjs clinc150</code>, then <code>node tools/rederive.mjs CUADv1.json --clinc clinc150</code>.</p></details>
 </section>
 
 <footer>
-  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · message data Banking77 and NLU++ by PolyAI, CC BY 4.0 ·<a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
+  <p>Built by Kar for AI Native Solutions · code MIT · contract data CUAD v1 by The Atticus Project, CC BY 4.0 · receipt data CORD v2 by NAVER CLOVA, CC BY 4.0 · message data Banking77 and NLU++ by PolyAI, CC BY 4.0 · request data CLINC150 by Larson et al. (Clinc), CC BY 3.0 ·<a href="https://github.com/sjgant80-hub/pattern-libraries">the repository</a> · <a href="CLAIMS.md">the sealed claims</a></p>
   <p>Powered by the Konomi architecture, created by Thomas Frumkin.</p>
 </footer>
 </main>

@@ -8,9 +8,10 @@
 //   library 1, document extraction: CUAD v1 (The Atticus Project, CC BY 4.0), its data.zip pinned by sha256
 //   library 2, receipt reading (finance): CORD v2 (NAVER CLOVA, CC BY 4.0), its derived file pinned by sha256
 //   library 3, triage and routing: Banking77 + NLU++ (PolyAI, CC BY 4.0), its files pinned by a manifest sha256
+//   library 4, routing across ten domains with out-of-scope: CLINC150 (Larson et al. 2019, CC BY 3.0), three files pinned (SEAL 8)
 // All share one clock (25 minutes); libraries 1 and 2 share N1's six local-7B calls, three each (N3); library 3 runs its
-// two parts (route, triage) on the free tiers only (N4). --dry computes and prints, and writes nothing.
-// --only=<ids> (comma-separated: doc, finance, route, triage) runs only those (a build-time night 0 must not spend
+// two parts (route, triage) on the free tiers only (N4), and library 4 (clinc) the same (N5). --dry computes and prints, and writes nothing.
+// --only=<ids> (comma-separated: doc, finance, route, triage, clinc) runs only those (a build-time night 0 must not spend
 // another library's night).
 import { readFileSync, writeFileSync, appendFileSync, mkdirSync, renameSync, existsSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -36,6 +37,7 @@ const imp = (rel) => import(pathToFileURL(join(REPO, rel)).href).then((m) => m.d
 
 async function main() {
   const [Y, N, C, B, C2, F, PA, T] = await Promise.all([imp('src/cycle.mjs'), imp('src/night.mjs'), imp('tools/cuad.mjs'), imp('src/build.mjs'), imp('tools/cord.mjs'), imp('src/finance.mjs'), imp('tools/polyai.mjs'), imp('src/triage.mjs')]);
+  const [CL4, L4] = await Promise.all([imp('tools/clinc.mjs'), imp('src/clinc.mjs')]);
   const at = new Date().toISOString();
   const deadline = Date.now() + N.NIGHT.clockMinutes * 60000;   // one clock for both libraries
   let model = null, picked = false, why7b = NO7B ? 'the local 7B was not asked: ' + String(process.env.PL_NO7B_WHY || '--no-7b was given').slice(0, 200) : '';
@@ -147,6 +149,34 @@ async function main() {
       }
       appendFileSync(join(D3, 'ledger.jsonl'), JSON.stringify({ at, kind: 'library-night', library: id, cycle: state.cycle, ok: r.ok, promoted: rec.promoted.length, dropped: rec.dropped.length, patterns: rec.patterns, meter: rec.meter && (rec.meter.after || rec.meter), check: (rec.meter && rec.meter.check) || null, exam: rec.exam ? rec.exam.receipt : null, calls7b: 0, callsCredit: 0, asks: [] }) + '\n');
     }
+  }
+  // ── library 4, routing across ten domains with out-of-scope (CLINC150): one night library, the free tiers only (N5) ──
+  const SRC4 = join(HOME, '.si-didy', 'patterns', 'sources', 'clinc150');
+  if (runs('clinc')) {
+    let docs4 = null;
+    if (!existsSync(join(SRC4, 'data_full.json'))) says.push('routing across ten domains library: the source is not on this machine (' + SRC4 + ')');
+    else { try { docs4 = CL4.load(SRC4); } catch (e) { says.push('routing across ten domains library: ' + String((e && e.message) || e).slice(0, 200) + ', so nothing runs'); process.exitCode = 1; } }
+    if (docs4) try {
+      const D4 = join(ROOT, 'clinc');
+      mkdirSync(join(D4, 'nights'), { recursive: true });
+      const LN = N.nightOf(N.CLINC);
+      const plan = Y.schedule(docs4.map((d) => d.id), L4.SCHEDULE);
+      const state = rd(join(D4, 'state.json'), { cycle: 0, library: [], records: [] });
+      const slices = Y.slicesFor(plan, state.cycle);
+      const need = new Set([...plan.meter, ...(slices ? [...slices.train, ...slices.held, ...slices.final] : [])]);
+      const units = CL4.units(docs4.filter((d) => need.has(d.id)));
+      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null });
+      const rec = { ...r.record, source: { repo: CL4.SOURCE.repo, commit: CL4.SOURCE.commit, files: CL4.SOURCE.files }, why7b: 'library 4 runs on the free tiers only (SEAL 8, N5)', dry: DRY };
+      says.push(LN.line(rec));
+      if (!DRY) {
+        save(join(D4, 'nights', 'cycle-' + state.cycle + '.json'), JSON.stringify(rec, null, 1));
+        if (r.ok) {
+          if (existsSync(join(D4, 'state.json'))) copyFileSync(join(D4, 'state.json'), join(D4, 'state.c' + state.cycle + '.json'));
+          save(join(D4, 'state.json'), JSON.stringify(r.state, null, 1));
+        }
+        appendFileSync(join(D4, 'ledger.jsonl'), JSON.stringify({ at, kind: 'library-night', library: 'clinc', cycle: state.cycle, ok: r.ok, promoted: rec.promoted.length, dropped: rec.dropped.length, patterns: rec.patterns, meter: rec.meter && (rec.meter.after || rec.meter), check: (rec.meter && rec.meter.check) || null, exam: rec.exam ? rec.exam.receipt : null, calls7b: 0, callsCredit: 0, asks: [] }) + '\n');
+      }
+    } catch (e) { says.push('routing across ten domains library: ' + String((e && e.message) || e).slice(0, 200) + ', so nothing was saved'); process.exitCode = 1; }
   }
   if (model) await unload(model);
   if (!ONLY) save(join(ROOT, 'libraries.txt'), says.join('\n') + '\n');
