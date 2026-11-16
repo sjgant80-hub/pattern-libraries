@@ -612,3 +612,69 @@ and `no`, have no tokens under the law's tokeniser, so "the query holds every to
 every query, and the keyword router sent every query to one of them. A route whose name has no tokens is never chosen by
 the keyword router. This changes only the cheap baseline's reading of an empty name, in the direction that makes the
 baseline route fewer queries and leaves more for out-of-scope; no pattern was kept or published under the old reading.
+
+---
+
+# SEAL 9 · library 5, MERGER AGREEMENT DEAL POINTS (MAUD), written before its code (2026-11-16)
+
+Seals 1 to 8 above are unchanged, byte for byte. Library 1's contracts ran out of exams (seal 7); this is the fresh
+contract data, and Simon chose it in chat ("go with CLINC150, MAUD and FATURA"). P1-P5 bind it. A claim that misses its
+bar is kept and published as failed. Nothing here is relaxed after a result is seen.
+
+## Data
+
+**MAUD**, the Merger Agreement Understanding Dataset (Steven H. Wang, Antoine Scardigli, Leonard Tang, Wei Chen, Dimitry
+Levkin, Anya Chen, Spencer Ball, Thomas Woodside, Oliver Zhang and Dan Hendrycks; "MAUD: An Expert-Annotated Legal NLP
+Dataset for Merger Agreement Understanding", 2023, arXiv 2301.00876, the citation in the repository's README),
+curated by **The Atticus Project** and used in the 2021 American Bar Association Public Target Deal Points Study, licence
+**CC BY 4.0** (atticusprojectai.org/maud; the Atticus Project's own dataset card says the same). The file is `data.zip`
+from **github.com/TheAtticusProject/maud** at commit `4640316078dcd370debb877f350c39a28b181ffe`, sha256
+`75af5a33d038e9254864f043da38072490ffe11e8488d58d0a2dd39c8f554519` (32,893,590 bytes). Three files inside it are read
+and pinned by sha256: `data/MAUD_train.csv` `bac9f2d034ad487d5398ee2ac1c876679afea509ba8e7f1092112955c6180ff9`,
+`data/MAUD_dev.csv` `e977f99abcfd43f785272c23bcf08f8208579a6458d9088d2d5ba64c67e4cc1f`, `data/MAUD_test.csv`
+`afcbc88a4f14e8c14056469446e79f610a6eaf3a1425e61729637bd69251e697`. Only rows whose `data_type` is `main` are used:
+20,623 expert answers on 152 merger agreements. The `abridged` and `rare_answers` rows are rewritten or added text, not
+answers on real excerpts, and are never read. MAUD's own train/dev/test split is not used; the split below is by
+agreement. This repository commits no excerpt.
+
+## What it reads
+
+A **document is one merger agreement**. A **question** is one (`question`, `subquestion`) pair, 144 of them. For each,
+the experts chose the agreement's relevant excerpt (`text`) and gave the answer (`label`, with its words in `answer`).
+A **task** is one question with one label, 356 of them: one unit per agreement that has that question, right when the
+experts' label is that label. A unit's words are the law's tokens of the excerpt, all of them. A task's name is its
+answer's words when every expert answer under that label is the same words; otherwise (the list-valued answers, such as
+the kinds of R&W that count as fundamental) it is "yes: <subquestion>" for label 1 and "no: <subquestion>" for label 0.
+
+**The reader** answers a question with the first kept pattern, in library order, among that question's tasks that fires
+on its excerpt; any other answer whose pattern fired is named (a conflict); otherwise unknown.
+
+**The cheap baseline** (fixed here): ctrl-F for the answer's own words. A task's unit is the baseline's when the excerpt
+holds every token of the task's name (a name with no tokens never matches, as seal 8's note). On the meter, the cheap
+answer to a question is the first of its tasks, in label order, that the baseline holds.
+
+**The fresh exam**: the agreements in one fixed order by SHA-256 of salt + agreement name (seal 4), salt `maud:`: METER
+20, seed 32, four batches of 25 (nothing left over), seal 7's merged tail (it changes nothing here: the last night has
+two batches left). **Two nights**: night 0 on batches 0 and 1, night 1 on batches 2 and 3. Chosen from the seed before
+this seal, as seal 7 asks: of the 311 tasks seen on the seed, a task's answer share on the seed puts it on 5 or more
+held-out agreements for **200** at 25 per batch (at 15 per batch, 174 over three nights; at one night of 60, 256 once).
+No pattern was proposed or gated to choose it. MAUD has 152 agreements; after these two nights library 5 needs fresh data.
+
+**The two gates**: the law's gate unchanged, then the field gate with library 1's numbers.
+
+## Claims for library 5
+
+- **M1**: each night, the library as carried in beats the cheap baseline on the cases it answers on that night's fresh
+  final exam, judged and signed by the baseline agreement (rate, higher, minimum improvement 0.10, z 1.96, at least 20
+  answered; fewer is INSUFFICIENT, never a pass). Night 0 cannot decide it.
+- **M2**: it abstains rather than guesses: on the METER, wherever it answers a question, it is right at least **80%** of
+  the time.
+- **M3**: every night re-derives byte for byte from the pinned files and the recorded proposals (CI re-runs it).
+- **M4**: the source carries its licence and attribution: the page and NOTICE credit The Atticus Project and the paper,
+  CC BY 4.0.
+- **M5**: the reader is measured whole on the METER every night: questions asked, answered, right, with a conflict; and
+  ctrl-F's answered and right on the same questions. *Bar:* every night's record holds all six counts, re-derived in CI.
+- **N6**: library 5 runs in the same night process, after library 4, inside the one 25-minute clock, on the **free tiers
+  only** (no local-7B call; so no credit-tier candidate; P2 holds by construction).
+
+Library 5 is reported **landed** only under seal 1's definition. Until then it is **running** or **not landed**.
