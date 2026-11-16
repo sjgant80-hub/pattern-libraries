@@ -1,0 +1,825 @@
+{
+ "cycle": 1,
+ "library": [
+  {
+   "when": [
+    "lol"
+   ],
+   "then": "amusement",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "40eb6244",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 165,
+     "right": 134,
+     "prec": 0.8121212121212121,
+     "basePrec": 0.18787878787878787
+    },
+    "final": {
+     "cover": 174,
+     "right": 149,
+     "prec": 0.8563218390804598,
+     "basePrec": 0.14367816091954022
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 165,
+     "right": 134,
+     "base": 0,
+     "rightRate": 0.812121,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 174,
+     "right": 149,
+     "base": 0,
+     "rightRate": 0.856322,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "confused"
+   ],
+   "then": "confusion",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "7ebefee1",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 10,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "final": {
+     "cover": 12,
+     "right": 10,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 10,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 10,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "curious"
+   ],
+   "then": "curiosity",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "738e7242",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 20,
+     "right": 18,
+     "prec": 0.9,
+     "basePrec": 0.1
+    },
+    "final": {
+     "cover": 21,
+     "right": 20,
+     "prec": 0.9523809523809523,
+     "basePrec": 0.047619047619047616
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 18,
+     "base": 0,
+     "rightRate": 0.9,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 21,
+     "right": 20,
+     "base": 0,
+     "rightRate": 0.952381,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "disgusting"
+   ],
+   "then": "disgust",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "a74830a8",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 13,
+     "right": 12,
+     "prec": 0.9230769230769231,
+     "basePrec": 0.07692307692307693
+    },
+    "final": {
+     "cover": 20,
+     "right": 19,
+     "prec": 0.95,
+     "basePrec": 0.05
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 13,
+     "right": 12,
+     "base": 0,
+     "rightRate": 0.923077,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 19,
+     "base": 0,
+     "rightRate": 0.95,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "excited"
+   ],
+   "then": "excitement",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "a88baf71",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 12,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 17,
+     "right": 14,
+     "prec": 0.8235294117647058,
+     "basePrec": 0.17647058823529413
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 12,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 14,
+     "base": 0,
+     "rightRate": 0.823529,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "scary"
+   ],
+   "then": "fear",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "2aeeb733",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 7,
+     "prec": 0.875,
+     "basePrec": 0.125
+    },
+    "final": {
+     "cover": 7,
+     "right": 6,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 7,
+     "base": 0,
+     "rightRate": 0.875,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 6,
+     "base": 1,
+     "rightRate": 0.857143,
+     "baseRate": 0.142857,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "thank"
+   ],
+   "then": "gratitude",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "bd07b109",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 158,
+     "right": 148,
+     "prec": 0.9367088607594937,
+     "basePrec": 0.06329113924050633
+    },
+    "final": {
+     "cover": 131,
+     "right": 125,
+     "prec": 0.9541984732824428,
+     "basePrec": 0.04580152671755725
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 158,
+     "right": 148,
+     "base": 0,
+     "rightRate": 0.936709,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 131,
+     "right": 125,
+     "base": 0,
+     "rightRate": 0.954198,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "thanks"
+   ],
+   "then": "gratitude",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "d5ff6c31",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 191,
+     "right": 184,
+     "prec": 0.9633507853403142,
+     "basePrec": 0.03664921465968586
+    },
+    "final": {
+     "cover": 174,
+     "right": 170,
+     "prec": 0.9770114942528736,
+     "basePrec": 0.022988505747126436
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 191,
+     "right": 184,
+     "base": 0,
+     "rightRate": 0.963351,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 174,
+     "right": 170,
+     "base": 0,
+     "rightRate": 0.977011,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "sharing",
+    "thanks"
+   ],
+   "then": "gratitude",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-2"
+   },
+   "receipt": "63c39541",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "loved"
+   ],
+   "then": "love",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "f2005ced",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 16,
+     "right": 14,
+     "prec": 0.875,
+     "basePrec": 0.125
+    },
+    "final": {
+     "cover": 21,
+     "right": 18,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 16,
+     "right": 14,
+     "base": 0,
+     "rightRate": 0.875,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 21,
+     "right": 18,
+     "base": 2,
+     "rightRate": 0.857143,
+     "baseRate": 0.095238,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "hopefully"
+   ],
+   "then": "optimism",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "8c578718",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 15,
+     "right": 14,
+     "prec": 0.9333333333333333,
+     "basePrec": 0.06666666666666667
+    },
+    "final": {
+     "cover": 17,
+     "right": 15,
+     "prec": 0.8823529411764706,
+     "basePrec": 0.11764705882352941
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 15,
+     "right": 14,
+     "base": 0,
+     "rightRate": 0.933333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 15,
+     "base": 0,
+     "rightRate": 0.882353,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "sadly"
+   ],
+   "then": "sadness",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "emotions",
+    "trainN": 10263,
+    "recipe": "mine-1"
+   },
+   "receipt": "54e802be",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 11,
+     "right": 10,
+     "prec": 0.9090909090909091,
+     "basePrec": 0.09090909090909091
+    },
+    "final": {
+     "cover": 10,
+     "right": 8,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 10,
+     "base": 0,
+     "rightRate": 0.909091,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  }
+ ],
+ "records": [
+  {
+   "library": "emotions",
+   "task": "amusement",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "lol"
+    ],
+    "then": "amusement"
+   },
+   "receipt": "40eb6244"
+  },
+  {
+   "library": "emotions",
+   "task": "confusion",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "confused"
+    ],
+    "then": "confusion"
+   },
+   "receipt": "7ebefee1"
+  },
+  {
+   "library": "emotions",
+   "task": "curiosity",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "curious"
+    ],
+    "then": "curiosity"
+   },
+   "receipt": "738e7242"
+  },
+  {
+   "library": "emotions",
+   "task": "disgust",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "disgusting"
+    ],
+    "then": "disgust"
+   },
+   "receipt": "a74830a8"
+  },
+  {
+   "library": "emotions",
+   "task": "excitement",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "excited"
+    ],
+    "then": "excitement"
+   },
+   "receipt": "a88baf71"
+  },
+  {
+   "library": "emotions",
+   "task": "fear",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "scary"
+    ],
+    "then": "fear"
+   },
+   "receipt": "2aeeb733"
+  },
+  {
+   "library": "emotions",
+   "task": "gratitude",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "thank"
+    ],
+    "then": "gratitude"
+   },
+   "receipt": "bd07b109"
+  },
+  {
+   "library": "emotions",
+   "task": "gratitude",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "thanks"
+    ],
+    "then": "gratitude"
+   },
+   "receipt": "d5ff6c31"
+  },
+  {
+   "library": "emotions",
+   "task": "gratitude",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "sharing",
+     "thanks"
+    ],
+    "then": "gratitude"
+   },
+   "receipt": "63c39541"
+  },
+  {
+   "library": "emotions",
+   "task": "love",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "loved"
+    ],
+    "then": "love"
+   },
+   "receipt": "f2005ced"
+  },
+  {
+   "library": "emotions",
+   "task": "optimism",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "hopefully"
+    ],
+    "then": "optimism"
+   },
+   "receipt": "8c578718"
+  },
+  {
+   "library": "emotions",
+   "task": "sadness",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "sadly"
+    ],
+    "then": "sadness"
+   },
+   "receipt": "54e802be"
+  }
+ ]
+}

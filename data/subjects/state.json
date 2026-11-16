@@ -1,0 +1,1715 @@
+{
+ "cycle": 1,
+ "library": [
+  {
+   "when": [
+    "group",
+    "statement"
+   ],
+   "then": "abstract-algebra",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-2"
+   },
+   "receipt": "5ad2a036",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 7,
+     "prec": 0.875,
+     "basePrec": 0.125
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 7,
+     "base": 0,
+     "rightRate": 0.875,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "predicate"
+   ],
+   "then": "formal-logic",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "6510c783",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 9,
+     "right": 9,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "counterexample"
+   ],
+   "then": "formal-logic",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "6670bf2c",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 9,
+     "right": 9,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "aggregate"
+   ],
+   "then": "high-school-macroeconomics",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "49aadfe0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 11,
+     "right": 9,
+     "prec": 0.8181818181818182,
+     "basePrec": 0.18181818181818182
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 9,
+     "base": 0,
+     "rightRate": 0.818182,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "frac"
+   ],
+   "then": "high-school-mathematics",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "aec0fee0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "psychology"
+   ],
+   "then": "high-school-psychology",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "bbf6cc71",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "final": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "deviation"
+   ],
+   "then": "high-school-statistics",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "68d58fa8",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 7,
+     "prec": 0.875,
+     "basePrec": 0.125
+    },
+    "final": {
+     "cover": 9,
+     "right": 8,
+     "prec": 0.8888888888888888,
+     "basePrec": 0.1111111111111111
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 7,
+     "base": 0,
+     "rightRate": 0.875,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.888889,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "fallacy"
+   ],
+   "then": "logical-fallacies",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "66358e24",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 14,
+     "right": 14,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 20,
+     "right": 20,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 14,
+     "right": 14,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 20,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "auditor"
+   ],
+   "then": "professional-accounting",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "b80ccb67",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 10,
+     "right": 10,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 10,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "defendant"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "f4a0561e",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 61,
+     "right": 58,
+     "prec": 0.9508196721311475,
+     "basePrec": 0.04918032786885246
+    },
+    "final": {
+     "cover": 55,
+     "right": 54,
+     "prec": 0.9818181818181818,
+     "basePrec": 0.01818181818181818
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 61,
+     "right": 58,
+     "base": 0,
+     "rightRate": 0.95082,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 55,
+     "right": 54,
+     "base": 0,
+     "rightRate": 0.981818,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "sued"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "300cf3ed",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 45,
+     "right": 44,
+     "prec": 0.9777777777777777,
+     "basePrec": 0.022222222222222223
+    },
+    "final": {
+     "cover": 40,
+     "right": 39,
+     "prec": 0.975,
+     "basePrec": 0.025
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 45,
+     "right": 44,
+     "base": 0,
+     "rightRate": 0.977778,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 40,
+     "right": 39,
+     "base": 0,
+     "rightRate": 0.975,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "attorney"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "f6eb17a8",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 39,
+     "right": 37,
+     "prec": 0.9487179487179487,
+     "basePrec": 0.05128205128205128
+    },
+    "final": {
+     "cover": 33,
+     "right": 31,
+     "prec": 0.9393939393939394,
+     "basePrec": 0.06060606060606061
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 39,
+     "right": 37,
+     "base": 0,
+     "rightRate": 0.948718,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 33,
+     "right": 31,
+     "base": 1,
+     "rightRate": 0.939394,
+     "baseRate": 0.030303,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "attorney",
+    "defendant"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-2"
+   },
+   "receipt": "c7566e7e",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 11,
+     "right": 11,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 14,
+     "right": 14,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 11,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 14,
+     "right": 14,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "breach",
+    "sued"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-2"
+   },
+   "receipt": "69eede67",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "trial"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "71cbb07d",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 67,
+     "right": 65,
+     "prec": 0.9701492537313433,
+     "basePrec": 0.029850746268656716
+    },
+    "final": {
+     "cover": 60,
+     "right": 57,
+     "prec": 0.95,
+     "basePrec": 0.05
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 67,
+     "right": 65,
+     "base": 0,
+     "rightRate": 0.970149,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 60,
+     "right": 57,
+     "base": 0,
+     "rightRate": 0.95,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "court"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "4a313aaa",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 85,
+     "right": 68,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 70,
+     "right": 60,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 85,
+     "right": 68,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 70,
+     "right": 60,
+     "base": 0,
+     "rightRate": 0.857143,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "owner"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "5e0ccd22",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 49,
+     "right": 47,
+     "prec": 0.9591836734693877,
+     "basePrec": 0.04081632653061224
+    },
+    "final": {
+     "cover": 41,
+     "right": 38,
+     "prec": 0.926829268292683,
+     "basePrec": 0.07317073170731707
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 49,
+     "right": 47,
+     "base": 0,
+     "rightRate": 0.959184,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 41,
+     "right": 38,
+     "base": 0,
+     "rightRate": 0.926829,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "respirations"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "45a28459",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 15,
+     "right": 15,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 12,
+     "right": 12,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 15,
+     "right": 15,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 12,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "vital"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "59280896",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 12,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 13,
+     "right": 11,
+     "prec": 0.8461538461538461,
+     "basePrec": 0.15384615384615385
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 12,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 13,
+     "right": 11,
+     "base": 0,
+     "rightRate": 0.846154,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "abnormalities"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "10b06860",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 9,
+     "right": 8,
+     "prec": 0.8888888888888888,
+     "basePrec": 0.1111111111111111
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.888889,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "respirations",
+    "vital"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-2"
+   },
+   "receipt": "dfee1c14",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "min"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "057b1689",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 17,
+     "right": 17,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 17,
+     "right": 15,
+     "prec": 0.8823529411764706,
+     "basePrec": 0.11764705882352941
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 17,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 15,
+     "base": 0,
+     "rightRate": 0.882353,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "pulse"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "b8e55588",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 20,
+     "right": 18,
+     "prec": 0.9,
+     "basePrec": 0.1
+    },
+    "final": {
+     "cover": 15,
+     "right": 14,
+     "prec": 0.9333333333333333,
+     "basePrec": 0.06666666666666667
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 18,
+     "base": 0,
+     "rightRate": 0.9,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 15,
+     "right": 14,
+     "base": 0,
+     "rightRate": 0.933333,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "hiv"
+   ],
+   "then": "virology",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "866d10cb",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "virus"
+   ],
+   "then": "virology",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T22:37:20.892Z",
+    "feed": "subjects",
+    "trainN": 2842,
+    "recipe": "mine-1"
+   },
+   "receipt": "eb988778",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 11,
+     "right": 10,
+     "prec": 0.9090909090909091,
+     "basePrec": 0.09090909090909091
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 10,
+     "base": 0,
+     "rightRate": 0.909091,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  }
+ ],
+ "records": [
+  {
+   "library": "subjects",
+   "task": "abstract-algebra",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "group",
+     "statement"
+    ],
+    "then": "abstract-algebra"
+   },
+   "receipt": "5ad2a036"
+  },
+  {
+   "library": "subjects",
+   "task": "formal-logic",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "predicate"
+    ],
+    "then": "formal-logic"
+   },
+   "receipt": "6510c783"
+  },
+  {
+   "library": "subjects",
+   "task": "formal-logic",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "counterexample"
+    ],
+    "then": "formal-logic"
+   },
+   "receipt": "6670bf2c"
+  },
+  {
+   "library": "subjects",
+   "task": "high-school-macroeconomics",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "aggregate"
+    ],
+    "then": "high-school-macroeconomics"
+   },
+   "receipt": "49aadfe0"
+  },
+  {
+   "library": "subjects",
+   "task": "high-school-mathematics",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "frac"
+    ],
+    "then": "high-school-mathematics"
+   },
+   "receipt": "aec0fee0"
+  },
+  {
+   "library": "subjects",
+   "task": "high-school-psychology",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "psychology"
+    ],
+    "then": "high-school-psychology"
+   },
+   "receipt": "bbf6cc71"
+  },
+  {
+   "library": "subjects",
+   "task": "high-school-statistics",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "deviation"
+    ],
+    "then": "high-school-statistics"
+   },
+   "receipt": "68d58fa8"
+  },
+  {
+   "library": "subjects",
+   "task": "logical-fallacies",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "fallacy"
+    ],
+    "then": "logical-fallacies"
+   },
+   "receipt": "66358e24"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-accounting",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "auditor"
+    ],
+    "then": "professional-accounting"
+   },
+   "receipt": "b80ccb67"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "defendant"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "f4a0561e"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "sued"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "300cf3ed"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "attorney"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "f6eb17a8"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "attorney",
+     "defendant"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "c7566e7e"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "breach",
+     "sued"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "69eede67"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "trial"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "71cbb07d"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "court"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "4a313aaa"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "owner"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "5e0ccd22"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "respirations"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "45a28459"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "vital"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "59280896"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "abnormalities"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "10b06860"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "respirations",
+     "vital"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "dfee1c14"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "min"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "057b1689"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "pulse"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "b8e55588"
+  },
+  {
+   "library": "subjects",
+   "task": "virology",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "hiv"
+    ],
+    "then": "virology"
+   },
+   "receipt": "866d10cb"
+  },
+  {
+   "library": "subjects",
+   "task": "virology",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "rule": {
+    "when": [
+     "virus"
+    ],
+    "then": "virology"
+   },
+   "receipt": "eb988778"
+  }
+ ]
+}

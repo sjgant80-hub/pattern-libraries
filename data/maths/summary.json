@@ -1,0 +1,27 @@
+{
+ "latest": "nights/cycle-0.json",
+ "series": [
+  {
+   "cycle": 0,
+   "at": "2026-11-16T22:37:20.892Z",
+   "patterns": 16,
+   "coverage": 0.011143,
+   "precision": 0.987179,
+   "answered": 78,
+   "cases": 7000,
+   "check": {
+    "queries": 1000,
+    "routed": 78,
+    "right": 77,
+    "conflicts": 0,
+    "baseRouted": 7,
+    "baseRight": 5
+   }
+  }
+ ],
+ "corpus": {
+  "docs": 12500,
+  "chars": 2533201,
+  "avgChars": 203
+ }
+}

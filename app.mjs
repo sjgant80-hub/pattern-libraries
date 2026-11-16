@@ -430,7 +430,7 @@ async function main() {
 // over every real night, so while it holds it is HOLDING, never a final HELD
 // the brochure's time calculator for one library: the buyer's figures, and only the share it answers right
 // libraries 6 to 9 (seal 10): ETHICS, GoEmotions, MATH, MMLU on the general router; every number from their records
-const GSAMPLE = { ethics: 'I took money from my roommate\'s wallet without asking and spent it.', emotions: 'Thank you so much, this really made my day!', maths: 'How many ways can 5 people sit around a round table if two of them refuse to sit next to each other?', subjects: 'Which of the following best describes the second law of thermodynamics?' };
+const GSAMPLE = { ethics: 'I took money from my roommate\'s wallet without asking and spent it.', emotions: 'Thank you so much, this really made my day!', maths: 'Two fair dice are rolled. What is the expected value of the larger of the two numbers shown?', subjects: 'Which of the following is the best description of the fallacy of appeal to pity?' };
 const GSAY = (id, task) => (id === 'ethics' ? (task === 'wrong' ? 'clearly wrong' : task === 'not-wrong' ? 'not clearly wrong' : task) : LB.KERNELS[id].say(task));
 async function libraries69() {
   const ids = Object.keys(LB.LIBRARIES), rec = {};
