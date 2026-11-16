@@ -51,15 +51,19 @@ export function schedule(ids, s = SCHEDULE) {
   const meter = order.slice(0, S.meter), seed = order.slice(S.meter, S.meter + S.seed), rest = order.slice(S.meter + S.seed);
   const batches = [];
   for (let i = 0; i + S.batch <= rest.length; i += S.batch) batches.push(rest.slice(i, i + S.batch));
-  return { order, meter, seed, batches, spare: rest.slice(batches.length * S.batch) };
+  return { order, meter, seed, batches, spare: rest.slice(batches.length * S.batch), ...(S.tail === 'merge' ? { tail: 'merge' } : {}) };
 }
 
-/** slicesFor(plan, n) → { cycle, train, held, final } for cycle n, or null when its two batches do not exist */
+/** slicesFor(plan, n) → { cycle, train, held, final } for cycle n, or null when its two batches do not exist.
+ *  A plan with tail 'merge' (seal 7) spends every batch on its last cycle: when no full pair is left after cycle n and at
+ *  least three batches are left, the held-out exam is every batch left but the last, and the final exam is the last. */
 export function slicesFor(plan, n) {
   if (!isObj(plan) || !Number.isInteger(n) || n < 0) return null;
   const b = arr(plan.batches);
   if (2 * n + 1 >= b.length) return null;
-  return { cycle: n, train: [...arr(plan.seed), ...b.slice(0, 2 * n).flat()], held: arr(b[2 * n]), final: arr(b[2 * n + 1]) };
+  const train = [...arr(plan.seed), ...b.slice(0, 2 * n).flat()];
+  if (plan.tail === 'merge' && 2 * n + 3 >= b.length && b.length - 2 * n >= 3) return { cycle: n, train, held: b.slice(2 * n, b.length - 1).map(arr).flat(), final: arr(b[b.length - 1]) };
+  return { cycle: n, train, held: arr(b[2 * n]), final: arr(b[2 * n + 1]) };
 }
 
 /** a unit carries its own verdict from the experts' annotation */

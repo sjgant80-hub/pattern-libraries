@@ -13,8 +13,8 @@
   {
    "name": "cycle",
    "file": "src/cycle.mjs",
-   "total": 69,
-   "killed": 69,
+   "total": 77,
+   "killed": 77,
    "ignored": 0,
    "clean": true,
    "capped": false

@@ -61,6 +61,44 @@ test('slicesFor: cycle n gates on batches 2n and 2n+1, trains on the seed and ev
   assert.deepEqual(Y.slicesFor({ batches: [['x'], ['y']] }, 0), { cycle: 0, train: [], held: ['x'], final: ['y'] });
 });
 
+test('seal 7 · a merge tail spends every batch on the last cycle; every other cycle is as before', () => {
+  const B = (k) => Array.from({ length: k }, (_, i) => ['b' + i]);
+  const odd = { seed: ['s'], batches: B(5), tail: 'merge' };
+  assert.deepEqual(Y.slicesFor(odd, 0), { cycle: 0, train: ['s'], held: ['b0'], final: ['b1'] });
+  assert.deepEqual(Y.slicesFor(odd, 1), { cycle: 1, train: ['s', 'b0', 'b1'], held: ['b2', 'b3'], final: ['b4'] });
+  assert.equal(Y.slicesFor(odd, 2), null);
+  assert.deepEqual(Y.slicesFor({ ...odd, tail: undefined }, 1), { cycle: 1, train: ['s', 'b0', 'b1'], held: ['b2'], final: ['b3'] }, 'no tail: seal 2 as written');
+  assert.deepEqual(Y.slicesFor({ ...odd, tail: 'other' }, 1).held, ['b2'], 'only the word merge merges');
+  const even = { seed: [], batches: B(6), tail: 'merge' }; // the last cycle has exactly two batches left: nothing to merge
+  assert.deepEqual(Y.slicesFor(even, 1), { cycle: 1, train: ['b0', 'b1'], held: ['b2'], final: ['b3'] });
+  assert.deepEqual(Y.slicesFor(even, 2), { cycle: 2, train: ['b0', 'b1', 'b2', 'b3'], held: ['b4'], final: ['b5'] });
+  const seven = { seed: [], batches: B(7), tail: 'merge' };
+  assert.deepEqual(Y.slicesFor(seven, 1).held, ['b2'], 'cycle 1 of 7 batches is not the last: cycle 2 still has b4, b5');
+  assert.deepEqual(Y.slicesFor(seven, 2), { cycle: 2, train: ['b0', 'b1', 'b2', 'b3'], held: ['b4', 'b5'], final: ['b6'] });
+  assert.deepEqual(Y.slicesFor({ batches: [['a', 'b'], 'junk', ['c']], tail: 'merge' }, 0), { cycle: 0, train: [], held: ['a', 'b'], final: ['c'] });
+  assert.deepEqual(Y.schedule(['x', 'y'], { meter: 0, seed: 0, batch: 1, salt: 't:', tail: 'merge' }).tail, 'merge');
+  assert.equal('tail' in Y.schedule(['x', 'y'], { meter: 0, seed: 0, batch: 1, salt: 't:' }), false);
+});
+
+test('seal 7 · on the real schedules: receipts cycle 6 is held 80 / final 40 on batches 12-14; contracts, routing, triage unchanged', async () => {
+  const F = (await import('../src/finance.mjs')).default, T = (await import('../src/triage.mjs')).default;
+  const ids = (p, k) => Array.from({ length: k }, (_, i) => p + String(i).padStart(5, '0'));
+  const fin = Y.schedule(ids('train-', 1000), F.SCHEDULE);
+  assert.equal(fin.batches.length, 15);
+  for (let n = 0; n < 6; n++) assert.deepEqual(Y.slicesFor(fin, n), Y.slicesFor({ ...fin, tail: undefined }, n), 'receipts cycle ' + n + ' as before');
+  const c6 = Y.slicesFor(fin, 6);
+  assert.deepEqual([c6.train.length, c6.held.length, c6.final.length], [300 + 12 * 40, 80, 40]);
+  assert.deepEqual(c6.held, [...fin.batches[12], ...fin.batches[13]]);
+  assert.deepEqual(c6.final, fin.batches[14]);
+  assert.equal(new Set([...c6.train, ...c6.held, ...c6.final, ...fin.meter]).size, 1000, 'no receipt in two places');
+  assert.equal(Y.slicesFor(fin, 7), null);
+  for (const [k, S] of [[510, Y.SCHEDULE], [13083, T.ROUTE_SCHEDULE], [3080, T.TRIAGE_SCHEDULE]]) {
+    const p = Y.schedule(ids('d-', k), S);
+    assert.equal('tail' in p, false);
+    for (let n = 0; Y.slicesFor(p, n); n++) assert.equal(Y.slicesFor(p, n).held.length, S.batch);
+  }
+});
+
 test('casesFor: units are the law\'s cases as they are; foreign shapes are converted; junk skipped', () => {
   const { units, ids } = world(2);
   const c = Y.casesFor(units, ids, 'agreement-date', 'held');
