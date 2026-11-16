@@ -1,0 +1,46 @@
+{
+ "kind": "library-night",
+ "v": 1,
+ "library": "triage",
+ "feed": "nlupp",
+ "cycle": 2,
+ "at": "2026-11-16T03:18:34.866Z",
+ "model": null,
+ "free": 2,
+ "exhausted": true,
+ "promoted": [],
+ "dropped": [],
+ "meter": {
+  "cases": 1000,
+  "answered": 2,
+  "right": 2,
+  "baseRight": 0,
+  "withGold": 21,
+  "coverage": 0.002,
+  "precision": 1,
+  "per": {
+   "handoff": {
+    "cases": 500,
+    "answered": 2,
+    "right": 2,
+    "baseRight": 0,
+    "withGold": 9
+   },
+   "lost-stolen": {
+    "cases": 500,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   }
+  }
+ },
+ "patterns": 1,
+ "source": {
+  "repo": "https://github.com/PolyAI-LDN/task-specific-datasets",
+  "commit": "57ec275d8078af65b7731c2a98be812d844a6d6b",
+  "manifest": "d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5"
+ },
+ "why7b": "library 3 runs on the free tiers only (SEAL 3, N4)",
+ "dry": false
+}

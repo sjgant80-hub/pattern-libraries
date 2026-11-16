@@ -12,6 +12,14 @@ import P from './vendor/patlib/patlib.mjs';
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const json = (p) => fetch(p, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+// a library's last REAL night: when the latest record found no fresh exam left, the page shows the night before it and says
+// plainly that the exams ran out (an exhausted night proposes, keeps and drops nothing, so it is not evidence for or against)
+const realNight = async (dir, sum) => {
+  const r = sum && sum.latest ? await json('data/' + dir + '/' + sum.latest) : null;
+  if (!r || !r.exhausted) return { r, ended: null };
+  const p = Number.isInteger(r.cycle) && r.cycle > 0 ? await json('data/' + dir + '/nights/cycle-' + (r.cycle - 1) + '.json') : null;
+  return { r: p && !p.exhausted ? p : null, ended: r };
+};
 const pct = (x) => (typeof x === 'number' ? (x * 100).toFixed(1) + '%' : 'n/a');
 const usd = (c) => '$' + (c / 100).toFixed(2);
 const chip = (ok, yes, no, wait) => (ok === null ? '<span class="chip wait">' + esc(wait || 'PENDING') + '</span>' : ok ? '<span class="chip good">' + esc(yes) + '</span>' : '<span class="chip bad">' + esc(no) + '</span>');
@@ -67,7 +75,7 @@ const checkChip = (c) => '<span class="chip ' + (c.verdict === 'reconciled' ? 'g
 
 async function main() {
   const [summary, state, libs, wit, prices] = await Promise.all([json('data/doc/summary.json'), json('data/doc/state.json'), json('data/libraries.json'), json('data/witness.json'), json('data/prices.json')]);
-  const night = summary && summary.latest ? await json('data/doc/' + summary.latest) : null;
+  const { r: night, ended: dEnded } = await realNight('doc', summary);
   const library = state && Array.isArray(state.library) ? state.library : [];
   const records = state && Array.isArray(state.records) ? state.records : [];
   const series = summary && Array.isArray(summary.series) ? summary.series : [];
@@ -76,7 +84,7 @@ async function main() {
   const clean = kernels.filter((k) => k.killed === k.total && k.ignored === 0);
   // library 2, receipts: its own records
   const [fsum, fstate] = await Promise.all([json('data/finance/summary.json'), json('data/finance/state.json')]);
-  const fnight = fsum && fsum.latest ? await json('data/finance/' + fsum.latest) : null;
+  const { r: fnight, ended: fEnded } = await realNight('finance', fsum);
   const flib = fstate && Array.isArray(fstate.library) ? fstate.library : [];
   const frecords = fstate && Array.isArray(fstate.records) ? fstate.records : [];
   const fseries = fsum && Array.isArray(fsum.series) ? fsum.series : [];
@@ -84,7 +92,7 @@ async function main() {
   const fparts = fsum && Array.isArray(fsum.parts) ? fsum.parts : [];
   // library 3, messages: routing and triage, each its own records
   const [rsum, rstate, tsum, tstate] = await Promise.all([json('data/route/summary.json'), json('data/route/state.json'), json('data/triage/summary.json'), json('data/triage/state.json')]);
-  const [rnight, tnight] = await Promise.all([rsum && rsum.latest ? json('data/route/' + rsum.latest) : null, tsum && tsum.latest ? json('data/triage/' + tsum.latest) : null]);
+  const [{ r: rnight, ended: rEnded }, { r: tnight, ended: tEnded }] = await Promise.all([realNight('route', rsum), realNight('triage', tsum)]);
   const rlib = rstate && Array.isArray(rstate.library) ? rstate.library : [], tlib = tstate && Array.isArray(tstate.library) ? tstate.library : [];
   const rseries = rsum && Array.isArray(rsum.series) ? rsum.series : [], tseries = tsum && Array.isArray(tsum.series) ? tsum.series : [];
   const rlast = rseries[rseries.length - 1] || null, tlast = tseries[tseries.length - 1] || null;
@@ -291,14 +299,17 @@ async function main() {
   }
 
   // the fresh exam bar
-  const S = Y.SCHEDULE, used = night && !night.exhausted ? 2 * (night.cycle + 1) : night && night.exhausted ? Infinity : 0;
+  const S = Y.SCHEDULE, used = dEnded ? Infinity : night ? 2 * (night.cycle + 1) : 0;
   const total = S.meter + S.seed + 15 * S.batch, w = (n) => (n / total) * 860;
   let x = 20, bar = '<svg viewBox="0 0 900 110" role="img" aria-label="The 510 contracts: 60 for measuring, 150 to train from, then 15 exam batches of 20">';
   bar += '<rect class="hot" x="' + x + '" y="20" width="' + w(S.meter) + '" height="36"/><text x="' + (x + w(S.meter) / 2) + '" y="76" text-anchor="middle">' + S.meter + ' measure</text>'; x += w(S.meter);
   bar += '<rect class="box" x="' + x + '" y="20" width="' + w(S.seed) + '" height="36"/><text x="' + (x + w(S.seed) / 2) + '" y="76" text-anchor="middle">' + S.seed + ' train from</text>'; x += w(S.seed);
   for (let b = 0; b < 15; b++) { bar += '<rect class="' + (b < used ? 'hot' : 'box') + '" x="' + x + '" y="20" width="' + (w(S.batch) - 2) + '" height="36"/>'; x += w(S.batch); }
   bar += '<text x="' + (20 + w(S.meter + S.seed) + w(15 * S.batch) / 2) + '" y="76" text-anchor="middle">15 exam batches of ' + S.batch + ' (shaded: used)</text></svg>';
-  $('exam-bar').innerHTML = bar + '<p class="muted">' + (used === Infinity ? 'Every batch has been an exam once.' : Math.min(used, 15) + ' of 15 batches have been an exam; ' + Math.max(0, 15 - used) + ' are still unseen, enough for ' + Math.floor(Math.max(0, 15 - used) / 2) + ' more nights before fresh contracts are needed.') + '</p>';
+  // the exams ran out: said above each library's last real night
+  const endedNote = (e, what) => '<p class="callout"><strong>' + esc('No fresh exam left.') + '</strong> ' + esc('Night ' + e.cycle + ' (' + String(e.at).slice(0, 10) + ') found every batch of ' + what + ' already used as an exam once, so it proposed and kept nothing; an exam is never used twice. The library keeps its ' + e.patterns + ' proven pattern' + (e.patterns === 1 ? '' : 's') + ' and still answers with ' + (e.patterns === 1 ? 'it' : 'them') + '. It grows again only on fresh data (CLAIMS.md, seal 7). Shown below: the last night that had an exam.') + '</p>';
+  for (const [e, id, what] of [[dEnded, 'night-flow', 'contracts'], [fEnded, 'fin-flow', 'receipts'], [rEnded, 'l3r-flow', 'messages'], [tEnded, 'l3t-flow', 'messages']]) if (e && $(id)) $(id).insertAdjacentHTML('afterbegin', endedNote(e, what));
+  $('exam-bar').innerHTML = bar + '<p class="muted">' + (used === Infinity ? 'Every batch has been an exam once.' : Math.min(used, 15) + ' of 15 batches have been an exam; ' + (15 - used === 1 ? '1 is still unseen: too few for another night, which needs two, so fresh contracts are needed.' : Math.max(0, 15 - used) + ' are still unseen, enough for ' + Math.floor(Math.max(0, 15 - used) / 2) + ' more night' + (Math.floor(Math.max(0, 15 - used) / 2) === 1 ? '' : 's') + ' before fresh contracts are needed.')) + '</p>';
 
   // how each was built
   $('recipes').querySelector('tbody').innerHTML = records.map((rc) => '<tr><td>' + esc(say(rc.task)) + '</td><td>' + esc(rc.type) + '</td><td>' + esc(rc.tier === '7b' ? 'local 7B' : rc.tier === 'oauth' ? 'paid tier' : rc.tier === 'recipe' ? 'recipe lookup' : 'free miner') + '</td><td class="mono">' + esc(rc.recipe) + '</td><td>' + esc(rc.tier === 'oauth' ? usd(rc.cost.cents) : rc.cost.calls ? rc.cost.calls + ' local call' + (rc.cost.calls === 1 ? '' : 's') : 'free') + '</td><td>' + esc(rc.cycle) + '</td></tr>').join('') || '<tr><td colspan="6" class="muted">no records yet</td></tr>';

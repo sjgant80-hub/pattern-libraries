@@ -1,5 +1,75 @@
 {
- "cycle": 1,
- "library": [],
- "records": []
+ "cycle": 2,
+ "library": [
+  {
+   "when": [
+    "speak"
+   ],
+   "then": "handoff",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "nlupp",
+    "trainN": 1580,
+    "recipe": "mine-1"
+   },
+   "receipt": "5bd3e578",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.4,
+     "why": ""
+    }
+   }
+  }
+ ],
+ "records": [
+  {
+   "library": "triage",
+   "task": "handoff",
+   "type": "flag",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "speak"
+    ],
+    "then": "handoff"
+   },
+   "receipt": "5bd3e578"
+  }
+ ]
 }

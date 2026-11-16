@@ -1,0 +1,28 @@
+{
+ "at": "2026-11-12T03:23:59.404Z",
+ "kind": "library-teach",
+ "library": "doc",
+ "cycle": 2,
+ "asked": [
+  {
+   "task": "liability-cap",
+   "ok": false,
+   "code": "key",
+   "why": "no sign-in on disk for the official CLI, so the subscription tier cannot run",
+   "seq": 5,
+   "costCents": null,
+   "proposed": 0,
+   "text": ""
+  }
+ ],
+ "proposals": [],
+ "promoted": [],
+ "dropped": [],
+ "patterns": 8,
+ "meter": {
+  "coverage": 0.073684,
+  "precision": 0.833333,
+  "answered": 84,
+  "cases": 1140
+ }
+}

@@ -58,9 +58,13 @@ test('no measured number is typed into the page: they are read from the records'
   for (const id of ['route', 'triage']) {
     const sum = JSON.parse(read('data/' + id + '/summary.json')), n3 = JSON.parse(read('data/' + id + '/' + sum.latest));
     const k = sum.series[sum.series.length - 1].check || {};
-    for (const n of [n3.dropped.length, sum.corpus.chars, sum.corpus.avgChars, n3.proposed.free, k.routed, k.right, k.baseRouted, k.baseRight]) if (n > 20) forms.add(String(n)), forms.add(n.toLocaleString('en-GB'));
+    for (const n of [n3.dropped.length, sum.corpus.chars, sum.corpus.avgChars, n3.proposed && n3.proposed.free, // an exhausted night proposes nothing
+      k.routed, k.right, k.baseRouted, k.baseRight]) if (n > 20) forms.add(String(n)), forms.add(n.toLocaleString('en-GB'));
   }
-  for (const f of forms) assert.equal(visible.includes(f), false, 'the page has "' + f + '" typed in; it must come from the records');
+  // a form is caught as a whole number: '80' inside the bar '80%' or inside '3,080' is not the count 80
+  // (a full stop or comma ends the number unless a digit follows it: "80." at a sentence end is still the count 80)
+  const typed = (f) => new RegExp('(?<!\\d|\\d[.,])' + f.replace(/[.%]/g, (c) => '\\' + c) + (f.endsWith('%') ? '' : '(?![\\d%]|[.,]\\d)')).test(visible);
+  for (const f of forms) assert.equal(typed(f), false, 'the page has "' + f + '" typed in; it must come from the records');
   assert.match(app, /json\('data\/doc\/summary\.json'\)/);
   assert.match(app, /json\('data\/doc\/state\.json'\)/);
   assert.match(app, /json\('data\/witness\.json'\)/);

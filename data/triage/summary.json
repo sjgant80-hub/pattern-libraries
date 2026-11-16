@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-0.json",
+ "latest": "nights/cycle-2.json",
  "series": [
   {
    "cycle": 0,
@@ -8,6 +8,26 @@
    "coverage": 0,
    "precision": null,
    "answered": 0,
+   "cases": 1000,
+   "check": null
+  },
+  {
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "patterns": 1,
+   "coverage": 0.002,
+   "precision": 1,
+   "answered": 2,
+   "cases": 1000,
+   "check": null
+  },
+  {
+   "cycle": 2,
+   "at": "2026-11-16T03:18:34.866Z",
+   "patterns": 1,
+   "coverage": 0.002,
+   "precision": 1,
+   "answered": 2,
    "cases": 1000,
    "check": null
   }

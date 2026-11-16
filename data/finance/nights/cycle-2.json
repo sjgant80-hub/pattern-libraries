@@ -1,0 +1,2017 @@
+{
+ "kind": "library-night",
+ "v": 1,
+ "library": "finance",
+ "feed": "cord-v2",
+ "cycle": 2,
+ "at": "2026-11-13T03:11:24.009Z",
+ "model": "qwen2.5:7b",
+ "free": 2,
+ "slices": {
+  "train": 460,
+  "held": [
+   "train-594",
+   "train-576",
+   "train-286",
+   "test-001",
+   "train-421",
+   "test-005",
+   "train-159",
+   "train-714",
+   "train-686",
+   "test-028",
+   "train-548",
+   "train-035",
+   "test-073",
+   "train-558",
+   "train-407",
+   "train-076",
+   "train-233",
+   "train-755",
+   "train-556",
+   "validation-066",
+   "train-766",
+   "validation-053",
+   "train-215",
+   "train-397",
+   "train-513",
+   "train-263",
+   "train-017",
+   "train-252",
+   "train-259",
+   "validation-009",
+   "train-658",
+   "train-509",
+   "validation-022",
+   "train-294",
+   "train-142",
+   "train-708",
+   "train-326",
+   "train-015",
+   "validation-097",
+   "train-012"
+  ],
+  "final": [
+   "train-163",
+   "train-602",
+   "train-165",
+   "train-056",
+   "train-139",
+   "validation-020",
+   "train-395",
+   "validation-087",
+   "train-230",
+   "train-389",
+   "train-699",
+   "train-423",
+   "train-650",
+   "train-064",
+   "train-728",
+   "train-670",
+   "train-160",
+   "train-361",
+   "train-199",
+   "train-134",
+   "train-191",
+   "validation-007",
+   "train-718",
+   "train-704",
+   "train-316",
+   "test-017",
+   "test-064",
+   "validation-060",
+   "train-438",
+   "train-213",
+   "train-111",
+   "train-747",
+   "test-070",
+   "train-484",
+   "train-066",
+   "train-148",
+   "train-512",
+   "train-659",
+   "train-586",
+   "train-609"
+  ]
+ },
+ "carried": 2,
+ "exam": {
+  "total": {
+   "cases": 320,
+   "answered": 42,
+   "right": 35,
+   "baseRight": 22,
+   "withGold": 187
+  },
+  "receipt": {
+   "ok": true,
+   "answered": 42,
+   "right": 35,
+   "baseRight": 22,
+   "rate": 0.833333,
+   "baseRate": 0.52381,
+   "decision": "PROMOTE",
+   "beats": true,
+   "receipt": "d277516b2912a67b2c3371b38bdafbb3b0cf94a03de38943260cfbaa699507e0",
+   "why": "+0.309524 on right when answered (sealed margin 0.1), stat 3.037132 reaches zCrit 1.96, n at least 20"
+  }
+ },
+ "proposed": {
+  "free": 71,
+  "7b": 15
+ },
+ "replies": [
+  {
+   "task": "change",
+   "ok": true,
+   "code": "ok",
+   "why": "",
+   "text": "WHEN change THEN change\nWHEN changed THEN change\nWHEN change AND zlast THEN change\nWHEN change AND zend THEN change\nWHEN change AND zalone THEN change",
+   "proposed": 5
+  },
+  {
+   "task": "item-price",
+   "ok": true,
+   "code": "ok",
+   "why": "",
+   "text": "WHEN iced THEN item-price\nWHEN nasi THEN item-price\nWHEN 1pc THEN item-price\nWHEN kwetiaw THEN item-price\nWHEN sbl THEN item-price",
+   "proposed": 5
+  },
+  {
+   "task": "total",
+   "ok": true,
+   "code": "ok",
+   "why": "",
+   "text": "WHEN total THEN total\nWHEN total AND zmax THEN total\nWHEN total AND zend THEN total\nWHEN total AND zalone THEN total\nWHEN zmax AND zend AND zalone THEN total",
+   "proposed": 5
+  }
+ ],
+ "proposals": [
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "pcs"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "grandtotal"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "debet"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "card",
+    "debit"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "grand"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "card"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "pcs"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "subttl"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "grandtotal"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "pcs",
+    "tart"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "subtotal"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "sub"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pcs"
+   ],
+   "then": "subtotal",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "rest"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "restaurant"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "pb1",
+    "zmid"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "rest",
+    "zmid"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "tax"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "rest"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "service"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "chg"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "svc"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "service",
+    "zalone"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "service",
+    "zmid"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "service"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "chg"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "svc"
+   ],
+   "then": "service",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "discount"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "disc"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "zneg"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "discount",
+    "zneg"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "disc",
+    "zneg"
+   ],
+   "then": "discount",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "tunai"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "cashidr"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "cash"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "tunai",
+    "zmax"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "tendered",
+    "zmax"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "cash"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "tunai"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "tendered"
+   ],
+   "then": "cash",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "changed"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "kembalian"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "kembali"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "changed",
+    "zlast"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "change",
+    "due"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-2"
+   }
+  },
+  {
+   "when": [
+    "change"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "kembali"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "changed"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from tax"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "recipe from total"
+   }
+  },
+  {
+   "when": [
+    "ayam"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "goreng"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "water"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-1"
+   }
+  },
+  {
+   "when": [
+    "tea"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "cheese"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "mineral"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "mine-cover"
+   }
+  },
+  {
+   "when": [
+    "change"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "changed"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "change",
+    "zlast"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "change",
+    "zend"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "change",
+    "zalone"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "iced"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "nasi"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "1pc"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "kwetiaw"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "sbl"
+   ],
+   "then": "item-price",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "total"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "total",
+    "zmax"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "total",
+    "zend"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "total",
+    "zalone"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  },
+  {
+   "when": [
+    "zmax",
+    "zend",
+    "zalone"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   }
+  }
+ ],
+ "promoted": [
+  {
+   "rule": "total+zmax=>total",
+   "source": "7b",
+   "recipe": "prompt-v1 salt 2",
+   "receipt": "95b4d79f",
+   "held": {
+    "cover": 20,
+    "right": 19,
+    "prec": 0.95,
+    "basePrec": 0.05
+   },
+   "final": {
+    "cover": 19,
+    "right": 18,
+    "prec": 0.9473684210526315,
+    "basePrec": 0.05263157894736842
+   },
+   "heldDocs": {
+    "ok": true,
+    "docs": 20,
+    "right": 19,
+    "base": 10,
+    "rightRate": 0.95,
+    "baseRate": 0.5,
+    "why": ""
+   },
+   "finalDocs": {
+    "ok": true,
+    "docs": 17,
+    "right": 16,
+    "base": 13,
+    "rightRate": 0.941176,
+    "baseRate": 0.764706,
+    "why": ""
+   }
+  }
+ ],
+ "dropped": [
+  {
+   "rule": "pb1=>total",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "pcs=>total",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "grandtotal=>total",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "debet=>total",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "card+debit=>total",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "total=>total",
+   "source": "mined",
+   "why": "a duplicate of total=>total"
+  },
+  {
+   "rule": "grand=>total",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "card=>total",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "pb1=>subtotal",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "total=>subtotal",
+   "source": "recipe",
+   "why": "held-out: right 8 of 36, needs 0.8"
+  },
+  {
+   "rule": "pcs=>subtotal",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "subttl=>subtotal",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "grandtotal=>subtotal",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "pcs+tart=>subtotal",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "subtotal=>subtotal",
+   "source": "mined",
+   "why": "held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "sub=>subtotal",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "pcs=>subtotal",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "total=>tax",
+   "source": "recipe",
+   "why": "held-out: right 0 of 36, needs 0.8"
+  },
+  {
+   "rule": "pb1=>tax",
+   "source": "mined",
+   "why": "a duplicate of pb1=>tax"
+  },
+  {
+   "rule": "rest=>tax",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "restaurant=>tax",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "pb1+zmid=>tax",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "rest+zmid=>tax",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "tax=>tax",
+   "source": "mined",
+   "why": "final exam: right 6 of 8, needs 0.8"
+  },
+  {
+   "rule": "pb1=>tax",
+   "source": "mined",
+   "why": "a duplicate of pb1=>tax"
+  },
+  {
+   "rule": "rest=>tax",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "pb1=>service",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "total=>service",
+   "source": "recipe",
+   "why": "held-out: right 0 of 36, needs 0.8"
+  },
+  {
+   "rule": "service=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "chg=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "svc=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "service+zalone=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "service+zmid=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "service=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "chg=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "svc=>service",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "pb1=>discount",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "total=>discount",
+   "source": "recipe",
+   "why": "held-out: right 1 of 36, needs 0.8"
+  },
+  {
+   "rule": "discount=>discount",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "disc=>discount",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "zneg=>discount",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "discount+zneg=>discount",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "disc+zneg=>discount",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "pb1=>cash",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "total=>cash",
+   "source": "recipe",
+   "why": "held-out: right 6 of 36, needs 0.8"
+  },
+  {
+   "rule": "tunai=>cash",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "cashidr=>cash",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "cash=>cash",
+   "source": "mined",
+   "why": "held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "tunai+zmax=>cash",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "tendered+zmax=>cash",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "cash=>cash",
+   "source": "mined",
+   "why": "held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "tunai=>cash",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "tendered=>cash",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "pb1=>change",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "total=>change",
+   "source": "recipe",
+   "why": "held-out: right 0 of 36, needs 0.8"
+  },
+  {
+   "rule": "changed=>change",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "kembalian=>change",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "kembali=>change",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "changed+zlast=>change",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "change+due=>change",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "change=>change",
+   "source": "mined",
+   "why": "held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "kembali=>change",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "changed=>change",
+   "source": "mined",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "pb1=>item-price",
+   "source": "recipe",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "total=>item-price",
+   "source": "recipe",
+   "why": "held-out: right 0 of 36, needs 0.8"
+  },
+  {
+   "rule": "ayam=>item-price",
+   "source": "mined",
+   "why": "held-out: covers 3, needs 5"
+  },
+  {
+   "rule": "goreng=>item-price",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "water=>item-price",
+   "source": "mined",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "tea=>item-price",
+   "source": "mined",
+   "why": "held-out: covers 4, needs 5"
+  },
+  {
+   "rule": "cheese=>item-price",
+   "source": "mined",
+   "why": "held-out: right 4 of 6, needs 0.8"
+  },
+  {
+   "rule": "mineral=>item-price",
+   "source": "mined",
+   "why": "held-out: covers 1, needs 5"
+  },
+  {
+   "rule": "change=>change",
+   "source": "7b",
+   "why": "held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "changed=>change",
+   "source": "7b",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "change+zlast=>change",
+   "source": "7b",
+   "why": "final-exam documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "change+zend=>change",
+   "source": "7b",
+   "why": "final-exam documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "change+zalone=>change",
+   "source": "7b",
+   "why": "held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+  },
+  {
+   "rule": "iced=>item-price",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "nasi=>item-price",
+   "source": "7b",
+   "why": "held-out: covers 2, needs 5"
+  },
+  {
+   "rule": "1pc=>item-price",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "kwetiaw=>item-price",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "sbl=>item-price",
+   "source": "7b",
+   "why": "held-out: covers 0, needs 5"
+  },
+  {
+   "rule": "total=>total",
+   "source": "7b",
+   "why": "a duplicate of total=>total"
+  },
+  {
+   "rule": "total+zend=>total",
+   "source": "7b",
+   "why": "a near-duplicate of total=>total"
+  },
+  {
+   "rule": "total+zalone=>total",
+   "source": "7b",
+   "why": "a near-duplicate of total=>total"
+  },
+  {
+   "rule": "zalone+zend+zmax=>total",
+   "source": "7b",
+   "why": "held-out: right 50 of 67, needs 0.8"
+  }
+ ],
+ "keptFree": {},
+ "tried7b": {
+  "change": 5,
+  "item-price": 5,
+  "total": 5
+ },
+ "passed7b": {
+  "total": 1
+ },
+ "asks": [
+  {
+   "task": "change",
+   "evidence": {
+    "tier1": {
+     "asked": true,
+     "answered": false,
+     "what": "the recipe lookup and the miners for change"
+    },
+    "tier2": {
+     "tried": 5,
+     "passed": 0,
+     "model": "qwen2.5:7b",
+     "dropped": [
+      "change=>change: held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1",
+      "changed=>change: held-out: covers 2, needs 5",
+      "change+zlast=>change: final-exam documents: beats the cheap baseline by 0.000 on those documents, needs 0.1",
+      "change+zend=>change: final-exam documents: beats the cheap baseline by 0.000 on those documents, needs 0.1",
+      "change+zalone=>change: held-out documents: beats the cheap baseline by 0.000 on those documents, needs 0.1"
+     ]
+    }
+   }
+  },
+  {
+   "task": "item-price",
+   "evidence": {
+    "tier1": {
+     "asked": true,
+     "answered": false,
+     "what": "the recipe lookup and the miners for item-price"
+    },
+    "tier2": {
+     "tried": 5,
+     "passed": 0,
+     "model": "qwen2.5:7b",
+     "dropped": [
+      "iced=>item-price: held-out: covers 0, needs 5",
+      "nasi=>item-price: held-out: covers 2, needs 5",
+      "1pc=>item-price: held-out: covers 0, needs 5",
+      "kwetiaw=>item-price: held-out: covers 0, needs 5",
+      "sbl=>item-price: held-out: covers 0, needs 5"
+     ]
+    }
+   }
+  }
+ ],
+ "meter": {
+  "before": {
+   "coverage": 0.12,
+   "precision": 0.916667,
+   "answered": 96,
+   "cases": 800
+  },
+  "after": {
+   "coverage": 0.12,
+   "precision": 0.916667,
+   "answered": 96,
+   "right": 88,
+   "cases": 800,
+   "withGold": 457
+  },
+  "per": {
+   "total": {
+    "cases": 100,
+    "answered": 85,
+    "right": 78,
+    "baseRight": 59,
+    "withGold": 98
+   },
+   "subtotal": {
+    "cases": 100,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 64
+   },
+   "tax": {
+    "cases": 100,
+    "answered": 11,
+    "right": 10,
+    "baseRight": 1,
+    "withGold": 37
+   },
+   "service": {
+    "cases": 100,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "discount": {
+    "cases": 100,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 5
+   },
+   "cash": {
+    "cases": 100,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 73
+   },
+   "change": {
+    "cases": 100,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 70
+   },
+   "item-price": {
+    "cases": 100,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 100
+   }
+  },
+  "receipt": {
+   "ok": true,
+   "answered": 96,
+   "right": 88,
+   "baseRight": 60,
+   "rate": 0.916667,
+   "baseRate": 0.625,
+   "decision": "PROMOTE",
+   "beats": true,
+   "receipt": "94259137bed90926f74f2b809e03a1677082aef35853afb79297e626ab35524b",
+   "why": "+0.291667 on right when answered (sealed margin 0.1), stat 4.807856 reaches zCrit 1.96, n at least 20"
+  },
+  "check": {
+   "parts": [
+    "A",
+    "B",
+    "C"
+   ],
+   "receipts": 100,
+   "reconciled": 0,
+   "flagged": 0,
+   "unchecked": 100,
+   "reconciledRight": 0,
+   "wrongRan": 0,
+   "wrongFlagged": 0
+  }
+ },
+ "patterns": 3,
+ "built": 1,
+ "source": {
+  "file": "cord-v2-ground-truth.jsonl",
+  "sha256": "272432829e501edde76ee9457a04c146e4e6e5d7fb40c0c395fc71a93f82c613"
+ },
+ "r0": {
+  "A": {
+   "ran": 656,
+   "held": 595
+  },
+  "B": {
+   "ran": 650,
+   "held": 619
+  },
+  "C": {
+   "ran": 535,
+   "held": 518
+  }
+ },
+ "why7b": null,
+ "dry": false
+}

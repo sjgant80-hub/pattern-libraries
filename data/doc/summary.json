@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-1.json",
+ "latest": "nights/cycle-6.json",
  "series": [
   {
    "cycle": 0,
@@ -18,6 +18,51 @@
    "precision": 0.963636,
    "answered": 55,
    "cases": 1140
+  },
+  {
+   "cycle": 2,
+   "at": "2026-11-12T03:12:52.724Z",
+   "patterns": 8,
+   "coverage": 0.073684,
+   "precision": 0.833333,
+   "answered": 84,
+   "cases": 1140
+  },
+  {
+   "cycle": 3,
+   "at": "2026-11-13T03:11:24.009Z",
+   "patterns": 8,
+   "coverage": 0.073684,
+   "precision": 0.833333,
+   "answered": 84,
+   "cases": 1140
+  },
+  {
+   "cycle": 4,
+   "at": "2026-11-14T03:04:23.891Z",
+   "patterns": 8,
+   "coverage": 0.073684,
+   "precision": 0.833333,
+   "answered": 84,
+   "cases": 1140
+  },
+  {
+   "cycle": 5,
+   "at": "2026-11-15T03:05:12.562Z",
+   "patterns": 8,
+   "coverage": 0.073684,
+   "precision": 0.833333,
+   "answered": 84,
+   "cases": 1140
+  },
+  {
+   "cycle": 6,
+   "at": "2026-11-16T03:18:34.866Z",
+   "patterns": 8,
+   "coverage": 0.073684,
+   "precision": 0.833333,
+   "answered": 84,
+   "cases": 1140
   }
  ],
  "corpus": {
@@ -26,5 +71,5 @@
   "avgChars": 52563
  },
  "creditCalls": 0,
- "checks": 111
+ "checks": 154
 }

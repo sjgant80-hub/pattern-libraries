@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 4,
  "library": [
   {
    "when": [
@@ -963,6 +963,731 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "salary"
+   ],
+   "then": "receiving-money",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "banking77",
+    "trainN": 5000,
+    "recipe": "mine-1"
+   },
+   "receipt": "bfe35a87",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "top",
+    "verification"
+   ],
+   "then": "verify-top-up",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "banking77",
+    "trainN": 5000,
+    "recipe": "mine-2"
+   },
+   "receipt": "ce58e046",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "link"
+   ],
+   "then": "card-linking",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "banking77",
+    "trainN": 7000,
+    "recipe": "mine-1"
+   },
+   "receipt": "2410ccc5",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "address"
+   ],
+   "then": "edit-personal-details",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "banking77",
+    "trainN": 7000,
+    "recipe": "mine-cover"
+   },
+   "receipt": "5adb44b2",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "cards",
+    "day"
+   ],
+   "then": "disposable-card-limits",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "banking77",
+    "trainN": 7000,
+    "recipe": "mine-2"
+   },
+   "receipt": "9c2e73e0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "atms"
+   ],
+   "then": "atm-support",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "banking77",
+    "trainN": 7000,
+    "recipe": "mine-1"
+   },
+   "receipt": "7c058d7f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "twice"
+   ],
+   "then": "transaction-charged-twice",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "banking77",
+    "trainN": 7000,
+    "recipe": "mine-1"
+   },
+   "receipt": "dbf3cfcd",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.142857,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "code",
+    "verification"
+   ],
+   "then": "verify-top-up",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "banking77",
+    "trainN": 7000,
+    "recipe": "mine-2"
+   },
+   "receipt": "3df1d272",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "pound"
+   ],
+   "then": "extra-charge-on-statement",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-1"
+   },
+   "receipt": "c6394709",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "extra",
+    "statement"
+   ],
+   "then": "extra-charge-on-statement",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-2"
+   },
+   "receipt": "b3f163f0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 6,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 6,
+     "base": 0,
+     "rightRate": 0.857143,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.285714,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "open"
+   ],
+   "then": "age-limit",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-cover"
+   },
+   "receipt": "3dd7f99d",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "age"
+   ],
+   "then": "age-limit",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-cover"
+   },
+   "receipt": "cb15eb76",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.2,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.142857,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "phone",
+    "stolen"
+   ],
+   "then": "lost-or-stolen-phone",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-2"
+   },
+   "receipt": "d6f62e1f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.428571,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "expire"
+   ],
+   "then": "card-about-to-expire",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-1"
+   },
+   "receipt": "e19bc9d1",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.6,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.75,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "expires"
+   ],
+   "then": "card-about-to-expire",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-14T03:04:23.891Z",
+    "feed": "banking77",
+    "trainN": 9000,
+    "recipe": "mine-1"
+   },
+   "receipt": "baaa8eb6",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -1368,6 +2093,311 @@
     "then": "country-support"
    },
    "receipt": "30c5a784"
+  },
+  {
+   "library": "route",
+   "task": "receiving-money",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "salary"
+    ],
+    "then": "receiving-money"
+   },
+   "receipt": "bfe35a87"
+  },
+  {
+   "library": "route",
+   "task": "verify-top-up",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "top",
+     "verification"
+    ],
+    "then": "verify-top-up"
+   },
+   "receipt": "ce58e046"
+  },
+  {
+   "library": "route",
+   "task": "card-linking",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "link"
+    ],
+    "then": "card-linking"
+   },
+   "receipt": "2410ccc5"
+  },
+  {
+   "library": "route",
+   "task": "edit-personal-details",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "address"
+    ],
+    "then": "edit-personal-details"
+   },
+   "receipt": "5adb44b2"
+  },
+  {
+   "library": "route",
+   "task": "disposable-card-limits",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "cards",
+     "day"
+    ],
+    "then": "disposable-card-limits"
+   },
+   "receipt": "9c2e73e0"
+  },
+  {
+   "library": "route",
+   "task": "atm-support",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "atms"
+    ],
+    "then": "atm-support"
+   },
+   "receipt": "7c058d7f"
+  },
+  {
+   "library": "route",
+   "task": "transaction-charged-twice",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "twice"
+    ],
+    "then": "transaction-charged-twice"
+   },
+   "receipt": "dbf3cfcd"
+  },
+  {
+   "library": "route",
+   "task": "verify-top-up",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "code",
+     "verification"
+    ],
+    "then": "verify-top-up"
+   },
+   "receipt": "3df1d272"
+  },
+  {
+   "library": "route",
+   "task": "extra-charge-on-statement",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "pound"
+    ],
+    "then": "extra-charge-on-statement"
+   },
+   "receipt": "c6394709"
+  },
+  {
+   "library": "route",
+   "task": "extra-charge-on-statement",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "extra",
+     "statement"
+    ],
+    "then": "extra-charge-on-statement"
+   },
+   "receipt": "b3f163f0"
+  },
+  {
+   "library": "route",
+   "task": "age-limit",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "open"
+    ],
+    "then": "age-limit"
+   },
+   "receipt": "3dd7f99d"
+  },
+  {
+   "library": "route",
+   "task": "age-limit",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "age"
+    ],
+    "then": "age-limit"
+   },
+   "receipt": "cb15eb76"
+  },
+  {
+   "library": "route",
+   "task": "lost-or-stolen-phone",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "phone",
+     "stolen"
+    ],
+    "then": "lost-or-stolen-phone"
+   },
+   "receipt": "d6f62e1f"
+  },
+  {
+   "library": "route",
+   "task": "card-about-to-expire",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "expire"
+    ],
+    "then": "card-about-to-expire"
+   },
+   "receipt": "e19bc9d1"
+  },
+  {
+   "library": "route",
+   "task": "card-about-to-expire",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "rule": {
+    "when": [
+     "expires"
+    ],
+    "then": "card-about-to-expire"
+   },
+   "receipt": "baaa8eb6"
   }
  ]
 }

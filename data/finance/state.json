@@ -1,5 +1,281 @@
 {
- "cycle": 1,
- "library": [],
- "records": []
+ "cycle": 6,
+ "library": [
+  {
+   "when": [
+    "total"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "cord-v2",
+    "trainN": 2929,
+    "recipe": "mine-cover"
+   },
+   "receipt": "03e1907a",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 47,
+     "right": 40,
+     "prec": 0.851063829787234,
+     "basePrec": 0.14893617021276595
+    },
+    "final": {
+     "cover": 43,
+     "right": 39,
+     "prec": 0.9069767441860465,
+     "basePrec": 0.09302325581395349
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 39,
+     "right": 33,
+     "base": 26,
+     "rightRate": 0.846154,
+     "baseRate": 0.666667,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 37,
+     "right": 33,
+     "base": 22,
+     "rightRate": 0.891892,
+     "baseRate": 0.594595,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "pb1"
+   ],
+   "then": "tax",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "cord-v2",
+    "trainN": 2929,
+    "recipe": "mine-1"
+   },
+   "receipt": "8e78ab04",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.333333,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "total",
+    "zmax"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "7b",
+    "model": "qwen2.5:7b",
+    "proposedAt": "2026-11-13T03:11:24.009Z",
+    "feed": "cord-v2",
+    "trainN": 3522,
+    "recipe": "prompt-v1 salt 2"
+   },
+   "receipt": "95b4d79f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 20,
+     "right": 19,
+     "prec": 0.95,
+     "basePrec": 0.05
+    },
+    "final": {
+     "cover": 19,
+     "right": 18,
+     "prec": 0.9473684210526315,
+     "basePrec": 0.05263157894736842
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 19,
+     "base": 10,
+     "rightRate": 0.95,
+     "baseRate": 0.5,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 16,
+     "base": 13,
+     "rightRate": 0.941176,
+     "baseRate": 0.764706,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "kembali"
+   ],
+   "then": "change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-16T03:18:34.866Z",
+    "feed": "cord-v2",
+    "trainN": 5375,
+    "recipe": "mine-1"
+   },
+   "receipt": "32b33277",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  }
+ ],
+ "records": [
+  {
+   "library": "finance",
+   "task": "total",
+   "type": "money",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "total"
+    ],
+    "then": "total"
+   },
+   "receipt": "03e1907a"
+  },
+  {
+   "library": "finance",
+   "task": "tax",
+   "type": "money",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "pb1"
+    ],
+    "then": "tax"
+   },
+   "receipt": "8e78ab04"
+  },
+  {
+   "library": "finance",
+   "task": "total",
+   "type": "money",
+   "tier": "7b",
+   "recipe": "prompt-v1 salt 2",
+   "cost": {
+    "calls": 1,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "rule": {
+    "when": [
+     "total",
+     "zmax"
+    ],
+    "then": "total"
+   },
+   "receipt": "95b4d79f"
+  },
+  {
+   "library": "finance",
+   "task": "change",
+   "type": "money",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 5,
+   "at": "2026-11-16T03:18:34.866Z",
+   "rule": {
+    "when": [
+     "kembali"
+    ],
+    "then": "change"
+   },
+   "receipt": "32b33277"
+  }
+ ]
 }

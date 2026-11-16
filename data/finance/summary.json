@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-0.json",
+ "latest": "nights/cycle-5.json",
  "series": [
   {
    "cycle": 0,
@@ -8,6 +8,121 @@
    "coverage": 0,
    "precision": null,
    "answered": 0,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "cycle": 1,
+   "at": "2026-11-12T03:12:52.724Z",
+   "patterns": 2,
+   "coverage": 0.12,
+   "precision": 0.916667,
+   "answered": 96,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "cycle": 2,
+   "at": "2026-11-13T03:11:24.009Z",
+   "patterns": 3,
+   "coverage": 0.12,
+   "precision": 0.916667,
+   "answered": 96,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "cycle": 3,
+   "at": "2026-11-14T03:04:23.891Z",
+   "patterns": 3,
+   "coverage": 0.12,
+   "precision": 0.916667,
+   "answered": 96,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "cycle": 4,
+   "at": "2026-11-15T03:05:12.562Z",
+   "patterns": 3,
+   "coverage": 0.12,
+   "precision": 0.916667,
+   "answered": 96,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "cycle": 5,
+   "at": "2026-11-16T03:18:34.866Z",
+   "patterns": 4,
+   "coverage": 0.12875,
+   "precision": 0.92233,
+   "answered": 103,
    "cases": 800,
    "check": {
     "parts": [

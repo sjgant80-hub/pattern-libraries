@@ -1,5 +1,5 @@
 {
- "cycle": 2,
+ "cycle": 7,
  "library": [
   {
    "when": [
@@ -192,6 +192,198 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "conflicts"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "cuad-v1",
+    "trainN": 3079,
+    "recipe": "mine-1"
+   },
+   "receipt": "0dcfadc3",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.5,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "accordance"
+   ],
+   "then": "governing-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "cuad-v1",
+    "trainN": 3079,
+    "recipe": "mine-cover"
+   },
+   "receipt": "06486dd1",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 15,
+     "right": 12,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 11,
+     "right": 10,
+     "prec": 0.9090909090909091,
+     "basePrec": 0.09090909090909091
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 11,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.363636,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.25,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "consequential"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "cuad-v1",
+    "trainN": 61944,
+    "recipe": "mine-1"
+   },
+   "receipt": "72c769eb",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 13,
+     "right": 11,
+     "prec": 0.8461538461538461,
+     "basePrec": 0.15384615384615385
+    },
+    "final": {
+     "cover": 14,
+     "right": 12,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 9,
+     "base": 1,
+     "rightRate": 0.9,
+     "baseRate": 0.1,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 10,
+     "base": 1,
+     "rightRate": 0.909091,
+     "baseRate": 0.090909,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "punitive"
+   ],
+   "then": "cap-on-liability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-12T03:12:52.724Z",
+    "feed": "cuad-v1",
+    "trainN": 61944,
+    "recipe": "mine-1"
+   },
+   "receipt": "89f6fdc5",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 11,
+     "right": 9,
+     "prec": 0.8181818181818182,
+     "basePrec": 0.18181818181818182
+    },
+    "final": {
+     "cover": 10,
+     "right": 8,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 1,
+     "rightRate": 0.888889,
+     "baseRate": 0.111111,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 6,
+     "base": 0,
+     "rightRate": 0.857143,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -274,6 +466,86 @@
     "then": "renewal-term"
    },
    "receipt": "bb000038"
+  },
+  {
+   "library": "doc",
+   "task": "governing-law",
+   "type": "place",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "conflicts"
+    ],
+    "then": "governing-law"
+   },
+   "receipt": "0dcfadc3"
+  },
+  {
+   "library": "doc",
+   "task": "governing-law",
+   "type": "place",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "accordance"
+    ],
+    "then": "governing-law"
+   },
+   "receipt": "06486dd1"
+  },
+  {
+   "library": "doc",
+   "task": "cap-on-liability",
+   "type": "sentence",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "consequential"
+    ],
+    "then": "cap-on-liability"
+   },
+   "receipt": "72c769eb"
+  },
+  {
+   "library": "doc",
+   "task": "cap-on-liability",
+   "type": "sentence",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 2,
+   "at": "2026-11-12T03:12:52.724Z",
+   "rule": {
+    "when": [
+     "punitive"
+    ],
+    "then": "cap-on-liability"
+   },
+   "receipt": "89f6fdc5"
   }
  ]
 }

@@ -1,0 +1,579 @@
+{
+ "kind": "library-night",
+ "v": 1,
+ "library": "route",
+ "feed": "banking77",
+ "cycle": 4,
+ "at": "2026-11-16T03:18:34.866Z",
+ "model": null,
+ "free": 2,
+ "exhausted": true,
+ "promoted": [],
+ "dropped": [],
+ "meter": {
+  "cases": 77000,
+  "answered": 166,
+  "right": 152,
+  "baseRight": 19,
+  "withGold": 1000,
+  "coverage": 0.002156,
+  "precision": 0.915663,
+  "per": {
+   "card-arrival": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "card-linking": {
+    "cases": 1000,
+    "answered": 2,
+    "right": 2,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "exchange-rate": {
+    "cases": 1000,
+    "answered": 5,
+    "right": 4,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "card-payment-wrong-exchange-rate": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 15
+   },
+   "extra-charge-on-statement": {
+    "cases": 1000,
+    "answered": 6,
+    "right": 6,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "pending-cash-withdrawal": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 25
+   },
+   "fiat-currency-support": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "card-delivery-estimate": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "automatic-top-up": {
+    "cases": 1000,
+    "answered": 7,
+    "right": 7,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "card-not-working": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "exchange-via-app": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "lost-or-stolen-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "age-limit": {
+    "cases": 1000,
+    "answered": 11,
+    "right": 11,
+    "baseRight": 2,
+    "withGold": 15
+   },
+   "pin-blocked": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "contactless-not-working": {
+    "cases": 1000,
+    "answered": 3,
+    "right": 3,
+    "baseRight": 1,
+    "withGold": 3
+   },
+   "top-up-by-bank-transfer-charge": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 7
+   },
+   "pending-top-up": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 21
+   },
+   "cancel-transfer": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "top-up-limits": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "wrong-amount-of-cash-received": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 20
+   },
+   "card-payment-fee-charged": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 17
+   },
+   "transfer-not-received-by-recipient": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 20
+   },
+   "supported-cards-and-currencies": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 7
+   },
+   "getting-virtual-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 16
+   },
+   "card-acceptance": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 5
+   },
+   "top-up-reverted": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "balance-not-updated-after-cheque-or-cash-deposit": {
+    "cases": 1000,
+    "answered": 12,
+    "right": 10,
+    "baseRight": 0,
+    "withGold": 23
+   },
+   "card-payment-not-recognised": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "edit-personal-details": {
+    "cases": 1000,
+    "answered": 4,
+    "right": 4,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "why-verify-identity": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "unable-to-verify-identity": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 8
+   },
+   "get-physical-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "visa-or-mastercard": {
+    "cases": 1000,
+    "answered": 12,
+    "right": 12,
+    "baseRight": 7,
+    "withGold": 14
+   },
+   "topping-up-by-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "disposable-card-limits": {
+    "cases": 1000,
+    "answered": 1,
+    "right": 1,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "compromised-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 8
+   },
+   "atm-support": {
+    "cases": 1000,
+    "answered": 7,
+    "right": 5,
+    "baseRight": 0,
+    "withGold": 8
+   },
+   "direct-debit-payment-not-recognised": {
+    "cases": 1000,
+    "answered": 8,
+    "right": 8,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "passcode-forgotten": {
+    "cases": 1000,
+    "answered": 8,
+    "right": 6,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "declined-cash-withdrawal": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 23
+   },
+   "pending-card-payment": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 17
+   },
+   "lost-or-stolen-phone": {
+    "cases": 1000,
+    "answered": 13,
+    "right": 12,
+    "baseRight": 1,
+    "withGold": 16
+   },
+   "request-refund": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "declined-transfer": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "refund-not-showing-up": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 18
+   },
+   "declined-card-payment": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "pending-transfer": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "terminate-account": {
+    "cases": 1000,
+    "answered": 8,
+    "right": 7,
+    "baseRight": 0,
+    "withGold": 13
+   },
+   "card-swallowed": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 9
+   },
+   "transaction-charged-twice": {
+    "cases": 1000,
+    "answered": 6,
+    "right": 6,
+    "baseRight": 1,
+    "withGold": 15
+   },
+   "verify-source-of-funds": {
+    "cases": 1000,
+    "answered": 5,
+    "right": 5,
+    "baseRight": 3,
+    "withGold": 12
+   },
+   "transfer-timing": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "reverted-card-payment": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 16
+   },
+   "change-pin": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "beneficiary-not-allowed": {
+    "cases": 1000,
+    "answered": 4,
+    "right": 4,
+    "baseRight": 1,
+    "withGold": 12
+   },
+   "transfer-fee-charged": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "receiving-money": {
+    "cases": 1000,
+    "answered": 5,
+    "right": 5,
+    "baseRight": 0,
+    "withGold": 11
+   },
+   "failed-transfer": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 16
+   },
+   "transfer-into-account": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 7
+   },
+   "verify-top-up": {
+    "cases": 1000,
+    "answered": 4,
+    "right": 4,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "getting-spare-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 8
+   },
+   "top-up-by-cash-or-cheque": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "order-physical-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "virtual-card-not-working": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 5
+   },
+   "wrong-exchange-rate-for-cash-withdrawal": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 18
+   },
+   "get-disposable-virtual-card": {
+    "cases": 1000,
+    "answered": 12,
+    "right": 8,
+    "baseRight": 2,
+    "withGold": 10
+   },
+   "top-up-failed": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 15
+   },
+   "balance-not-updated-after-bank-transfer": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 15
+   },
+   "cash-withdrawal-not-recognised": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 23
+   },
+   "exchange-charge": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 14
+   },
+   "top-up-by-card-charge": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 7
+   },
+   "activate-my-card": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 15
+   },
+   "cash-withdrawal-charge": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 12
+   },
+   "card-about-to-expire": {
+    "cases": 1000,
+    "answered": 4,
+    "right": 4,
+    "baseRight": 1,
+    "withGold": 13
+   },
+   "apple-pay-or-google-pay": {
+    "cases": 1000,
+    "answered": 10,
+    "right": 10,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "verify-my-identity": {
+    "cases": 1000,
+    "answered": 0,
+    "right": 0,
+    "baseRight": 0,
+    "withGold": 10
+   },
+   "country-support": {
+    "cases": 1000,
+    "answered": 9,
+    "right": 8,
+    "baseRight": 0,
+    "withGold": 17
+   }
+  },
+  "check": {
+   "queries": 1000,
+   "routed": 165,
+   "right": 151,
+   "conflicts": 1,
+   "baseRouted": 185,
+   "baseRight": 139
+  }
+ },
+ "patterns": 35,
+ "source": {
+  "repo": "https://github.com/PolyAI-LDN/task-specific-datasets",
+  "commit": "57ec275d8078af65b7731c2a98be812d844a6d6b",
+  "manifest": "d014c397bfa65560859b7856a4f855fbd738f6e49c71640b7219e3ab5f9549e5"
+ },
+ "why7b": "library 3 runs on the free tiers only (SEAL 3, N4)",
+ "dry": false
+}

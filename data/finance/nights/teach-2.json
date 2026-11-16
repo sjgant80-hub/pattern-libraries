@@ -1,0 +1,28 @@
+{
+ "at": "2026-11-13T03:19:48.093Z",
+ "kind": "library-teach",
+ "library": "finance",
+ "cycle": 2,
+ "asked": [
+  {
+   "task": "change",
+   "ok": false,
+   "code": "key",
+   "why": "no sign-in on disk for the official CLI, so the subscription tier cannot run",
+   "seq": 10,
+   "costCents": null,
+   "proposed": 0,
+   "text": ""
+  }
+ ],
+ "proposals": [],
+ "promoted": [],
+ "dropped": [],
+ "patterns": 3,
+ "meter": {
+  "coverage": 0.12,
+  "precision": 0.916667,
+  "answered": 96,
+  "cases": 800
+ }
+}
