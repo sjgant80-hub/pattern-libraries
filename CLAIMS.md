@@ -538,3 +538,71 @@ and then a final exam no rule has ever seen.
   in CI).
 - **S7.3** · Tonight's receipt night records the sizes of its two exams. The page says which night used the merged tail.
 - **S7.4** · The kernel gate on `src/cycle.mjs` re-runs clean.
+
+---
+
+# SEAL 8 · library 4, ROUTING ACROSS TEN DOMAINS, WITH OUT-OF-SCOPE (CLINC150), written before its code (2026-11-16)
+
+Seals 1 to 7 above are unchanged, byte for byte. Simon's P1-P5 bind this library as they bind every library. Library 3's
+routing ran out of exams (seal 7); this is the fresh data seal 7 asked for, and Simon chose it in chat ("go with CLINC150,
+MAUD and FATURA"). A claim that misses its bar is kept and published as failed. Nothing here is relaxed after a result
+is seen.
+
+## Data
+
+**CLINC150** (Larson, Mahendran, Peper, Clarke, Lee, Hill, Kummerfeld, Leach, Laurenzano, Tang and Mars, 2019, "An
+Evaluation Dataset for Intent Classification and Out-of-Scope Prediction", EMNLP-IJCNLP), from
+**github.com/clinc/oos-eval** pinned at commit `828f8093932c8fe6ca7936c3d2e52903b1c523de`, licence **CC BY 3.0
+Unported** (its LICENSE file, read in full before this seal). Three files are used and pinned by sha256:
+
+- `data/data_full.json` `36923c3705a59e08fe9c3883d8bc2dd966ef93e22cb78ac41171782a698d56e0`: 23,700 queries in six
+  splits (train 15,000, val 3,000, test 4,500; oos_train 100, oos_val 100, oos_test 1,000), each `[text, intent]`.
+- `data/domains.json` `b947b579d3b8e74b06f93b01083d8efaff2888b43a3e362533bd88a6e1211b3a`: the 150 intents in 10 domains.
+- `LICENSE` `e6bc9e9c474700b708f568bac9e5a8a9bcb2b1dad53442f5ba449fcb848b8e76`.
+
+A committed tool fetches them at the pinned commit and checks the three hashes; CI does the same before it re-derives any
+night. This repository commits no query. Attribution (CC BY 3.0): the page and NOTICE name the authors, the paper and
+the licence.
+
+## What it reads
+
+A query is a document. **Routing**: each of the 150 intents is a route, its task id the intent name with every run of
+characters other than a-z and 0-9 turned into one `-`. For each route the query is one unit, right when the experts'
+intent is that route. **Out of scope**: one more task, `out-of-scope`, one unit per query, right when the experts'
+intent is `oos` (a query none of the 150 intents covers: "how much has the dow changed today"). A query's words are the
+law's own tokens of its text, the first 40. **The router** is library 3's: the first kept route pattern in library order
+that fires; every other route that fired is named (a conflict); otherwise unknown. An out-of-scope flag is raised when a
+kept pattern for it fires. Routing and the flag are read side by side and both are shown; neither hides the other.
+
+**The cheap baselines**: a route, the keyword router (the query holds every token of the route's own name; on the meter,
+the first route in `domains.json` order, domain by domain, whose name tokens it holds). `out-of-scope`: **the keyword
+router routes the query nowhere**.
+
+**The fresh exam**: id `clinc-<split>-<index>` (index five digits, file order), one fixed order by SHA-256 of salt + id
+(seal 4), salt `clinc150:`: METER 1,500, seed 4,200, batches of 2,000 (nine, nothing left over), and seal 7's merged
+tail, so its four nights spend every batch (cycle 3: held-out batches 6 and 7, final batch 8). The batch size was chosen
+from the seed before this seal, as seal 7 asks. For each intent, on the seed, take its most common word among the words
+right on at least 80% of the seed queries holding them; at about 13 queries per intent in a batch of 2,000, that word
+is expected to fire on 5 for **63 of the 150 intents** (at 1,000 per batch: 20; at 1,500: 43; at 3,000: 76, with only two
+nights). No pattern was proposed or gated to choose it.
+
+**The two gates**: the law's gate unchanged (vendor/patlib at amendment 1), then the field gate with library 3's numbers.
+
+## Claims for library 4
+
+- **L1** — each night, the library as carried in beats the cheap baseline on the cases it answers on that night's fresh
+  final exam, judged and signed by the baseline agreement (rate, higher, minimum improvement 0.10, z 1.96, at least 20
+  answered cases; fewer is INSUFFICIENT, never a pass). Night 0 cannot decide it.
+- **L2** — it abstains rather than guesses: on the METER, wherever it routes, it is right at least **80%** of the time;
+  wherever it raises out-of-scope, the query is out of scope at least **80%** of the time.
+- **L3** — every night re-derives byte for byte from the pinned files and the recorded proposals (CI re-runs it).
+- **L4** — the source carries its licence and attribution (CC BY 3.0): the page and NOTICE name the authors, the paper
+  and the licence.
+- **L5** — the router is measured whole on the METER every night: routed, right, conflicts, and the keyword router's
+  routed and right; and for out-of-scope: raised, right, and the cheap baseline's raised and right. *Bar:* every night's
+  record holds all ten counts, re-derived in CI.
+- **N5** — library 4 runs in the same night process, after library 3, inside the one 25-minute clock, on the **free tiers
+  only** (no local-7B call, so no credit-tier candidate; P2 holds by construction). Its records live in their own folder,
+  and the morning block carries its line.
+
+Library 4 is reported **landed** only under seal 1's definition. Until then it is **running** or **not landed**.
