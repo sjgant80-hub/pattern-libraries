@@ -20,6 +20,7 @@ import F from './finance.mjs';
 import T from './triage.mjs';
 import L4 from './clinc.mjs';
 import L5 from './maud.mjs';
+import LB from './labelled.mjs';
 import Y from './cycle.mjs';
 import B from './build.mjs';
 
@@ -54,6 +55,13 @@ export const CLINC = Object.freeze({ NIGHT: CLINC_NIGHT, D: L4.DOMAIN, Y: Object
 export const MAUD_NIGHT = Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: 'maud', feed: 'maud', prompt: 'prompt-v1', free: 2 });
 export const MAUD = Object.freeze({ NIGHT: MAUD_NIGHT, D: L5.DOMAIN, Y: Object.freeze({ ...Y, ...Y.cycleFor(L5.DOMAIN) }), name: 'merger agreement deal points', batches: 4,
   check: (lib, units, ids) => L5.readOn(lib, units, ids) });
+// libraries 6 to 9 (SEAL 10): ETHICS, GoEmotions, MATH, MMLU, each a routing library on the general router, the free tiers
+// only (N7); each router measured whole on its meter (G5)
+export const LABELLED = Object.freeze(Object.fromEntries(Object.entries(LB.LIBRARIES).map(([id, L]) => {
+  const K = LB.KERNELS[id];
+  return [id, Object.freeze({ NIGHT: Object.freeze({ max7b: 0, clockMinutes: 25, numPredict: 160, library: id, feed: id, prompt: 'prompt-v1', free: 2 }), D: K.DOMAIN,
+    Y: Object.freeze({ ...Y, ...Y.cycleFor(K.DOMAIN) }), name: L.name, batches: L.batches, check: (lib, units, ids) => K.routeOn(lib, units, ids) })];
+})));
 
 const countBy = (list, key) => { const o = {}; for (const x of list) { const k = key(x); o[k] = (o[k] || 0) + 1; } return o; };
 
@@ -196,4 +204,4 @@ export function replayAsk(record) {
 // library 1, bound: the names every caller already uses
 export const { freeProposals, night, line } = nightOf(DOC);
 
-export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, nightOf, freeProposals, night, replayAsk, line };
+export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, LABELLED, nightOf, freeProposals, night, replayAsk, line };

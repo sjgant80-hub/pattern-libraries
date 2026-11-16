@@ -36,8 +36,21 @@ jobs:
           curl -sSL -o /tmp/maud/data.zip https://raw.githubusercontent.com/TheAtticusProject/maud/4640316078dcd370debb877f350c39a28b181ffe/data.zip
           echo "75af5a33d038e9254864f043da38072490ffe11e8488d58d0a2dd39c8f554519  /tmp/maud/data.zip" | sha256sum -c -
           unzip -q -o /tmp/maud/data.zip data/MAUD_train.csv data/MAUD_dev.csv data/MAUD_test.csv -d /tmp/maud
-      - name: every committed night of every library re-derives byte for byte from the public data (X3, F3, T3, L3, M3), with R0 re-run and the void nights replayed under their old order (seal 4)
-        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl --polyai /tmp/polyai --clinc /tmp/clinc150 --maud /tmp/maud
+      - name: the pinned ETHICS, GoEmotions, MATH and MMLU files (seal 10), each checked by its hash
+        run: |
+          mkdir -p /tmp/ethics /tmp/goemotions /tmp/math /tmp/mmlu
+          curl -sSL -o /tmp/ethics/ethics.tar https://people.eecs.berkeley.edu/~hendrycks/ethics.tar
+          echo "40acbf1ac0da79a2aabef394d58889136b8d38b05be09482006de2453fb06333  /tmp/ethics/ethics.tar" | sha256sum -c -
+          tar -xf /tmp/ethics/ethics.tar -C /tmp/ethics ethics/commonsense
+          for f in train.tsv dev.tsv test.tsv emotions.txt; do curl -sSL -o /tmp/goemotions/$f https://raw.githubusercontent.com/google-research/google-research/7951440944924ac61b6e2f9a2a3c715834005c40/goemotions/data/$f; done
+          curl -sSL -o /tmp/math/train.parquet https://huggingface.co/datasets/qwedsacf/competition_math/resolve/e839825f9ec5c6cfa585c654a59610969ec13993/data/train-00000-of-00001-7320a6f3aba8ebd2.parquet
+          echo "2325458edc03d786939ee9e1e5795efb9e2480247b6e1ed2c51f41bea7369c6a  /tmp/math/train.parquet" | sha256sum -c -
+          python -I tools/math_derive.py /tmp/math/train.parquet /tmp/math/math.jsonl
+          curl -sSL -o /tmp/mmlu/data.tar https://people.eecs.berkeley.edu/~hendrycks/data.tar
+          echo "bec563ba4bac1d6aaf04141cd7d1605d7a5ca833e38f994051e818489592989b  /tmp/mmlu/data.tar" | sha256sum -c -
+          tar -xf /tmp/mmlu/data.tar -C /tmp/mmlu data/dev data/val data/test
+      - name: every committed night of every library re-derives byte for byte from the public data (X3, F3, T3, L3, M3, G3), with R0 re-run and the void nights replayed under their old order (seal 4)
+        run: node tools/rederive.mjs /tmp/cuad/CUADv1.json --cord /tmp/cord/cord-v2-ground-truth.jsonl --polyai /tmp/polyai --clinc /tmp/clinc150 --maud /tmp/maud --ethics /tmp/ethics --emotions /tmp/goemotions --maths /tmp/math --subjects /tmp/mmlu
       - name: the catalogue (seal 5) - K1 exact, K2 patterns asked, K3 addresses, K4 shadows, K5 conflicts all re-derive from the pinned Banking77 (timings are not compared)
         run: node tools/catalogue-measure.mjs /tmp/polyai --runs 1 --check
       # Pinned. An unpinned gate is a gate somebody else can change.

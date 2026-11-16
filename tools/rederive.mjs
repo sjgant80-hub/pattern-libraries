@@ -23,11 +23,13 @@ import CL from './clinc.mjs';
 import L4 from '../src/clinc.mjs';
 import ML from './maud.mjs';
 import L5 from '../src/maud.mjs';
+import TL from './labelled.mjs';
+import LB from '../src/labelled.mjs';
 import P from '../vendor/patlib/patlib.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai', '--clinc', '--cdir', '--maud', '--mdir'].includes(args[i - 1]));
+const src = args.find((a, i) => !a.startsWith('--') && !['--dir', '--cord', '--fdir', '--polyai', '--clinc', '--cdir', '--maud', '--mdir', '--ethics', '--emotions', '--maths', '--subjects'].includes(args[i - 1]));
 const DIR = opt('--dir') || fileURLToPath(new URL('../data/doc/nights', import.meta.url));
 const CORD = opt('--cord'), FDIR = opt('--fdir') || fileURLToPath(new URL('../data/finance/nights', import.meta.url));
 const POLY = opt('--polyai');
@@ -115,6 +117,16 @@ if (MAUD) {
   if (!nightsIn(MDIR).length) console.log('maud: no committed night yet (' + MDIR + ')');
   else bad += await replay({ id: 'maud', dir: MDIR, units: ML.units(q), plan: Y.schedule(q.map((d) => d.id), L5.SCHEDULE), run: N.nightOf(N.MAUD), Q: N.MAUD.Y,
     typeOf: L5.DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) });
+}
+// libraries 6 to 9 (seal 10): --ethics <dir> --emotions <dir> --maths <dir> --subjects <dir>, each replayed once it has a night
+for (const id of Object.keys(LB.LIBRARIES)) {
+  const dir = opt('--' + id);
+  if (!dir) continue;
+  const q = TL.LOAD[id](dir), ndir = fileURLToPath(new URL('../data/' + id + '/nights', import.meta.url));
+  const ok = (rec) => rec.source && rec.source.name === TL.SOURCES[id].name && JSON.stringify(rec.source.files) === JSON.stringify(TL.SOURCES[id].files || null);
+  if (!nightsIn(ndir).length) { console.log(id + ': no committed night yet (' + ndir + ')'); continue; }
+  bad += await replay({ id, dir: ndir, units: TL.units(id, q), plan: Y.schedule(q.map((d) => d.id), LB.LIBRARIES[id].schedule), run: N.nightOf(N.LABELLED[id]), Q: N.LABELLED[id].Y,
+    typeOf: LB.KERNELS[id].DOMAIN.typeOf, sourceOk: ok, extra: () => '', input: () => ({}) });
 }
 console.log(bad ? bad + ' night(s) did NOT re-derive' : 'every committed night re-derived byte for byte');
 process.exit(bad ? 1 : 0);

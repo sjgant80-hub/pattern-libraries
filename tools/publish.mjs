@@ -12,6 +12,8 @@ import C2 from './cord.mjs';
 import PA from './polyai.mjs';
 import CL from './clinc.mjs';
 import ML from './maud.mjs';
+import TL from './labelled.mjs';
+import LB from '../src/labelled.mjs';
 
 const HOME = userInfo().homedir;
 const FROM = join(HOME, '.si-didy', 'patterns', 'libraries');
@@ -88,5 +90,14 @@ if (maud && existsSync(join(FROM, 'maud', 'state.json'))) {
   const sum = { latest: 'nights/cycle-' + last.cycle + '.json', series: recs5.map((r) => ({ ...point(r), check: r.meter.check || null })), corpus: { docs: ag.length, answers: ag.reduce((n, d) => n + d.rows.length, 0), chars } };
   writeFileSync(join(DATA, 'maud', 'summary.json'), JSON.stringify(sum, null, 1) + '\n');
   console.log('maud: published ' + recs5.length + ' night(s); latest ' + sum.latest);
+}
+// libraries 6 to 9 (seal 10): --ethics <dir> --emotions <dir> --maths <dir> --subjects <dir>, once each has a night
+for (const id of Object.keys(LB.LIBRARIES)) {
+  const i = args.indexOf('--' + id), dir = i >= 0 ? args[i + 1] : null;
+  if (!dir || !existsSync(join(FROM, id, 'state.json'))) continue;
+  const recs = copy(id), last = recs[recs.length - 1];
+  const sum = { latest: 'nights/cycle-' + last.cycle + '.json', series: recs.map((r) => ({ ...point(r), check: r.meter.check || null })), corpus: corpus(TL.LOAD[id](dir)) };
+  writeFileSync(join(DATA, id, 'summary.json'), JSON.stringify(sum, null, 1) + '\n');
+  console.log(id + ': published ' + recs.length + ' night(s); latest ' + sum.latest);
 }
 if (!existsSync(join(DATA, 'doc', 'summary.json'))) process.exit(1);

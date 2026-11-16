@@ -9,6 +9,7 @@ import F from './src/finance.mjs';
 import T from './src/triage.mjs';
 import L4 from './src/clinc.mjs';
 import L5 from './src/maud.mjs';
+import LB from './src/labelled.mjs';
 import P from './vendor/patlib/patlib.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -301,6 +302,7 @@ async function main() {
   }
   await library4(prices);
   await library5(prices);
+  await libraries69();
 
   // the fresh exam bar
   const S = Y.SCHEDULE, used = dEnded ? Infinity : night ? 2 * (night.cycle + 1) : 0;
@@ -427,6 +429,49 @@ async function main() {
 // P4 read from a library's nights: coverage never falls, and rises on every night whose pattern count grew. It is a claim
 // over every real night, so while it holds it is HOLDING, never a final HELD
 // the brochure's time calculator for one library: the buyer's figures, and only the share it answers right
+// libraries 6 to 9 (seal 10): ETHICS, GoEmotions, MATH, MMLU on the general router; every number from their records
+const GSAMPLE = { ethics: 'I took money from my roommate\'s wallet without asking and spent it.', emotions: 'Thank you so much, this really made my day!', maths: 'How many ways can 5 people sit around a round table if two of them refuse to sit next to each other?', subjects: 'Which of the following best describes the second law of thermodynamics?' };
+const GSAY = (id, task) => (id === 'ethics' ? (task === 'wrong' ? 'clearly wrong' : task === 'not-wrong' ? 'not clearly wrong' : task) : LB.KERNELS[id].say(task));
+async function libraries69() {
+  const ids = Object.keys(LB.LIBRARIES), rec = {};
+  for (const id of ids) {
+    const [sum, st] = await Promise.all([json('data/' + id + '/summary.json'), json('data/' + id + '/state.json')]);
+    const { r, ended } = await realNight(id, sum);
+    const series = sum && Array.isArray(sum.series) ? sum.series : [], last = series[series.length - 1] || null;
+    rec[id] = { night: r, ended, lib: st && Array.isArray(st.library) ? st.library : [], k: last && last.check ? last.check : null };
+  }
+  const sel = $('gl'), gdoc = $('gdoc');
+  sel.innerHTML = ids.map((id) => '<option value="' + id + '">' + esc(LB.LIBRARIES[id].n + ' · ' + LB.LIBRARIES[id].name) + '</option>').join('');
+  const sample = () => { gdoc.value = GSAMPLE[sel.value]; };
+  sample();
+  const readIt = () => {
+    const id = sel.value, K = LB.KERNELS[id], lib = rec[id].lib, m = K.read(gdoc.value, lib);
+    $('ganswer').innerHTML = '<p><strong>Answer:</strong> ' + (m.route === 'unknown' ? '<span class="unknown">unknown — no proven pattern fired</span>' : esc(GSAY(id, m.route)) + ' <span class="muted">(' + dexplain(m.rule).replace('the excerpt holds', 'the text holds') + ')</span>') + '</p>'
+      + (m.also.length ? '<p><strong>Also matched:</strong> ' + esc(m.also.map((t) => GSAY(id, t)).join(', ')) + ' <span class="muted">(a conflict: shown, never hidden)</span></p>' : '')
+      + '<p><strong>The keyword method would say:</strong> ' + (m.keyword === 'unknown' ? '<span class="muted">nothing</span>' : esc(GSAY(id, m.keyword))) + '</p>'
+      + '<p class="muted">' + esc(lib.length ? 'Read in your browser with ' + lib.length + ' proven pattern' + (lib.length === 1 ? '' : 's') + ' from library ' + LB.LIBRARIES[id].n + '.' : 'Library ' + LB.LIBRARIES[id].n + ' has no proven pattern yet, so every text is unknown.') + '</p>';
+  };
+  $('gread').addEventListener('click', readIt);
+  $('gsample').addEventListener('click', () => { sample(); readIt(); });
+  sel.addEventListener('change', () => { sample(); readIt(); });
+  readIt();
+  const frac = (a, b) => (b ? a + ' of ' + b + ' (' + pct(a / b) + ')' : 'none answered');
+  $('g-nights').querySelector('tbody').innerHTML = ids.map((id) => { const R = rec[id], k = R.k; return '<tr><td>' + esc(LB.LIBRARIES[id].n + ' · ' + id) + '</td><td>' + esc(R.night ? R.night.cycle + ' (' + String(R.night.at).slice(0, 10) + ')' + (R.ended ? ', exams now spent' : '') : 'none yet') + '</td><td>' + esc(R.lib.length) + '</td><td>' + esc(k ? frac(k.right, k.routed) : '') + '</td><td>' + esc(k ? frac(k.baseRight, k.baseRouted) : '') + '</td></tr>'; }).join('');
+  $('g-note').innerHTML = '<p class="muted">' + esc('Measured on texts kept apart (the meter), never used to propose or test a pattern. A library that answers few texts is not failing: it answers only where a proven pattern fires and leaves the rest. ' + (rec.ethics.lib.length ? '' : 'Ethics has kept no pattern yet: single words rarely decide whether an act is wrong, and the bars are not lowered to let one in.')) + '</p>';
+  $('g-kept').querySelector('tbody').innerHTML = ids.flatMap((id) => (rec[id].night ? rec[id].night.promoted || [] : []).map((p) => { const { words, task } = ruleWords(p.rule); return '<tr><td>' + esc(id) + '</td><td>' + words.map((w) => '<code>' + esc(w) + '</code>').join(' + ') + '</td><td>' + esc(GSAY(id, task)) + '</td><td>' + esc(p.held.right + ' / ' + p.held.cover) + '</td><td>' + esc(p.final.right + ' / ' + p.final.cover) + '</td></tr>'; })).join('') || '<tr><td colspan="5" class="muted">nothing kept yet</td></tr>';
+  const g1 = (R) => { const x = R.night && R.night.exam && R.night.exam.receipt; return chip(!x || !x.ok ? null : x.decision === 'PROMOTE' ? true : x.decision === 'INSUFFICIENT' ? null : false, 'HELD', 'FAILED', !R.night ? 'NO NIGHT YET' : x && x.answered === 0 ? 'NOTHING TO EXAMINE YET' : 'INSUFFICIENT'); };
+  const g2 = (R) => chip(R.k && R.k.routed ? R.k.right / R.k.routed >= LB.METER_BAR : null, 'HELD', 'FAILED', !R.night ? 'NO NIGHT YET' : 'NOTHING ANSWERED YET') + (R.k && R.k.routed ? ' ' + esc(pct(R.k.right / R.k.routed)) : '');
+  const g5 = (R) => chip(R.k ? ['queries', 'routed', 'right', 'conflicts', 'baseRouted', 'baseRight'].every((f) => Number.isInteger(R.k[f])) : null, 'HELD', 'FAILED', 'NO NIGHT YET');
+  const rows = [
+    ['G1', 'Each night\'s library beats the keyword method on that night\'s fresh final exam (signed).', g1],
+    ['G2', 'Where it answers on the measuring texts, it is right at least ' + (LB.METER_BAR * 100) + '% of the time.', g2],
+    ['G3', 'Every night re-derives byte for byte from the public data.', () => '<span class="chip">re-derived in CI</span>'],
+    ['G4', 'Each source carries its licence and credit.', () => chip(true, 'HELD', 'FAILED')],
+    ['G5', 'The router is measured whole every night against the keyword method (six counts).', g5],
+  ];
+  $('g-claims').querySelector('tbody').innerHTML = rows.map(([c, w, fn]) => '<tr><td><strong>' + c + '</strong></td><td>' + esc(w) + '</td>' + ids.map((id) => '<td>' + fn(rec[id]) + '</td>').join('') + '</tr>').join('');
+}
+
 function calcFor(prefix, noun, verb, measured) {
   const ins = [['receipts', noun + ' a month', 5000, 'an example: put in yours'], ['minutes', 'Minutes to ' + verb + ' one by hand', 1, 'an example: put in yours'], ['rate', 'Cost of an hour of that work', 25, 'an example: put in yours']];
   $(prefix + '-calc-in').innerHTML = ins.map(([id, label, v, src]) => '<label class="inp" for="' + prefix + '-' + id + '">' + esc(label) + '<input id="' + prefix + '-' + id + '" type="number" min="0" step="any" value="' + v + '"><span class="muted">' + esc(src) + '</span></label>').join('');

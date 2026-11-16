@@ -43,6 +43,17 @@ DATA
   data/maud/ are derived from it and are shared under the same CC BY 4.0 terms. src/maud-questions.mjs holds its 144
   question names and their answer names, as the experts wrote them.
 
+- Libraries 6 to 9 (seal 10). Each file is pinned by sha256 in tools/labelled.mjs; this repository commits no text from
+  them; the patterns, scores and records in data/{ethics,emotions,maths,subjects}/ are derived from them under the same terms.
+  * ETHICS (Dan Hendrycks, Collin Burns, Steven Basart, Andrew Critch, Jerry Li, Dawn Song, Jacob Steinhardt; "Aligning AI
+    With Shared Human Values", ICLR 2021), MIT licence (https://github.com/hendrycks/ethics). Commonsense morality only.
+  * GoEmotions (Dorottya Demszky, Dana Movshovitz-Attias, Jeongwoo Ko, Alan Cowen, Gaurav Nemade, Sujith Ravi; ACL 2020),
+    Apache License 2.0 (https://github.com/google-research/google-research, commit 7951440944924ac61b6e2f9a2a3c715834005c40).
+  * MATH (Dan Hendrycks, Collin Burns, Saurav Kadavath, Akul Arora, Steven Basart, Eric Tang, Dawn Song, Jacob Steinhardt;
+    NeurIPS 2021), MIT licence (https://github.com/hendrycks/math; the copy it links to, huggingface.co/datasets/qwedsacf/competition_math).
+  * MMLU (Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn Song, Jacob Steinhardt; ICLR 2021), MIT
+    licence (https://github.com/hendrycks/test). Question texts and subjects only.
+
 REUSED CODE (vendored byte for byte, each pinned by hash in test/vendor.test.mjs)
 - vendor/patlib/patlib.mjs: Kar's pattern-library law (si-didy, sealed 2026-11-06, 53cfed8).
 - vendor/mint/src/{baseline,experiment,journal}.mjs and vendor/mint/vendor/fall-kit/light/sha256.mjs: the baseline

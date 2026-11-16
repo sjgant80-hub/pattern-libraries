@@ -94,8 +94,8 @@
   {
    "name": "router",
    "file": "src/router.mjs",
-   "total": 46,
-   "killed": 46,
+   "total": 52,
+   "killed": 52,
    "ignored": 0,
    "clean": true,
    "capped": false

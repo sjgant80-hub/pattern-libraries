@@ -30,6 +30,8 @@ export function routerFor(spec) {
   const OOS = typeof S.oos === 'string' && S.oos ? str(S.oosTask) || 'out-of-scope' : null;
   const TASKS = Object.freeze(OOS ? [...ROUTES, OOS] : [...ROUTES]);
   const key = str(S.key);
+  // how many of a message's words the patterns read (seal 10 lets a library read longer texts); 40 unless set
+  const TOKENS = Number.isInteger(S.tokens) && S.tokens > 0 ? S.tokens : WINDOW.tokens;
 
   const say = (task) => {
     if (OOS && task === OOS) return str(S.oosSay) || 'Out of scope';
@@ -43,12 +45,14 @@ export function routerFor(spec) {
   function units(doc) {
     const out = {};
     if (!isObj(doc) || typeof doc.id !== 'string' || typeof doc.text !== 'string') return out;
-    const text = doc.text, all = P.tokensOf(text), tokens = all.slice(0, WINDOW.tokens);
+    const text = doc.text, all = P.tokensOf(text), tokens = all.slice(0, TOKENS);
     const raw = text.replace(/\s+/g, ' ').trim().slice(0, WINDOW.raw), id = P.fnv(key + doc.id).toString(36);
     const gold = str(doc.intent);
+    // seal 10: a message may carry several experts' labels (doc.intents); a route is right when it is any of them
+    const more = new Set(arr(doc.intents).filter((x) => typeof x === 'string' && x !== S.oos).map(idOf));
     let anyKw = false;
     for (const r of ROUTES) {
-      const right = idOf(gold) === r && gold !== S.oos, kw = NAMEWORDS[r].length > 0 && NAMEWORDS[r].every((w) => all.includes(w)); // a name with no words never matches (seal 8 note)
+      const right = (idOf(gold) === r && gold !== S.oos) || more.has(r), kw = NAMEWORDS[r].length > 0 && NAMEWORDS[r].every((w) => all.includes(w)); // a name with no words never matches (seal 8 note)
       if (kw) anyKw = true;
       out[r] = [{ id: id + '.q', doc: doc.id, raw, tokens, kw, right, label: right ? r : 'other' }];
     }

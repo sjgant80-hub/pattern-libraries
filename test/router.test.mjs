@@ -65,6 +65,24 @@ test('units: one per route and one out-of-scope; right only for the experts\' in
   assert.deepEqual(Object.keys(K.units({ id: 'a', text: 'card arrival' })).length, 5, 'a missing intent is no intent');
 });
 
+test('seal 10: several experts\' labels (any one is right), and a longer reading window when a library sets one', () => {
+  const m = K.units({ id: 'm1', text: 'card arrival and pin change', intent: '', intents: ['card_arrival', 'pin_change', 7, 'oos'] });
+  assert.deepEqual(K.TASKS.filter((t) => m[t][0].right), ['card-arrival', 'pin-change'], 'every listed label is right; junk and the oos label are not routes');
+  assert.equal(m['out-of-scope'][0].right, false, 'intents never make a message out of scope');
+  const both = K.units({ id: 'm2', text: 'x', intent: 'card_arrival', intents: ['pin_change'] });
+  assert.deepEqual(K.TASKS.filter((t) => both[t][0].right), ['card-arrival', 'pin-change'], 'intent and intents together');
+  assert.deepEqual(K.TASKS.filter((t) => K.units({ id: 'm3', text: 'x', intent: 'no', intents: 'pin_change' })[t][0].right), ['no'], 'intents that is not a list is ignored');
+  const kO = R.routerFor({ intents: ['oos', 'a_b'], oos: 'oos' });
+  assert.equal(kO.units({ id: 'o', text: 'x', intent: '', intents: ['oos'] }).oos[0].right, false, 'the oos label inside intents is never a route\'s right answer');
+  const words = Array.from({ length: 70 }, (_, i) => 'word' + String.fromCharCode(97 + (i % 26)) + String.fromCharCode(97 + Math.floor(i / 26))).join(' ');
+  const L60 = R.routerFor({ intents: ['a_b'], tokens: 60 });
+  assert.equal(L60.units({ id: 'w', text: words })['a-b'][0].tokens.length, 60);
+  assert.equal(R.routerFor({ intents: ['a_b'], tokens: 0 }).units({ id: 'w', text: words })['a-b'][0].tokens.length, 40, 'a window that is not a positive whole number is the default');
+  assert.equal(R.routerFor({ intents: ['a_b'], tokens: 2.5 }).units({ id: 'w', text: words })['a-b'][0].tokens.length, 40);
+  assert.equal(R.routerFor({ intents: ['a_b'], tokens: -3 }).units({ id: 'w', text: words })['a-b'][0].tokens.length, 40);
+  assert.equal(R.routerFor({ intents: ['a_b'], tokens: 1 }).units({ id: 'w', text: words })['a-b'][0].tokens.length, 1);
+});
+
 test('baseline and pick: the cheap unit; the first unit a kept rule for the task fires on, with and without a catalogue', () => {
   const u = U(K, 'q1', 'card arrival late', 'card_arrival');
   assert.equal(K.baseline('card-arrival', u['card-arrival']), u['card-arrival'][0]);
