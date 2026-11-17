@@ -45,18 +45,19 @@ const nightsIn = (dir) => (existsSync(dir) ? readdirSync(dir).filter((f) => /^cy
 async function replay(L) {
   const files = nightsIn(L.dir);
   if (!files.length) { console.error('::error::no committed nights in ' + L.dir); return 1; }
-  let state = { cycle: 0, library: [], records: [] }, bad = 0;
+  let state = { cycle: 0, library: [], records: [] }, bad = 0, prev = null;
   for (const f of files) {
     const rec = JSON.parse(readFileSync(join(L.dir, f), 'utf8'));
     if (rec.cycle !== state.cycle) { console.error('::error::' + f + ' is night ' + rec.cycle + ', but the replay is at night ' + state.cycle); return bad + 1; }
     if (!L.sourceOk(rec)) { console.error('::error::' + f + ' was not made from the pinned source'); bad++; }
     const problem = L.extra(rec);
     if (problem) { console.error('::error::' + f + ': ' + problem); bad++; }
-    const r = await L.run.night({ units: L.units, plan: L.plan, cycle: rec.cycle, library: state.library, records: state.records, at: rec.at, ask: rec.model ? N.replayAsk(rec) : null, model: rec.model, free: rec.free || 1, ...L.input(rec) });   // no model that night: nothing was asked
+    const r = await L.run.night({ units: L.units, plan: L.plan, cycle: rec.cycle, library: state.library, records: state.records, at: rec.at, ask: rec.model ? N.replayAsk(rec) : null, model: rec.model, free: rec.free || 1, ...(rec.nearmiss === true ? { nearmiss: true, prior: prev } : {}), ...L.input(rec) });   // seal 11: the same previous record   // no model that night: nothing was asked
     const same = JSON.stringify(r.record) === JSON.stringify(strip(rec));
     console.log((same ? 'same  ' : 'DIFFERENT ') + L.id + ' ' + f + ': ' + L.run.line(r.record));
     if (!same) bad++;
     if (r.ok) state = r.state;
+    prev = rec;
     const tf = join(L.dir, 'teach-' + rec.cycle + '.json');
     if (existsSync(tf)) {
       const t = JSON.parse(readFileSync(tf, 'utf8'));

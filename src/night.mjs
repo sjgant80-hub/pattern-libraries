@@ -65,6 +65,30 @@ export const LABELLED = Object.freeze(Object.fromEntries(Object.entries(LB.LIBRA
 
 const countBy = (list, key) => { const o = {}; for (const x of list) { const k = key(x); o[k] = (o[k] || 0) + 1; } return o; };
 
+/** nearMeasure(free, near, keptWith, keptWithout, precisionWith, precisionWithout) → seal 11's comparison, from the two arms */
+export function nearMeasure(free, near, keptWith, keptWithout, pw, po) {
+  const mine = new Set(arr(free).map((r) => P.ruleKey(r)));
+  return { proposed: arr(near).length, newTonight: arr(near).filter((r) => !mine.has(P.ruleKey(r))).length, keptFromThem: arr(keptWith).filter((r) => isObj(r) && isObj(r.prov) && r.prov.source === 'nearmiss').length,
+    keptWith: arr(keptWith).length, keptWithout: arr(keptWithout).length, precisionWith: pw, precisionWithout: po };
+}
+
+/** nearMisses(prior, tasks) → the rules a night dropped ONLY for firing on too few held-out texts, short by 1 or 2 (seal 11):
+ *  [{ when, then }] in the prior night's order, each once, for tasks this library still has */
+export function nearMisses(prior, tasks) {
+  const known = new Set(arr(tasks)), seen = new Set(), out = [];
+  for (const d of arr(isObj(prior) ? prior.dropped : null)) {
+    if (!isObj(d)) continue;
+    const m = str(d.why).match(/^held-out: covers (\d+), needs (\d+)$/), k = str(d.rule);
+    if (!m || Number(m[1]) < Number(m[2]) - 2 || Number(m[1]) >= Number(m[2]) || seen.has(k)) continue;
+    const [w, then] = k.split('=>');
+    const when = str(w).split('+').filter(Boolean);
+    if (!then || !known.has(then) || !when.length) continue;
+    seen.add(k);
+    out.push({ when, then });
+  }
+  return out;
+}
+
 /** nightOf(L) → { freeProposals, night, line } for the library L */
 export function nightOf(L) {
   const NT = L.NIGHT, D = L.D, C = L.Y;
@@ -94,7 +118,8 @@ export function nightOf(L) {
     const model = str(I.model) || null;
     const meterIds = arr(plan.meter);
     const free = I.free === 1 ? 1 : NT.free;
-    const base = { kind: 'library-night', v: 1, library: NT.library, feed: NT.feed, cycle, at, model, ...(free === 1 ? {} : { free }) };
+    const nearOn = I.nearmiss === true;   // seal 11: on from the night the seal names; a record made with it says so
+    const base = { kind: 'library-night', v: 1, library: NT.library, feed: NT.feed, cycle, at, model, ...(free === 1 ? {} : { free }), ...(nearOn ? { nearmiss: true } : {}) };
     // a library with a check measures it on the meter: finance its arithmetic (only the parts R0 kept), routing the
     // router whole (T5)
     const check = (lib) => (typeof L.check === 'function' ? L.check(lib, units, meterIds, I) : null);
@@ -113,7 +138,11 @@ export function nightOf(L) {
 
     // 3 · the free tiers
     const freeProps = freeProposals(units, slices, records, at, free);
-    const g1 = C.grow(units, slices, freeProps, carried);
+    const nearProps = nearOn ? nearMisses(I.prior, D.TASKS).map((r) => ({ ...r, prov: prov('nearmiss', 'none', at, C.casesFor(units, slices.train, r.then, 'train').length, 'near-miss of night ' + (cycle - 1)) })) : [];
+    const g1 = C.grow(units, slices, [...freeProps, ...nearProps], carried);
+    // the same night without them (measured, never kept): seal 11's comparison on the same fresh exam
+    const nearRec = nearOn ? (() => { const g0 = C.grow(units, slices, freeProps, carried);
+      return nearMeasure(freeProps, nearProps, g1.promoted, g0.promoted, C.meter(g1.library, D.TASKS, units, meterIds).precision, C.meter(g0.library, D.TASKS, units, meterIds).precision); })() : null;
     const keptFree = countBy(g1.promoted, (r) => r.then);
 
     // 4 · the local 7B, only where the free tiers kept nothing
@@ -158,13 +187,13 @@ export function nightOf(L) {
       ...base,
       slices: { train: slices.train.length, held: slices.held, final: slices.final },
       carried: carried.length, exam: { total: examIn.total, receipt: x1 },
-      proposed: { free: freeProps.length, '7b': props7b.length }, replies,
-      proposals: [...freeProps, ...props7b].map((p) => ({ when: p.when, then: p.then, prov: p.prov })),
+      proposed: { free: freeProps.length, '7b': props7b.length, ...(nearOn ? { nearmiss: nearProps.length } : {}) }, replies,
+      proposals: [...freeProps, ...nearProps, ...props7b].map((p) => ({ when: p.when, then: p.then, prov: p.prov })),
       promoted: promoted.map((r) => ({ rule: P.ruleKey(r), source: r.prov.source, recipe: r.prov.recipe, receipt: r.receipt, held: r.scores.held, final: r.scores.final, heldDocs: r.scores.heldDocs, finalDocs: r.scores.finalDocs })),
       dropped: [...g1.dropped, ...g2.dropped],
       keptFree, tried7b, passed7b, asks: asks.map((a) => ({ task: a.task, evidence: a.evidence })),
       meter: { before: { coverage: mIn.coverage, precision: mIn.precision, answered: mIn.answered, cases: mIn.cases }, after: { coverage: m.coverage, precision: m.precision, answered: m.answered, right: m.right, cases: m.cases, withGold: m.withGold }, per: m.per, receipt: mReceipt, ...(c ? { check: c } : {}) },
-      patterns: lib.length, built: built.length,
+      patterns: lib.length, built: built.length, ...(nearRec ? { nearmissMeasure: nearRec } : {}),
     };
     return { ok: true, record, asks, state: { cycle: cycle + 1, library: lib, records: [...records, ...built] } };
   }
@@ -204,4 +233,4 @@ export function replayAsk(record) {
 // library 1, bound: the names every caller already uses
 export const { freeProposals, night, line } = nightOf(DOC);
 
-export default { NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, LABELLED, nightOf, freeProposals, night, replayAsk, line };
+export default { nearMisses, nearMeasure, NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, LABELLED, nightOf, freeProposals, night, replayAsk, line };
