@@ -755,3 +755,48 @@ What these patterns are, said plainly: a kept pattern agrees with the people who
 saw. "Wrong" in library 6 means what the ETHICS annotators judged clearly wrong; an emotion in library 7 is what GoEmotions'
 raters read in a comment. Neither is a moral or clinical verdict. Libraries 8 and 9 say which branch or subject a text
 belongs to; they solve nothing. Each library is reported **landed** only under seal 1's definition.
+
+---
+
+# SEAL 11 · a night's near-misses feed the next night (the Convergence Pass, upgrade 1), written before it is switched on (2026-11-17)
+
+Seals 1 to 10 above are unchanged, byte for byte. Simon's Convergence Pass asks each layer to run on the byproduct of the
+layer inside it, and to keep an upgrade only if it is measured better on real data. This seal is that test for the
+pattern libraries.
+
+## What was found
+
+A night drops a rule whose held-out cover is short of the law's 5. Those rules are thrown away. On library 2's six
+counted nights, 79 of 440 dropped rules (18%) were short by only 1 or 2. Seal 7 used that count once, by hand.
+
+## What changes
+
+A **near-miss** is a rule the previous night dropped for exactly one reason, "held-out: covers k, needs n", with
+n − 2 ≤ k < n, for a task the library still has; each rule once, in the previous night's order. When a night runs with
+`nearmiss` on, the previous night's near-misses are proposed again, after the free proposers, on this night's fresh
+exam, through the same two gates and the same bars. A near-miss rule is kept only if it passes everything any other
+proposal must pass. Nothing else changes.
+
+**It is switched on for libraries 4 to 9** (clinc, maud, ethics, emotions, maths, subjects) **from their nights on or
+after 2026-11-18**, as long as they have exams left. Libraries 1, 2 and 3 have no exam left, or a last one already
+run. Every night already recorded is unchanged and re-derives byte for byte. A record made with it says
+`nearmiss: true`, and its replay passes the same previous record.
+
+## How it is measured (fixed here, before any night runs with it)
+
+Each such night also grows the library from the free proposers alone, on the same fresh exam, and records both counts:
+`keptWith` (what the library keeps, near-misses included) and `keptWithout` (what it would have kept without them),
+plus `newTonight` (near-misses the miners did not propose again tonight), `keptFromThem`, and the meter precision of
+the library both ways (`precisionWith`, `precisionWithout`). Near-misses are proposed after the free proposers, so
+`keptWith` can never be below `keptWithout`: more patterns alone proves nothing. Precision is the real test. The library always keeps the
+`keptWith` arm. The arm is fixed by this seal and never chosen after the exam is seen, so the exam is still used once.
+
+- **C1 (the upgrade earns its place)**: over every library-night it runs, the sum of `keptWith − keptWithout` is
+  **above 0**, AND on every one of those nights `precisionWith` is at least `precisionWithout` minus 0.01 (where both
+  answer), AND `precisionWith` stays at or above the library's 80% bar wherever it answers. Any one night that breaks
+  either precision condition fails C1.
+- **C2**: every night made with it re-derives byte for byte in CI, the comparison counts included.
+
+**Decided** when every library on it has run out of exams, or after the night of 2026-11-30, whichever comes first.
+If C1 fails, the upgrade is switched off by a note in this file, and its nights and counts stay published as a
+failure. If it holds, it stays.

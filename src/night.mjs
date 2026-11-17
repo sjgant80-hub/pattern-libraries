@@ -135,7 +135,8 @@ export function nightOf(L) {
     const g1 = C.grow(units, slices, [...freeProps, ...nearProps], carried);
     // the same night without them (measured, never kept): seal 11's comparison on the same fresh exam
     const nearRec = nearOn ? (() => { const g0 = C.grow(units, slices, freeProps, carried), mine = new Set(freeProps.map((r) => P.ruleKey(r)));
-      return { proposed: nearProps.length, newTonight: nearProps.filter((r) => !mine.has(P.ruleKey(r))).length, keptFromThem: g1.promoted.filter((r) => r.prov && r.prov.source === 'nearmiss').length, keptWith: g1.promoted.length, keptWithout: g0.promoted.length }; })() : null;
+      const pw = C.meter(g1.library, D.TASKS, units, meterIds).precision, po = C.meter(g0.library, D.TASKS, units, meterIds).precision;
+      return { proposed: nearProps.length, newTonight: nearProps.filter((r) => !mine.has(P.ruleKey(r))).length, keptFromThem: g1.promoted.filter((r) => r.prov && r.prov.source === 'nearmiss').length, keptWith: g1.promoted.length, keptWithout: g0.promoted.length, precisionWith: pw, precisionWithout: po }; })() : null;
     const keptFree = countBy(g1.promoted, (r) => r.then);
 
     // 4 · the local 7B, only where the free tiers kept nothing
