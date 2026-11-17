@@ -7,8 +7,8 @@ import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
 const ROOT = new URL('../', import.meta.url);
-// the whole of CLAIMS.md as sealed: seals 1 to 10, and the notes of seals 8 and 9
-const SEALED_WHOLE = '9d68df608cf21753d81baaa014ffd969be6ab5cae0f58f4ca2b5e2113fecfc68';
+// the whole of CLAIMS.md as sealed: seals 1 to 11, and the notes of seals 8 and 9
+const SEALED_WHOLE = '5c9ba75c948f7c5038fb288e857660eb20ee44e8546af84a56d1145ab7169562';
 const read = (p) => readFileSync(new URL(p, ROOT), 'utf8');
 const html = read('index.html'), app = read('app.mjs');
 // the words a reader sees: no style, no script, no tags (so an SVG coordinate like x="810" is not a typed number)
@@ -42,6 +42,9 @@ test('SEAL 1 is the claims as sealed, unchanged; SEAL 2 and SEAL 3 follow it, un
   // seal 10 (libraries 6 to 9, cb9f7bd) was appended after the first 54,555 bytes
   assert.equal(sha(buf.subarray(0, 54555)), '070b44d506b3e1de6012bbf81cd0c9825decfb45d7efb40189e5a91f11ab9406');
   assert.match(buf.subarray(54555, 54700).toString('utf8'), /^\n---\n\n# SEAL 10 · libraries 6 to 9/);
+  // seal 11 (near-misses feed the next night, b4d9c49) was appended after the first 60,081 bytes
+  assert.equal(sha(buf.subarray(0, 60081)), '9d68df608cf21753d81baaa014ffd969be6ab5cae0f58f4ca2b5e2113fecfc68');
+  assert.match(buf.subarray(60081, 60220).toString('utf8'), /^\n---\n\n# SEAL 11 · a night's near-misses feed the next night/);
   assert.equal(sha(buf), SEALED_WHOLE);
   assert.match(buf.subarray(10552, 10700).toString('utf8'), /^\n---\n\n# SEAL 2 · library 2, FINANCE/);
   assert.match(buf.subarray(20871, 21000).toString('utf8'), /^\n---\n\n# SEAL 3 · library 3, TRIAGE AND ROUTING/);

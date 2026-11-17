@@ -65,6 +65,13 @@ export const LABELLED = Object.freeze(Object.fromEntries(Object.entries(LB.LIBRA
 
 const countBy = (list, key) => { const o = {}; for (const x of list) { const k = key(x); o[k] = (o[k] || 0) + 1; } return o; };
 
+/** nearMeasure(free, near, keptWith, keptWithout, precisionWith, precisionWithout) → seal 11's comparison, from the two arms */
+export function nearMeasure(free, near, keptWith, keptWithout, pw, po) {
+  const mine = new Set(arr(free).map((r) => P.ruleKey(r)));
+  return { proposed: arr(near).length, newTonight: arr(near).filter((r) => !mine.has(P.ruleKey(r))).length, keptFromThem: arr(keptWith).filter((r) => isObj(r) && isObj(r.prov) && r.prov.source === 'nearmiss').length,
+    keptWith: arr(keptWith).length, keptWithout: arr(keptWithout).length, precisionWith: pw, precisionWithout: po };
+}
+
 /** nearMisses(prior, tasks) → the rules a night dropped ONLY for firing on too few held-out texts, short by 1 or 2 (seal 11):
  *  [{ when, then }] in the prior night's order, each once, for tasks this library still has */
 export function nearMisses(prior, tasks) {
@@ -134,9 +141,8 @@ export function nightOf(L) {
     const nearProps = nearOn ? nearMisses(I.prior, D.TASKS).map((r) => ({ ...r, prov: prov('nearmiss', 'none', at, C.casesFor(units, slices.train, r.then, 'train').length, 'near-miss of night ' + (cycle - 1)) })) : [];
     const g1 = C.grow(units, slices, [...freeProps, ...nearProps], carried);
     // the same night without them (measured, never kept): seal 11's comparison on the same fresh exam
-    const nearRec = nearOn ? (() => { const g0 = C.grow(units, slices, freeProps, carried), mine = new Set(freeProps.map((r) => P.ruleKey(r)));
-      const pw = C.meter(g1.library, D.TASKS, units, meterIds).precision, po = C.meter(g0.library, D.TASKS, units, meterIds).precision;
-      return { proposed: nearProps.length, newTonight: nearProps.filter((r) => !mine.has(P.ruleKey(r))).length, keptFromThem: g1.promoted.filter((r) => r.prov && r.prov.source === 'nearmiss').length, keptWith: g1.promoted.length, keptWithout: g0.promoted.length, precisionWith: pw, precisionWithout: po }; })() : null;
+    const nearRec = nearOn ? (() => { const g0 = C.grow(units, slices, freeProps, carried);
+      return nearMeasure(freeProps, nearProps, g1.promoted, g0.promoted, C.meter(g1.library, D.TASKS, units, meterIds).precision, C.meter(g0.library, D.TASKS, units, meterIds).precision); })() : null;
     const keptFree = countBy(g1.promoted, (r) => r.then);
 
     // 4 · the local 7B, only where the free tiers kept nothing
@@ -227,4 +233,4 @@ export function replayAsk(record) {
 // library 1, bound: the names every caller already uses
 export const { freeProposals, night, line } = nightOf(DOC);
 
-export default { nearMisses, NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, LABELLED, nightOf, freeProposals, night, replayAsk, line };
+export default { nearMisses, nearMeasure, NIGHT, FIN_NIGHT, ROUTE_NIGHT, TRIAGE_NIGHT, CLINC_NIGHT, MAUD_NIGHT, DOC, FINANCE, ROUTE, TRIAGE, CLINC, MAUD, LABELLED, nightOf, freeProposals, night, replayAsk, line };

@@ -36,6 +36,9 @@ const runs = (id) => !ONLY || ONLY.split(',').includes(id);
 const rd = (p, fb) => { try { return JSON.parse(readFileSync(p, 'utf8')); } catch { return fb; } };
 const save = (p, s) => { if (DRY) return; const t = p + '.tmp'; writeFileSync(t, s); renameSync(t, p); };
 const imp = (rel) => import(pathToFileURL(join(REPO, rel)).href).then((m) => m.default);
+// seal 11: libraries 4-9, on nights from 2026-11-18, re-propose the previous night's near-misses; the previous record is read here
+const NEAR_FROM = '2026-11-18';
+const priorFor = (dir, cycle, at) => (String(at) >= NEAR_FROM && cycle > 0 ? rd(join(dir, 'nights', 'cycle-' + (cycle - 1) + '.json'), null) : null);
 
 async function main() {
   const [Y, N, C, B, C2, F, PA, T] = await Promise.all([imp('src/cycle.mjs'), imp('src/night.mjs'), imp('tools/cuad.mjs'), imp('src/build.mjs'), imp('tools/cord.mjs'), imp('src/finance.mjs'), imp('tools/polyai.mjs'), imp('src/triage.mjs')]);
@@ -167,7 +170,8 @@ async function main() {
       const slices = Y.slicesFor(plan, state.cycle);
       const need = new Set([...plan.meter, ...(slices ? [...slices.train, ...slices.held, ...slices.final] : [])]);
       const units = CL4.units(docs4.filter((d) => need.has(d.id)));
-      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null });
+      const prior = priorFor(D4, state.cycle, at);
+      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null, nearmiss: !!prior, prior });
       const rec = { ...r.record, source: { repo: CL4.SOURCE.repo, commit: CL4.SOURCE.commit, files: CL4.SOURCE.files }, why7b: 'library 4 runs on the free tiers only (SEAL 8, N5)', dry: DRY };
       says.push(LN.line(rec));
       if (!DRY) {
@@ -193,7 +197,8 @@ async function main() {
       const plan = Y.schedule(docs5.map((d) => d.id), L5.SCHEDULE);
       const state = rd(join(D5, 'state.json'), { cycle: 0, library: [], records: [] });
       const units = ML5.units(docs5);
-      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null });
+      const prior = priorFor(D5, state.cycle, at);
+      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null, nearmiss: !!prior, prior });
       const rec = { ...r.record, source: { repo: ML5.SOURCE.repo, commit: ML5.SOURCE.commit, files: ML5.SOURCE.files }, why7b: 'library 5 runs on the free tiers only (SEAL 9, N6)', dry: DRY };
       says.push(LN.line(rec));
       if (!DRY) {
@@ -221,7 +226,8 @@ async function main() {
       const slices = Y.slicesFor(plan, state.cycle);
       const need = new Set([...plan.meter, ...(slices ? [...slices.train, ...slices.held, ...slices.final] : [])]);
       const units = TL.units(id, docs.filter((d) => need.has(d.id)));
-      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null });
+      const prior = priorFor(D, state.cycle, at);
+      const r = await LN.night({ units, plan, cycle: state.cycle, library: state.library, records: state.records, at, ask: null, model: null, nearmiss: !!prior, prior });
       const rec = { ...r.record, source: { name: TL.SOURCES[id].name, licence: TL.SOURCES[id].licence, files: TL.SOURCES[id].files || null, manifest: id === 'subjects' ? LB.MMLU_MANIFEST : null }, why7b: 'libraries 6 to 9 run on the free tiers only (SEAL 10, N7)', dry: DRY };
       says.push(LN.line(rec));
       if (!DRY) {

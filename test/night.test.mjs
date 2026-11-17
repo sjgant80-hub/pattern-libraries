@@ -240,3 +240,61 @@ test('library 3: routing and triage nights run the free tiers only, record their
   assert.match(TN.line(t.record), /^triage library, night 0: /);
   assert.deepEqual([N.ROUTE_NIGHT.max7b, N.TRIAGE_NIGHT.max7b, N.ROUTE.batches, N.TRIAGE.batches], [0, 0, 9, 4]);
 });
+
+test('seal 11: nearMisses reads only rules dropped for held-out cover short by 1 or 2, once each, for known tasks', () => {
+  const prior = { dropped: [
+    { rule: 'dated+made=>agreement-date', why: 'held-out: covers 4, needs 5' },
+    { rule: 'made=>agreement-date', why: 'held-out: covers 3, needs 5' },
+    { rule: 'signed=>agreement-date', why: 'held-out: covers 2, needs 5' },
+    { rule: 'recitals=>agreement-date', why: 'held-out: covers 5, needs 5' },
+    { rule: 'dated+made=>agreement-date', why: 'held-out: covers 4, needs 5' },
+    { rule: 'noise=>nowhere', why: 'held-out: covers 4, needs 5' },
+    { rule: 'noise=>effective-date', why: 'held-out: right 0 of 6, needs 0.8' },
+    { rule: 'start=>effective-date', why: 'held-out: covers 4, needs 5 on those documents' },
+    { rule: '=>effective-date', why: 'held-out: covers 4, needs 5' },
+    { rule: 'nowhere', why: 'held-out: covers 4, needs 5' },
+    null, 7,
+  ] };
+  assert.deepEqual(N.nearMisses(prior, ['agreement-date', 'effective-date']), [{ when: ['dated', 'made'], then: 'agreement-date' }, { when: ['made'], then: 'agreement-date' }]);
+  assert.deepEqual(N.nearMisses({ dropped: [{ rule: 'a=>t', why: 'held-out: covers 1, needs 3' }, { rule: 'b=>t', why: 'held-out: covers 2, needs 3' }] }, ['t']), [{ when: ['a'], then: 't' }, { when: ['b'], then: 't' }], 'short by 1 or 2 of whatever the bar is');
+  assert.deepEqual(N.nearMisses({ dropped: [{ rule: 'a=>t', why: 'held-out: covers 0, needs 3' }] }, ['t']), []);
+  assert.deepEqual(N.nearMisses(null, ['t']), []);
+  assert.deepEqual(N.nearMisses({ dropped: 'x' }, ['t']), []);
+  assert.deepEqual(N.nearMisses(prior, null), []);
+});
+
+test('seal 11: a night with near-misses on proposes them after the free tiers, keeps them only through the gates, and measures the same night without them', async () => {
+  const n0 = await N.night({ units: W.units, plan, cycle: 0, library: [], records: [], at: AT });
+  const prior = { ...n0.record, dropped: [...n0.record.dropped, { rule: 'dated+recitals=>agreement-date', why: 'held-out: covers 4, needs 5' }] };
+  const on = await N.night({ units: W.units, plan, cycle: 1, library: n0.state.library, records: n0.state.records, at: AT, nearmiss: true, prior });
+  const off = await N.night({ units: W.units, plan, cycle: 1, library: n0.state.library, records: n0.state.records, at: AT, prior });
+  assert.equal(on.record.nearmiss, true);
+  assert.equal('nearmiss' in off.record, false, 'off unless the night input says so');
+  assert.equal('nearmissMeasure' in off.record, false);
+  assert.equal('nearmiss' in off.record.proposed, false);
+  const m = on.record.nearmissMeasure;
+  assert.equal(m.proposed, N.nearMisses(prior, N.DOC.D.TASKS).length);
+  assert.ok(m.proposed >= 1);
+  assert.equal(on.record.proposed.nearmiss, m.proposed);
+  assert.equal(on.record.proposals.filter((p) => p.prov.source === 'nearmiss').length, m.proposed);
+  assert.match(on.record.proposals.find((p) => p.prov.source === 'nearmiss').prov.recipe, /^near-miss of night 0$/);
+  assert.equal(m.keptWithout, off.record.promoted.length - off.record.promoted.filter((p) => p.source === '7b').length, 'the comparison arm is the same night without them');
+  assert.equal(m.keptWith - m.keptWithout, m.keptFromThem, 'near-misses come after the free tiers, so they only add');
+  assert.equal(m.keptFromThem, on.record.promoted.filter((p) => p.source === 'nearmiss').length);
+  assert.ok(m.newTonight >= 0 && m.newTonight <= m.proposed);
+  assert.ok(m.newTonight >= 1, 'dated+recitals is not one the miners propose (never in one unit)');
+  for (const k of ['precisionWith', 'precisionWithout']) assert.ok(m[k] === null || (m[k] >= 0 && m[k] <= 1), k);
+  assert.equal(m.precisionWithout, off.record.meter.after.precision);
+  assert.equal(m.precisionWith, on.record.meter.after.precision);
+  const replay = await N.night({ units: W.units, plan, cycle: 1, library: n0.state.library, records: n0.state.records, at: AT, nearmiss: true, prior });
+  assert.equal(JSON.stringify(replay.record), JSON.stringify(on.record), 'replays byte for byte from the same previous record');
+  const noPrior = await N.night({ units: W.units, plan, cycle: 1, library: n0.state.library, records: n0.state.records, at: AT, nearmiss: true });
+  assert.equal(noPrior.record.nearmissMeasure.proposed, 0, 'on but with no previous record: nothing to re-propose');
+});
+
+test('seal 11: nearMeasure counts both arms and only real near-miss keeps', () => {
+  const free = [{ when: ['a'], then: 't' }, { when: ['b'], then: 't' }], near = [{ when: ['a'], then: 't' }, { when: ['c'], then: 't' }, { when: ['d'], then: 't' }];
+  const kept = [{ when: ['a'], then: 't', prov: { source: 'mined' } }, { when: ['c'], then: 't', prov: { source: 'nearmiss' } }, { when: ['d'], then: 't', prov: { source: 'nearmiss' } }, { when: ['x'], then: 't' }, null, { when: ['y'], then: 't', prov: null }];
+  assert.deepEqual(N.nearMeasure(free, near, kept, kept.slice(0, 1), 0.9, 0.8), { proposed: 3, newTonight: 2, keptFromThem: 2, keptWith: 6, keptWithout: 1, precisionWith: 0.9, precisionWithout: 0.8 });
+  assert.deepEqual(N.nearMeasure(null, null, null, null, null, null), { proposed: 0, newTonight: 0, keptFromThem: 0, keptWith: 0, keptWithout: 0, precisionWith: null, precisionWithout: null });
+});

@@ -31,8 +31,8 @@
   {
    "name": "night",
    "file": "src/night.mjs",
-   "total": 46,
-   "killed": 46,
+   "total": 58,
+   "killed": 58,
    "ignored": 0,
    "clean": true,
    "capped": false
