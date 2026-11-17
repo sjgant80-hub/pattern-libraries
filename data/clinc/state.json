@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 2,
  "library": [
   {
    "when": [
@@ -2269,6 +2269,1306 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "interest"
+   ],
+   "then": "interest-rate",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "7856fa33",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 12,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 14,
+     "right": 14,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 12,
+     "base": 10,
+     "rightRate": 1,
+     "baseRate": 0.833333,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 14,
+     "right": 14,
+     "base": 11,
+     "rightRate": 1,
+     "baseRate": 0.785714,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "bill",
+    "minimum"
+   ],
+   "then": "min-payment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-2"
+   },
+   "receipt": "96687b65",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "spent"
+   ],
+   "then": "spending-history",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "cef482e9",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 9,
+     "right": 9,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "redeem"
+   ],
+   "then": "redeem-rewards",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "b32f9493",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.25,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "apply"
+   ],
+   "then": "new-card",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "d6646b51",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 10,
+     "right": 8,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 11,
+     "right": 11,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 8,
+     "base": 5,
+     "rightRate": 0.8,
+     "baseRate": 0.5,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 11,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.363636,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "fridge"
+   ],
+   "then": "food-last",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "8a00c63f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "wait"
+   ],
+   "then": "how-busy",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "2b02558b",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 9,
+     "right": 8,
+     "prec": 0.8888888888888888,
+     "basePrec": 0.1111111111111111
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.888889,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "ingredients"
+   ],
+   "then": "ingredients-list",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "6fd9edf1",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 9,
+     "right": 9,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 9,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.111111,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.25,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "nutrition"
+   ],
+   "then": "nutrition-info",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "2bf23513",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.166667,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.666667,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "nutritional"
+   ],
+   "then": "nutrition-info",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "a69735ec",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "ratings"
+   ],
+   "then": "restaurant-reviews",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "aef158e9",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "cook"
+   ],
+   "then": "cook-time",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "11d108b1",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 13,
+     "right": 11,
+     "prec": 0.8461538461538461,
+     "basePrec": 0.15384615384615385
+    },
+    "final": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 13,
+     "right": 11,
+     "base": 0,
+     "rightRate": 0.846154,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 1,
+     "rightRate": 0.833333,
+     "baseRate": 0.166667,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "cook",
+    "long"
+   ],
+   "then": "cook-time",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-2"
+   },
+   "receipt": "3c2d8893",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 11,
+     "right": 11,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 11,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "reminders"
+   ],
+   "then": "reminder",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "0a2c7aef",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "replaced"
+   ],
+   "then": "tire-change",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "4a6f8aaf",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "plug"
+   ],
+   "then": "plug-type",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "7fa5286b",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.5,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.2,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "alerts"
+   ],
+   "then": "travel-alert",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "0e33f566",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 11,
+     "right": 11,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 11,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "heads"
+   ],
+   "then": "flip-coin",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "9c8a1cea",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.6,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.75,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "meetings",
+    "today"
+   ],
+   "then": "meeting-schedule",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-2"
+   },
+   "receipt": "08c9f70d",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "form"
+   ],
+   "then": "w2",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "ef6d793b",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "life"
+   ],
+   "then": "meaning-of-life",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "e3708ddf",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 13,
+     "right": 11,
+     "prec": 0.8461538461538461,
+     "basePrec": 0.15384615384615385
+    },
+    "final": {
+     "cover": 12,
+     "right": 11,
+     "prec": 0.9166666666666666,
+     "basePrec": 0.08333333333333333
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 13,
+     "right": 11,
+     "base": 5,
+     "rightRate": 0.846154,
+     "baseRate": 0.384615,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 11,
+     "base": 6,
+     "rightRate": 0.916667,
+     "baseRate": 0.5,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "fact"
+   ],
+   "then": "fun-fact",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "436d6f6a",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.666667,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.333333,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "thanks"
+   ],
+   "then": "thank-you",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "85a98d69",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "joke"
+   ],
+   "then": "tell-joke",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "45ae4f30",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 4,
+     "rightRate": 1,
+     "baseRate": 0.5,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.2,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "male"
+   ],
+   "then": "change-accent",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-1"
+   },
+   "receipt": "bcda533c",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 9,
+     "right": 8,
+     "prec": 0.8888888888888888,
+     "basePrec": 0.1111111111111111
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 1,
+     "rightRate": 0.888889,
+     "baseRate": 0.111111,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.4,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "back",
+    "settings"
+   ],
+   "then": "reset-settings",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-2"
+   },
+   "receipt": "dc2622fa",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "factory"
+   ],
+   "then": "reset-settings",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "clinc150",
+    "trainN": 8200,
+    "recipe": "mine-cover"
+   },
+   "receipt": "c971d2a1",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 12,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 12,
+     "base": 1,
+     "rightRate": 1,
+     "baseRate": 0.083333,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.285714,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -3224,6 +4524,550 @@
     "then": "reset-settings"
    },
    "receipt": "918f9d2b"
+  },
+  {
+   "library": "clinc",
+   "task": "interest-rate",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "interest"
+    ],
+    "then": "interest-rate"
+   },
+   "receipt": "7856fa33"
+  },
+  {
+   "library": "clinc",
+   "task": "min-payment",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "bill",
+     "minimum"
+    ],
+    "then": "min-payment"
+   },
+   "receipt": "96687b65"
+  },
+  {
+   "library": "clinc",
+   "task": "spending-history",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "spent"
+    ],
+    "then": "spending-history"
+   },
+   "receipt": "cef482e9"
+  },
+  {
+   "library": "clinc",
+   "task": "redeem-rewards",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "redeem"
+    ],
+    "then": "redeem-rewards"
+   },
+   "receipt": "b32f9493"
+  },
+  {
+   "library": "clinc",
+   "task": "new-card",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "apply"
+    ],
+    "then": "new-card"
+   },
+   "receipt": "d6646b51"
+  },
+  {
+   "library": "clinc",
+   "task": "food-last",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "fridge"
+    ],
+    "then": "food-last"
+   },
+   "receipt": "8a00c63f"
+  },
+  {
+   "library": "clinc",
+   "task": "how-busy",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "wait"
+    ],
+    "then": "how-busy"
+   },
+   "receipt": "2b02558b"
+  },
+  {
+   "library": "clinc",
+   "task": "ingredients-list",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "ingredients"
+    ],
+    "then": "ingredients-list"
+   },
+   "receipt": "6fd9edf1"
+  },
+  {
+   "library": "clinc",
+   "task": "nutrition-info",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "nutrition"
+    ],
+    "then": "nutrition-info"
+   },
+   "receipt": "2bf23513"
+  },
+  {
+   "library": "clinc",
+   "task": "nutrition-info",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "nutritional"
+    ],
+    "then": "nutrition-info"
+   },
+   "receipt": "a69735ec"
+  },
+  {
+   "library": "clinc",
+   "task": "restaurant-reviews",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "ratings"
+    ],
+    "then": "restaurant-reviews"
+   },
+   "receipt": "aef158e9"
+  },
+  {
+   "library": "clinc",
+   "task": "cook-time",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "cook"
+    ],
+    "then": "cook-time"
+   },
+   "receipt": "11d108b1"
+  },
+  {
+   "library": "clinc",
+   "task": "cook-time",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "cook",
+     "long"
+    ],
+    "then": "cook-time"
+   },
+   "receipt": "3c2d8893"
+  },
+  {
+   "library": "clinc",
+   "task": "reminder",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "reminders"
+    ],
+    "then": "reminder"
+   },
+   "receipt": "0a2c7aef"
+  },
+  {
+   "library": "clinc",
+   "task": "tire-change",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "replaced"
+    ],
+    "then": "tire-change"
+   },
+   "receipt": "4a6f8aaf"
+  },
+  {
+   "library": "clinc",
+   "task": "plug-type",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "plug"
+    ],
+    "then": "plug-type"
+   },
+   "receipt": "7fa5286b"
+  },
+  {
+   "library": "clinc",
+   "task": "travel-alert",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "alerts"
+    ],
+    "then": "travel-alert"
+   },
+   "receipt": "0e33f566"
+  },
+  {
+   "library": "clinc",
+   "task": "flip-coin",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "heads"
+    ],
+    "then": "flip-coin"
+   },
+   "receipt": "9c8a1cea"
+  },
+  {
+   "library": "clinc",
+   "task": "meeting-schedule",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "meetings",
+     "today"
+    ],
+    "then": "meeting-schedule"
+   },
+   "receipt": "08c9f70d"
+  },
+  {
+   "library": "clinc",
+   "task": "w2",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "form"
+    ],
+    "then": "w2"
+   },
+   "receipt": "ef6d793b"
+  },
+  {
+   "library": "clinc",
+   "task": "meaning-of-life",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "life"
+    ],
+    "then": "meaning-of-life"
+   },
+   "receipt": "e3708ddf"
+  },
+  {
+   "library": "clinc",
+   "task": "fun-fact",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "fact"
+    ],
+    "then": "fun-fact"
+   },
+   "receipt": "436d6f6a"
+  },
+  {
+   "library": "clinc",
+   "task": "thank-you",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "thanks"
+    ],
+    "then": "thank-you"
+   },
+   "receipt": "85a98d69"
+  },
+  {
+   "library": "clinc",
+   "task": "tell-joke",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "joke"
+    ],
+    "then": "tell-joke"
+   },
+   "receipt": "45ae4f30"
+  },
+  {
+   "library": "clinc",
+   "task": "change-accent",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "male"
+    ],
+    "then": "change-accent"
+   },
+   "receipt": "bcda533c"
+  },
+  {
+   "library": "clinc",
+   "task": "reset-settings",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "back",
+     "settings"
+    ],
+    "then": "reset-settings"
+   },
+   "receipt": "dc2622fa"
+  },
+  {
+   "library": "clinc",
+   "task": "reset-settings",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "factory"
+    ],
+    "then": "reset-settings"
+   },
+   "receipt": "c971d2a1"
   }
  ]
 }

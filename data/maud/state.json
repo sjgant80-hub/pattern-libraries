@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 2,
  "library": [
   {
    "when": [
@@ -338,6 +338,295 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "countries"
+   ],
+   "then": "a-p-c-application-to-answer--consummation=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maud",
+    "trainN": 82,
+    "recipe": "mine-cover"
+   },
+   "receipt": "4394619b",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 3,
+     "rightRate": 0.8,
+     "baseRate": 0.6,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 2,
+     "rightRate": 1,
+     "baseRate": 0.666667,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "statutes"
+   ],
+   "then": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--takeover-statutes=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maud",
+    "trainN": 78,
+    "recipe": "mine-1"
+   },
+   "receipt": "1012ad7f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 10,
+     "right": 10,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 10,
+     "base": 9,
+     "rightRate": 1,
+     "baseRate": 0.9,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 6,
+     "rightRate": 1,
+     "baseRate": 0.75,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "reasonably"
+   ],
+   "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maud",
+    "trainN": 82,
+    "recipe": "mine-1"
+   },
+   "receipt": "e39c0aef",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "covid",
+    "reasonably"
+   ],
+   "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maud",
+    "trainN": 82,
+    "recipe": "mine-2"
+   },
+   "receipt": "ea21212c",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "covid"
+   ],
+   "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maud",
+    "trainN": 82,
+    "recipe": "mine-cover"
+   },
+   "receipt": "c1fa85d9",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 10,
+     "right": 10,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 10,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "god"
+   ],
+   "then": "w-n-a-f-subject-to-disproportionate-impact-answer--act-of-god=1",
+   "prov": {
+    "source": "recipe",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maud",
+    "trainN": 82,
+    "recipe": "recipe from w-n-a-f-applies-to-answer--act-of-god=1"
+   },
+   "receipt": "9d3042d0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 7,
+     "prec": 0.875,
+     "basePrec": 0.125
+    },
+    "final": {
+     "cover": 10,
+     "right": 8,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 7,
+     "base": 5,
+     "rightRate": 0.875,
+     "baseRate": 0.625,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 8,
+     "base": 2,
+     "rightRate": 0.8,
+     "baseRate": 0.2,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -482,6 +771,127 @@
     "then": "w-n-a-f-applies-to-answer--act-of-god=1"
    },
    "receipt": "b557514d"
+  },
+  {
+   "library": "maud",
+   "task": "a-p-c-application-to-answer--consummation=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "countries"
+    ],
+    "then": "a-p-c-application-to-answer--consummation=1"
+   },
+   "receipt": "4394619b"
+  },
+  {
+   "library": "maud",
+   "task": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--takeover-statutes=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "statutes"
+    ],
+    "then": "accuracy-of-fundamental-target-r-ws-types-of-r-ws--takeover-statutes=1"
+   },
+   "receipt": "1012ad7f"
+  },
+  {
+   "library": "maud",
+   "task": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "reasonably"
+    ],
+    "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1"
+   },
+   "receipt": "e39c0aef"
+  },
+  {
+   "library": "maud",
+   "task": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "covid",
+     "reasonably"
+    ],
+    "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1"
+   },
+   "receipt": "ea21212c"
+  },
+  {
+   "library": "maud",
+   "task": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1",
+   "type": "deal point",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "covid"
+    ],
+    "then": "negative-interim-covenant-includes-carveout-for-pandemic-responses-answer-y-n=1"
+   },
+   "receipt": "c1fa85d9"
+  },
+  {
+   "library": "maud",
+   "task": "w-n-a-f-subject-to-disproportionate-impact-answer--act-of-god=1",
+   "type": "deal point",
+   "tier": "recipe",
+   "recipe": "recipe from w-n-a-f-applies-to-answer--act-of-god=1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "god"
+    ],
+    "then": "w-n-a-f-subject-to-disproportionate-impact-answer--act-of-god=1"
+   },
+   "receipt": "9d3042d0"
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-0.json",
+ "latest": "nights/cycle-1.json",
  "series": [
   {
    "cycle": 0,
@@ -13,6 +13,23 @@
     "queries": 1000,
     "routed": 78,
     "right": 77,
+    "conflicts": 0,
+    "baseRouted": 7,
+    "baseRight": 5
+   }
+  },
+  {
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "patterns": 24,
+   "coverage": 0.019857,
+   "precision": 0.928058,
+   "answered": 139,
+   "cases": 7000,
+   "check": {
+    "queries": 1000,
+    "routed": 139,
+    "right": 129,
     "conflicts": 0,
     "baseRouted": 7,
     "baseRight": 5

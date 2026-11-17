@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 2,
  "library": [
   {
    "when": [
@@ -769,6 +769,391 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "expand"
+   ],
+   "then": "algebra",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-1"
+   },
+   "receipt": "ab59251a",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 9,
+     "right": 8,
+     "prec": 0.8888888888888888,
+     "basePrec": 0.1111111111111111
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.888889,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "probability"
+   ],
+   "then": "counting-probability",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-cover"
+   },
+   "receipt": "d25814d0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 128,
+     "right": 103,
+     "prec": 0.8046875,
+     "basePrec": 0.1953125
+    },
+    "final": {
+     "cover": 63,
+     "right": 54,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 128,
+     "right": 103,
+     "base": 0,
+     "rightRate": 0.804688,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 63,
+     "right": 54,
+     "base": 0,
+     "rightRate": 0.857143,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "focus"
+   ],
+   "then": "intermediate-algebra",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-1"
+   },
+   "receipt": "d3069402",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 4,
+     "right": 4,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 4,
+     "right": 4,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "func"
+   ],
+   "then": "intermediate-algebra",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-1"
+   },
+   "receipt": "0ccf92de",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "coefficients"
+   ],
+   "then": "intermediate-algebra",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-cover"
+   },
+   "receipt": "9c54f339",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 31,
+     "right": 25,
+     "prec": 0.8064516129032258,
+     "basePrec": 0.1935483870967742
+    },
+    "final": {
+     "cover": 13,
+     "right": 12,
+     "prec": 0.9230769230769231,
+     "basePrec": 0.07692307692307693
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 31,
+     "right": 25,
+     "base": 0,
+     "rightRate": 0.806452,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 13,
+     "right": 12,
+     "base": 0,
+     "rightRate": 0.923077,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "mathbb"
+   ],
+   "then": "intermediate-algebra",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-cover"
+   },
+   "receipt": "4a3e4b0f",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "vectors"
+   ],
+   "then": "precalculus",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-1"
+   },
+   "receipt": "7f59a573",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 31,
+     "right": 31,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 18,
+     "right": 18,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 31,
+     "right": 31,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 18,
+     "right": 18,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "pmatrix",
+    "vector"
+   ],
+   "then": "precalculus",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "maths",
+    "trainN": 6700,
+    "recipe": "mine-2"
+   },
+   "receipt": "4c27f83a",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 20,
+     "right": 20,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 20,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -1092,6 +1477,167 @@
     "then": "precalculus"
    },
    "receipt": "34583313"
+  },
+  {
+   "library": "maths",
+   "task": "algebra",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "expand"
+    ],
+    "then": "algebra"
+   },
+   "receipt": "ab59251a"
+  },
+  {
+   "library": "maths",
+   "task": "counting-probability",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "probability"
+    ],
+    "then": "counting-probability"
+   },
+   "receipt": "d25814d0"
+  },
+  {
+   "library": "maths",
+   "task": "intermediate-algebra",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "focus"
+    ],
+    "then": "intermediate-algebra"
+   },
+   "receipt": "d3069402"
+  },
+  {
+   "library": "maths",
+   "task": "intermediate-algebra",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "func"
+    ],
+    "then": "intermediate-algebra"
+   },
+   "receipt": "0ccf92de"
+  },
+  {
+   "library": "maths",
+   "task": "intermediate-algebra",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "coefficients"
+    ],
+    "then": "intermediate-algebra"
+   },
+   "receipt": "9c54f339"
+  },
+  {
+   "library": "maths",
+   "task": "intermediate-algebra",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "mathbb"
+    ],
+    "then": "intermediate-algebra"
+   },
+   "receipt": "4a3e4b0f"
+  },
+  {
+   "library": "maths",
+   "task": "precalculus",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "vectors"
+    ],
+    "then": "precalculus"
+   },
+   "receipt": "7f59a573"
+  },
+  {
+   "library": "maths",
+   "task": "precalculus",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-2",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "pmatrix",
+     "vector"
+    ],
+    "then": "precalculus"
+   },
+   "receipt": "4c27f83a"
   }
  ]
 }

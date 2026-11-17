@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-5.json",
+ "latest": "nights/cycle-6.json",
  "series": [
   {
    "cycle": 0,
@@ -120,6 +120,29 @@
    "cycle": 5,
    "at": "2026-11-16T03:18:34.866Z",
    "patterns": 4,
+   "coverage": 0.12875,
+   "precision": 0.92233,
+   "answered": 103,
+   "cases": 800,
+   "check": {
+    "parts": [
+     "A",
+     "B",
+     "C"
+    ],
+    "receipts": 100,
+    "reconciled": 0,
+    "flagged": 0,
+    "unchecked": 100,
+    "reconciledRight": 0,
+    "wrongRan": 0,
+    "wrongFlagged": 0
+   }
+  },
+  {
+   "cycle": 6,
+   "at": "2026-11-17T03:09:26.811Z",
+   "patterns": 5,
    "coverage": 0.12875,
    "precision": 0.92233,
    "answered": 103,

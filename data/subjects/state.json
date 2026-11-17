@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 2,
  "library": [
   {
    "when": [
@@ -1204,6 +1204,438 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "translation"
+   ],
+   "then": "formal-logic",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "a66c3fc7",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 11,
+     "right": 10,
+     "prec": 0.9090909090909091,
+     "basePrec": 0.09090909090909091
+    },
+    "final": {
+     "cover": 8,
+     "right": 7,
+     "prec": 0.875,
+     "basePrec": 0.125
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 11,
+     "right": 10,
+     "base": 0,
+     "rightRate": 0.909091,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 7,
+     "base": 0,
+     "rightRate": 0.875,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "python"
+   ],
+   "then": "high-school-computer-science",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "21ecc936",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "heaven"
+   ],
+   "then": "high-school-world-history",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-cover"
+   },
+   "receipt": "d412c303",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 6,
+     "right": 5,
+     "prec": 0.8333333333333334,
+     "basePrec": 0.16666666666666666
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 5,
+     "base": 0,
+     "rightRate": 0.833333,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "fallacies"
+   ],
+   "then": "logical-fallacies",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "5c8f05b4",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 7,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 7,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "homo"
+   ],
+   "then": "prehistory",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "45e2ab28",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 5,
+     "right": 5,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 5,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "thereafter"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "9cb27dce",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 19,
+     "right": 19,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 20,
+     "right": 20,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 19,
+     "right": 19,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 20,
+     "right": 20,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "testified"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "995dcf89",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 17,
+     "right": 17,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 14,
+     "right": 14,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 17,
+     "right": 17,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 14,
+     "right": 14,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "breach"
+   ],
+   "then": "professional-law",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "a83baae0",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 7,
+     "right": 6,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 6,
+     "base": 0,
+     "rightRate": 0.857143,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "tenderness"
+   ],
+   "then": "professional-medicine",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "subjects",
+    "trainN": 8842,
+    "recipe": "mine-1"
+   },
+   "receipt": "67f44c55",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 8,
+     "right": 8,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 8,
+     "right": 8,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -1710,6 +2142,186 @@
     "then": "virology"
    },
    "receipt": "eb988778"
+  },
+  {
+   "library": "subjects",
+   "task": "formal-logic",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "translation"
+    ],
+    "then": "formal-logic"
+   },
+   "receipt": "a66c3fc7"
+  },
+  {
+   "library": "subjects",
+   "task": "high-school-computer-science",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "python"
+    ],
+    "then": "high-school-computer-science"
+   },
+   "receipt": "21ecc936"
+  },
+  {
+   "library": "subjects",
+   "task": "high-school-world-history",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "heaven"
+    ],
+    "then": "high-school-world-history"
+   },
+   "receipt": "d412c303"
+  },
+  {
+   "library": "subjects",
+   "task": "logical-fallacies",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "fallacies"
+    ],
+    "then": "logical-fallacies"
+   },
+   "receipt": "5c8f05b4"
+  },
+  {
+   "library": "subjects",
+   "task": "prehistory",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "homo"
+    ],
+    "then": "prehistory"
+   },
+   "receipt": "45e2ab28"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "thereafter"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "9cb27dce"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "testified"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "995dcf89"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-law",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "breach"
+    ],
+    "then": "professional-law"
+   },
+   "receipt": "a83baae0"
+  },
+  {
+   "library": "subjects",
+   "task": "professional-medicine",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "tenderness"
+    ],
+    "then": "professional-medicine"
+   },
+   "receipt": "67f44c55"
   }
  ]
 }

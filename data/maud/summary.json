@@ -1,5 +1,5 @@
 {
- "latest": "nights/cycle-0.json",
+ "latest": "nights/cycle-1.json",
  "series": [
   {
    "cycle": 0,
@@ -13,6 +13,23 @@
     "asked": 2731,
     "answered": 41,
     "right": 37,
+    "conflicts": 0,
+    "baseAnswered": 1359,
+    "baseRight": 909
+   }
+  },
+  {
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "patterns": 13,
+   "coverage": 0.008006,
+   "precision": 0.877193,
+   "answered": 57,
+   "cases": 7120,
+   "check": {
+    "asked": 2731,
+    "answered": 57,
+    "right": 50,
     "conflicts": 0,
     "baseAnswered": 1359,
     "baseRight": 909

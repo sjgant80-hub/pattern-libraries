@@ -1,5 +1,5 @@
 {
- "cycle": 1,
+ "cycle": 2,
  "library": [
   {
    "when": [
@@ -577,6 +577,246 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "awesome"
+   ],
+   "then": "admiration",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "emotions",
+    "trainN": 22263,
+    "recipe": "mine-1"
+   },
+   "receipt": "82313aae",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 34,
+     "right": 28,
+     "prec": 0.8235294117647058,
+     "basePrec": 0.17647058823529413
+    },
+    "final": {
+     "cover": 44,
+     "right": 37,
+     "prec": 0.8409090909090909,
+     "basePrec": 0.1590909090909091
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 34,
+     "right": 28,
+     "base": 0,
+     "rightRate": 0.823529,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 44,
+     "right": 37,
+     "base": 0,
+     "rightRate": 0.840909,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "annoying"
+   ],
+   "then": "annoyance",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "emotions",
+    "trainN": 22263,
+    "recipe": "mine-1"
+   },
+   "receipt": "e4249d2c",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 12,
+     "right": 11,
+     "prec": 0.9166666666666666,
+     "basePrec": 0.08333333333333333
+    },
+    "final": {
+     "cover": 10,
+     "right": 8,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 12,
+     "right": 11,
+     "base": 0,
+     "rightRate": 0.916667,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 10,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "careful"
+   ],
+   "then": "caring",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "emotions",
+    "trainN": 22263,
+    "recipe": "mine-1"
+   },
+   "receipt": "7e37822c",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "embarrassing"
+   ],
+   "then": "embarrassment",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "emotions",
+    "trainN": 22263,
+    "recipe": "mine-1"
+   },
+   "receipt": "18e9e281",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 7,
+     "right": 6,
+     "prec": 0.8571428571428571,
+     "basePrec": 0.14285714285714285
+    },
+    "final": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 7,
+     "right": 6,
+     "base": 0,
+     "rightRate": 0.857143,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
+  },
+  {
+   "when": [
+    "shocked"
+   ],
+   "then": "surprise",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "emotions",
+    "trainN": 22263,
+    "recipe": "mine-1"
+   },
+   "receipt": "d6cb0cf6",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 5,
+     "right": 4,
+     "prec": 0.8,
+     "basePrec": 0.2
+    },
+    "final": {
+     "cover": 9,
+     "right": 8,
+     "prec": 0.8888888888888888,
+     "basePrec": 0.1111111111111111
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 5,
+     "right": 4,
+     "base": 0,
+     "rightRate": 0.8,
+     "baseRate": 0,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 9,
+     "right": 8,
+     "base": 0,
+     "rightRate": 0.888889,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -820,6 +1060,106 @@
     "then": "sadness"
    },
    "receipt": "54e802be"
+  },
+  {
+   "library": "emotions",
+   "task": "admiration",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "awesome"
+    ],
+    "then": "admiration"
+   },
+   "receipt": "82313aae"
+  },
+  {
+   "library": "emotions",
+   "task": "annoyance",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "annoying"
+    ],
+    "then": "annoyance"
+   },
+   "receipt": "e4249d2c"
+  },
+  {
+   "library": "emotions",
+   "task": "caring",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "careful"
+    ],
+    "then": "caring"
+   },
+   "receipt": "7e37822c"
+  },
+  {
+   "library": "emotions",
+   "task": "embarrassment",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "embarrassing"
+    ],
+    "then": "embarrassment"
+   },
+   "receipt": "18e9e281"
+  },
+  {
+   "library": "emotions",
+   "task": "surprise",
+   "type": "route",
+   "tier": "mined",
+   "recipe": "mine-1",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "shocked"
+    ],
+    "then": "surprise"
+   },
+   "receipt": "d6cb0cf6"
   }
  ]
 }

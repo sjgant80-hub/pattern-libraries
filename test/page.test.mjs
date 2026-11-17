@@ -55,7 +55,10 @@ test('the page explains itself: what, start here, how, blueprint, adoption, the 
 });
 
 test('no measured number is typed into the page: they are read from the records', () => {
-  const summary = JSON.parse(read('data/doc/summary.json')), night = JSON.parse(read('data/doc/' + summary.latest));
+  // the page shows the last night that had an exam (an exhausted night proposes nothing): check that night's numbers
+  const lastReal = (id, sum) => { for (let i = sum.series.length - 1; i >= 0; i--) { const r = JSON.parse(read('data/' + id + '/nights/cycle-' + sum.series[i].cycle + '.json')); if (!r.exhausted) return r; } return JSON.parse(read('data/' + id + '/' + sum.latest)); };
+  const summary = JSON.parse(read('data/doc/summary.json')), night = lastReal('doc', summary);
+  assert.equal(night.exhausted, undefined, 'the document library has a night with an exam to check');
   const wit = JSON.parse(read('data/witness.json'));
   const forms = new Set();
   for (const s of summary.series) for (const x of [s.coverage, s.precision]) if (typeof x === 'number' && x > 0) forms.add((x * 100).toFixed(1) + '%');

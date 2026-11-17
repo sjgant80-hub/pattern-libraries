@@ -1,5 +1,5 @@
 {
- "cycle": 6,
+ "cycle": 7,
  "library": [
   {
    "when": [
@@ -193,6 +193,54 @@
      "why": ""
     }
    }
+  },
+  {
+   "when": [
+    "grand"
+   ],
+   "then": "total",
+   "prov": {
+    "source": "mined",
+    "model": "none",
+    "proposedAt": "2026-11-17T03:09:26.811Z",
+    "feed": "cord-v2",
+    "trainN": 6029,
+    "recipe": "mine-cover"
+   },
+   "receipt": "751de0b8",
+   "scores": {
+    "base": "other",
+    "held": {
+     "cover": 6,
+     "right": 6,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "final": {
+     "cover": 3,
+     "right": 3,
+     "prec": 1,
+     "basePrec": 0
+    },
+    "heldDocs": {
+     "ok": true,
+     "docs": 6,
+     "right": 6,
+     "base": 3,
+     "rightRate": 1,
+     "baseRate": 0.5,
+     "why": ""
+    },
+    "finalDocs": {
+     "ok": true,
+     "docs": 3,
+     "right": 3,
+     "base": 0,
+     "rightRate": 1,
+     "baseRate": 0,
+     "why": ""
+    }
+   }
   }
  ],
  "records": [
@@ -276,6 +324,26 @@
     "then": "change"
    },
    "receipt": "32b33277"
+  },
+  {
+   "library": "finance",
+   "task": "total",
+   "type": "money",
+   "tier": "mined",
+   "recipe": "mine-cover",
+   "cost": {
+    "calls": 0,
+    "cents": 0
+   },
+   "cycle": 6,
+   "at": "2026-11-17T03:09:26.811Z",
+   "rule": {
+    "when": [
+     "grand"
+    ],
+    "then": "total"
+   },
+   "receipt": "751de0b8"
   }
  ]
 }

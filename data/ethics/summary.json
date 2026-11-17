@@ -1,9 +1,26 @@
 {
- "latest": "nights/cycle-0.json",
+ "latest": "nights/cycle-1.json",
  "series": [
   {
    "cycle": 0,
    "at": "2026-11-16T22:37:20.892Z",
+   "patterns": 0,
+   "coverage": 0,
+   "precision": null,
+   "answered": 0,
+   "cases": 2000,
+   "check": {
+    "queries": 1000,
+    "routed": 0,
+    "right": 0,
+    "conflicts": 0,
+    "baseRouted": 87,
+    "baseRight": 38
+   }
+  },
+  {
+   "cycle": 1,
+   "at": "2026-11-17T03:09:26.811Z",
    "patterns": 0,
    "coverage": 0,
    "precision": null,
